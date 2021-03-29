@@ -7,11 +7,14 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { CustomerComponent } from './customer/customer.component';
+import { FormUserComponent } from './form-user/form-user.component';
 
 
 const rutas=[
   { path: 'home', component: HomeComponent},
-  { path: 'favs', component: FooterComponent},
+  { path: 'cliente', component: CustomerComponent},
+  { path: 'registro', component: FormUserComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' }
   // { path: '**', component: Pagina404Component}
 ] 
@@ -22,7 +25,9 @@ const rutas=[
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    CustomerComponent,
+    FormUserComponent
   ],
   imports: [
     BrowserModule,
