@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { CustomerComponent } from './customer/customer.component';
 import { FormUserComponent } from './form-user/form-user.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { CarouselOfItemsComponent } from './carousel-of-items/carousel-of-items.component';
 
 
 const rutas=[
@@ -30,7 +32,9 @@ const rutas=[
     HomeComponent,
     CustomerComponent,
     FormUserComponent,
-    ProductSearchComponent
+    ProductSearchComponent,
+    ProductCardComponent,
+    CarouselOfItemsComponent
   ],
   imports: [
     BrowserModule,

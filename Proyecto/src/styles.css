@@ -804,6 +804,12 @@
         color: #000000;
         background: #FF6F61;
     }
+    .product-item .product-price .btn {
+        float: right;
+        border: none;
+        color: #000000;
+        background: #FF6F61;
+    }
     
     .product-item:hover .product-price .btn,
     .product-item .product-price .btn:hover {
@@ -2363,8 +2369,12 @@ NUESTRO*/
         width: 100%;
     }
     
-    .putopito {
+    .rating {
         border: 3px solid peachpuff;
         background-color: peachpuff;
         margin-right: 0;
+    }
+
+    .movement-icon {
+        width: 1.5em;
     }
