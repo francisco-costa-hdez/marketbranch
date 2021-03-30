@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function create(Request $request){
-        User::create($request->all());
-
+        $usuarios = User::all();
+        return $
     }
+    
     public function view(){
        return view('crear');
         
