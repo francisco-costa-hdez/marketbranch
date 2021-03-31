@@ -1,48 +1,35 @@
-<div class="featured-product product">
-    <div class="container-fluid">
-        <div class="section-header">
-            <h1>Formulario de registro</h1>
+<div class="my-account featured-product product">
+    <div class="section-header container-fluid pl-5">
+        <div class="row align-items-end"> 
+            <div class="col-12"><h1 class="row ">&nbsp;Registro de Cliente</h1></div>
         </div>
+        
     </div>
     </div>
+
 <form method="POST" action="http://localhost:8000/user/create">
-    <div class="login">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">    
-                    <div class="register-form">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Nombre</label>
-                                <input name="nombre" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Apellidos</label>
-                                <input name="apellidos" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-6">
-                                <label>E-mail</label>
-                                <input name="email" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Móvil</label>
-                                <input name="movil" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Contraseña</label>
-                                <input name="password" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Repita contraseña</label>
-                                <input name="password2" class="form-control" type="text">
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn" type="submit">Registrarse</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    
+    <div class="form-group">
+        <label for="exampleInputEmail1">Nombre</label>
+        <input type="text" class="form-control" >
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Apellidos</label>
+        <input type="text" class="form-control" >
+      </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com">
         </div>
-    </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Contraseña</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+          <small class="form-text text-muted">No compartas tu contraseña con terceros.</small>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+          <label class="form-check-label" for="exampleCheck1">Acepto los <a href="">términos y condiciones</a> de la web</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      
     </form>
