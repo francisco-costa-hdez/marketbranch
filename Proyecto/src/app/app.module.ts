@@ -15,16 +15,19 @@ import { CarouselOfItemsComponent } from './carousel-of-items/carousel-of-items.
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ProductComponent } from './product/product.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
+import { ShopComponent } from './shop/shop.component';
+import { FAQComponent } from './faq/faq.component';
 
 
 const rutas=[
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
   { path: 'cliente', component: CustomerComponent},
   { path: 'registro', component: FormUserComponent},
   { path: 'buscar', component: ProductSearchComponent},
   { path: 'producto', component: ProductComponent},
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
-  // { path: '**', component: Pagina404Component}
+  { path: 'tienda', component: ShopComponent},
+  { path: '**', component: FAQComponent}
 ] 
 
 
@@ -41,7 +44,9 @@ const rutas=[
     CarouselOfItemsComponent,
     ScrollToTopComponent,
     ProductComponent,
-    CommentCardComponent
+    CommentCardComponent,
+    ShopComponent,
+    FAQComponent
   ],
   imports: [
     BrowserModule,
