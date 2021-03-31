@@ -17,6 +17,7 @@ import { ProductComponent } from './product/product.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { ShopComponent } from './shop/shop.component';
 import { FAQComponent } from './faq/faq.component';
+import { ReportABugComponent } from './report-abug/report-abug.component';
 
 
 const rutas=[
@@ -27,7 +28,9 @@ const rutas=[
   { path: 'buscar', component: ProductSearchComponent},
   { path: 'producto', component: ProductComponent},
   { path: 'tienda', component: ShopComponent},
+  { path: 'informar', component: ReportABugComponent},
   { path: '**', component: FAQComponent}
+  // { path: '**', component: Pagina404Component}
 ] 
 
 
@@ -47,6 +50,7 @@ const rutas=[
     CommentCardComponent,
     ShopComponent,
     FAQComponent
+    ReportABugComponent
   ],
   imports: [
     BrowserModule,
