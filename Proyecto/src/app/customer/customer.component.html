@@ -1,38 +1,77 @@
 
-<div class="featured-product product row">
-    <div class="container-fluid col-3">
-        
-            <img style="height:100px;"src="https://i2.wp.com/www.silocreativo.com/wp-content/uploads/2016/12/hacer-una-web-uso-html.png?fit=666%2C370&quality=100&strip=all&ssl=1">
-        
-    </div>
-    <div class="container-fluid col">
-        <div class="section-header">
-            <h1>Mi cuenta</h1>
+<div class="my-account featured-product product">
+    <div class="section-header container-fluid pl-5">
+        <div class="row align-items-end">
+            <div class="col-2 col-lg-1 p-0">
+                <img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/Images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO">
+            </div>
+            <div class="col-10 col-lg-11"><h1 class="row ">&nbsp;Mi cuenta</h1></div>
         </div>
-    </div>
     </div>
     
     <!-- My Account Start -->
     <div class="my-account">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab"><i class="fa fa-tachometer-alt"></i>Descripción</a>
+                        <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Detalles de cuenta</a>
+                        <a class="nav-link" id="security-nav" data-toggle="pill" href="#security-tab" role="tab"><i class="fa fa-briefcase"></i>Seguridad de cuenta</a>
                         <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Pedidos</a>
+                        <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-stars" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+                            <path d="M2.242 2.194a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.256-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53zm0 4a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.255-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53zm0 4a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.255-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53z"/>
+                          </svg>  Historial de compras</a>
+                        <a class="nav-link" id="wish-nav" data-toggle="pill" href="#wish-tab" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg> Lista de deseos</a>
                         <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa fa-credit-card"></i>Método de pago</a>
                         <a class="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab"><i class="fa fa-map-marker-alt"></i>Dirección</a>
-                        <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Detalles de cuenta</a>
                         <a class="nav-link" href="index.html"><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8"> 
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
-                            <h4>Dashboard</h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque.
-                            </p> 
+                        <div class="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
+                            <h4>Detalles de cuenta</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Nombre">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="NIF">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Teléfono">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Email">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Dirección">
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn">Actualizar</button>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="account-nav">
+                            <h4>Cambiar contraseña</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="password" placeholder="Contraseña actual">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Nueva contraseña">
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Confirmar contraseña">
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn">Guardar cambios</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                             <div class="table-responsive">
@@ -40,37 +79,67 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>Product</th>
-                                            <th>Date</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Producto</th>
+                                            <th>Fecha</th>
+                                            <th>Precio</th>
+                                            <th>Estado</th>
+                                            <th>Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td>Product Name</td>
+                                            <td>Producto Nombre</td>
                                             <td>01 Jan 2020</td>
                                             <td>$99</td>
-                                            <td>Approved</td>
-                                            <td><button class="btn">View</button></td>
+                                            <td>En camino</td>
+                                            <td><button class="btn">Ver</button></td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="history-tab" role="tabpanel" aria-labelledby="orders-nav">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td>2</td>
-                                            <td>Product Name</td>
-                                            <td>01 Jan 2020</td>
-                                            <td>$99</td>
-                                            <td>Approved</td>
-                                            <td><button class="btn">View</button></td>
+                                            <th>No</th>
+                                            <th>Producto</th>
+                                            <th>Fecha</th>
+                                            <th>Precio</th>
+                                            <th>Acción</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
-                                            <td>3</td>
-                                            <td>Product Name</td>
+                                            <td>1</td>
+                                            <td>Producto Comprado</td>
                                             <td>01 Jan 2020</td>
                                             <td>$99</td>
-                                            <td>Approved</td>
-                                            <td><button class="btn">View</button></td>
+                                            <td><button class="btn">Ver</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="wish-tab" role="tabpanel" aria-labelledby="orders-nav">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Producto Deseado</td>
+                                            <td>$99</td>
+                                            <td><button class="btn">Ver</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -83,58 +152,12 @@
                             </p> 
                         </div>
                         <div class="tab-pane fade" id="address-tab" role="tabpanel" aria-labelledby="address-nav">
-                            <h4>Address</h4>
+                            <h4>Mi dirección</h4>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h5>Payment Address</h5>
                                     <p>123 Payment Street, Los Angeles, CA</p>
                                     <p>Mobile: 012-345-6789</p>
                                     <button class="btn">Edit Address</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>Shipping Address</h5>
-                                    <p>123 Shipping Street, Los Angeles, CA</p>
-                                    <p>Mobile: 012-345-6789</p>
-                                    <button class="btn">Edit Address</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
-                            <h4>Detalles de cuenta</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Nombre">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="NIF">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Teléfono">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Email">
-                                </div>
-                                <div class="col-md-12">
-                                    <input class="form-control" type="text" placeholder="Dirección">
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn">Actualizar</button>
-                                    <br><br>
-                                </div>
-                            </div>
-                            <h4>Cambiar contraseña</h4>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="password" placeholder="Contraseña actual">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Nueva contraseña">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Confirmar contraseña">
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn">Guardar cambios</button>
                                 </div>
                             </div>
                         </div>
@@ -145,14 +168,4 @@
     </div>
     <!-- My Account End -->
     
-    <!-- Back to Top -->
-    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-    
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/slick/slick.min.js"></script>
-    
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+  
