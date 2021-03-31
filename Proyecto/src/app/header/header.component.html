@@ -1,54 +1,45 @@
-  
- <!-- Nav Bar Start -->
- <div class="nav">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-md  navbar-dark">
-            
-                <img src="assets/Images/LogoAM.png"  height="100" alt="">
-              
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="row align-items-center m-0 p-0">
+        <div class="navbar-brand col-12 col-md-3 m-0 p-0" routerLink="/home">
+            <img src="assets/Images/LogoAM.png" class="w-100">
+        </div>
+            <form class="form-group row col-8 col-md-5 m-0 p-0">
+                <div class="col-4 w-100 mr-0 pr-0">
+                    <select class="form-control-lg w-100 radius-0 border-0 bg-light"id="orderBy">
+                        <option value="NULL">Filtrar</option>
+                        <option value="tienda">Tiendas</option>
+                        <option value="producto">Productos</option>
+                        <option value="categoría">Categorías</option>
+                    </select>
+                </div>
+                <div class="col-6 col-lg-7 w-100 ml-0 mx-0 px-0">
+                    <input class="form-control-lg w-100 radius-0 border-0" type="search" placeholder="Búsqueda">
+                </div>
+                <div class="col-2 col-lg-1 mx-0 px-0">
+                    <button class="form-control-lg w-100 radius-0 border-0" type="button"><img src="assets/icons/search.svg"></button>
+                </div>
+              </form>
+        
+        <div class="col-2 col-md-3">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav ml-auto">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Login</a>
-                            <a href="#" class="dropdown-item">Register</a>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarsExample03">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown03">
+                            <a class="dropdown-item" href="#">Lista de deseos <img src="assets/icons/heart.svg"></a>
+                            <a class="dropdown-item" href="#">Cerrar sesión</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<!-- Nav Bar End -->      
-
-<!-- Bottom Bar Start -->
-<div class="bottom-bar nav">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-md-5">
-                <div class="search">
-                    <input type="text" placeholder="Search">
-                    <button><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-            <div class="col">
-                <div class="user">
-                    <a href="wishlist.html" class="btn wishlist">
-                        <i class="fa fa-heart"></i>
-                        <span>(0)</span>
-                    </a>
-                    <a href="cart.html" class="btn cart">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span>(0)</span>
-                    </a>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
+        <ul class="navbar-nav col-2 col-md-1">
+            <li class="nav-item w-100">
+                <a class="nav-link btn btn-cart" href="#"><img src="assets/icons/cart.svg"></a>
+            </li>
+        </ul>
     </div>
-</div>
-<!-- Bottom Bar End -->    
+  </nav>

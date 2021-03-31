@@ -2387,4 +2387,6 @@ NUESTRO*/
     .acho {
         height: 100px
     }
-    
+    .radius-0 {
+        border-radius: 0;
+    }
