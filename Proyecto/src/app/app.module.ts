@@ -34,11 +34,11 @@ const rutas=[
   { path: 'producto', component: ProductComponent},
   { path: 'tienda', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},
-  { path: 'aboutus', component: AboutUsComponent},
+  { path: 'about-us', component: AboutUsComponent},
   { path: 'terminos', component: TermsComponent},
   { path: 'contacto', component: ContactComponent},
   { path: 'registroprod', component: FormProductComponent},
-  // { path: '**', component: FAQComponent}
+  { path: 'faq', component: FAQComponent},
   { path: '**', component: Error404Component}
 ] 
 
