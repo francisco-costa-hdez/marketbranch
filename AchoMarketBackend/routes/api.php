@@ -25,6 +25,7 @@ Route::get('products/{id}',[ProductController::class, 'findProductById']);
 Route::get('products/shop/{shop_id}',[ProductController::class, 'findProductByShop']);
 Route::get('products/subcategory/{subcategory_id}',[ProductController::class, 'findProductBySubcategory']);
 Route::get('products/category/{category_id}',[ProductController::class, 'findProductByCategory']);
+Route::get('products/str/{string}',[ProductController::class, 'findProductByString']);
 // Route::post('products/{shop_id}/create',[ProductController::class, 'store'])->name('store.product');
 
 Route::get('shops',[ShopController::class, 'findAllShops']);
