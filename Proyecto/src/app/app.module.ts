@@ -24,7 +24,8 @@ import { TermsComponent } from './terms/terms.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormProductComponent } from './form-product/form-product.component';
 
-import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -65,13 +66,14 @@ const rutas=[
     AboutUsComponent,
     TermsComponent,
     ContactComponent,
-    FormProductComponent
+    FormProductComponent,
+    PhotoGalleryComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(rutas),
-    NgxImageZoomModule
+    NgxSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
