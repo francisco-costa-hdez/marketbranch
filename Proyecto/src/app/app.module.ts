@@ -21,6 +21,7 @@ import { ReportABugComponent } from './report-abug/report-abug.component';
 import { Error404Component } from './error404/error404.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,8 +32,8 @@ const rutas=[
   { path: 'producto', component: ProductComponent},
   { path: 'tienda', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},
-  { path: 'aboutus', component: AboutUsComponent},
-  // { path: '**', component: FAQComponent}
+  { path: 'about-us', component: AboutUsComponent},
+  { path: 'faq', component: FAQComponent},
   { path: '**', component: Error404Component}
 ] 
 
@@ -60,7 +61,8 @@ const rutas=[
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(rutas)
+    RouterModule.forRoot(rutas),
+    NgxImageZoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]

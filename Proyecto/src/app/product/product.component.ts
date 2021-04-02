@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
+  focusedImage = "assets/Images/descarga (1).png"
+  focusedImage1 = "assets/Images/limon-eco.jpg"
+
   constructor() { }
 
   ngOnInit(): void {
