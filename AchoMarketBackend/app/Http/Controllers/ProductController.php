@@ -21,8 +21,7 @@ class ProductController extends Controller
 
     public function findProductBySubcategory($subcategory_id)
     {
-        $products = new Product();
-        $products->where('subcategory_id',$subcategory_id)->get();
+        $products = Product::where('subcategory_id',$subcategory_id)->get();
          return response()->json($products,200);
     }
 
