@@ -24,6 +24,7 @@ import { TermsComponent } from './terms/terms.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormProductComponent } from './form-product/form-product.component';
 
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -69,7 +70,8 @@ const rutas=[
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(rutas)
+    RouterModule.forRoot(rutas),
+    NgxImageZoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]
