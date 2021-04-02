@@ -14,10 +14,11 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showGallery() {
-    this.show = true;
+  chosePrincipal() {
+    alert("esto quiero hacerlo con los datos devueltos de la api pa no trabajar doble:)");
   }
 
-  
-
+  toggleGallery(state:boolean) {
+    this.show = state;
+  }
 }

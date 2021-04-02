@@ -1,12 +1,26 @@
 <article class="featured-product product">
-        <div class="section-header pl-5">
-            <h1>Resultados de la búsqueda: "búsqueda"</h1>
-        </div>
-
+    <div class="section-header pl-5 row">
+        <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "búsqueda"</h1>
+        <form class="col-12 col-lg-3">
+            <div class="form-group row m-0 p-0">
+                <label class="col-3 col-form-label w-100 m-0 px-0"for="orderAllProducts">Ordenar</label>
+                    
+                <select class="col-9 form-control btn w-100 m-0 px-0"id="orderAllProducts">
+                    <option value="reciente">Más recientes primero</option>
+                    <option value="antiguo">Más antiguo primero</option>
+                    <option value="mejor">Mejores valoraciones primero</option>
+                    <option value="peor">Peores valoraciones primero</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <div class="row container-xl mx-auto p-0">
         <div class="col-12 col-lg-3 mx-auto px-auto pb-4">
             <form>
-            <ul class="list-group form-group">
+                <ul class="list-group form-group">
+                <li class="list-group-item">
+                    <h4>Filtros</h4>
+                </li>
                 <li class="list-group-item">
                     <h5>Subcategorías</h5>
                     <div class="pl-3">

@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
+  show:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  chosePrincipal() {
+    alert("esto quiero hacerlo con los datos devueltos de la api pa no trabajar doble:)");
+  }
+
+  toggleGallery(state:boolean) {
+    this.show = state;
+  }
 }
