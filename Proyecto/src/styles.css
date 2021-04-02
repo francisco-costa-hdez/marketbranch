@@ -1,7 +1,17 @@
+
+    html {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
     /**********************************/
     /********** General CSS ***********/
     /**********************************/
-    
+
     body {
         color: #353535;
         font-family: 'Open Sans', sans-serif;

@@ -20,6 +20,9 @@ import { FAQComponent } from './faq/faq.component';
 import { ReportABugComponent } from './report-abug/report-abug.component';
 import { Error404Component } from './error404/error404.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { TermsComponent } from './terms/terms.component';
+import { ContactComponent } from './contact/contact.component';
+import { FormProductComponent } from './form-product/form-product.component';
 
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 
@@ -33,6 +36,9 @@ const rutas=[
   { path: 'tienda', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},
   { path: 'about-us', component: AboutUsComponent},
+  { path: 'terminos', component: TermsComponent},
+  { path: 'contacto', component: ContactComponent},
+  { path: 'registroprod', component: FormProductComponent},
   { path: 'faq', component: FAQComponent},
   { path: '**', component: Error404Component}
 ] 
@@ -56,7 +62,10 @@ const rutas=[
     FAQComponent,
     ReportABugComponent,
     Error404Component,
-    AboutUsComponent
+    AboutUsComponent,
+    TermsComponent,
+    ContactComponent,
+    FormProductComponent
   ],
   imports: [
     BrowserModule,

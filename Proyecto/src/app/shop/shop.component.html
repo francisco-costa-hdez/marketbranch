@@ -9,17 +9,17 @@
             <div class="row">
                 <div class="col-12 col-lg-11  m-0 p-0">
                     <div class="row" style="margin:0; padding:10px;">
-                        <img src="assets/Images/limon-eco.jpg" style="width:100%;">
+                        <img src="assets/images/limon-eco.jpg" style="width:100%;">
                     </div>
                     <div class="row m-0 p-0" >
                         <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/Images/AchoM2.png" style="width:100%;">
+                            <img src="assets/images/AchoM2.png" style="width:100%;">
                         </div>
                         <div class="col-4"  style="margin:0; padding:10px;">
-                            <img src="assets/Images/limon-eco.jpg" style="width:100%;">
+                            <img src="assets/images/limon-eco.jpg" style="width:100%;">
                         </div>
                         <div class="col-4" style="margin:0; padding:10px;">
-                            <img src="assets/Images/AchoM2.png" style="width:100%;">
+                            <img src="assets/images/AchoM2.png" style="width:100%;">
                         </div>
                     </div>
                 </div>
@@ -75,8 +75,21 @@
             <app-carousel-of-items [carouselId]="'best'"></app-carousel-of-items>
         </article>
         <article class="featured-product product">
-            <div class="section-header pl-5">
-                <h1>Todos sus productos</h1>
+            <div class="section-header pl-5 row">
+                <h1 class="col-12 col-md-6">Todos sus productos</h1>
+                <form class="col-7 col-md-5">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label"for="orderAllProducts">Ordenar</label>
+                    
+                        <select class="col-sm-10 form-control btn btn-primary"id="orderAllProducts">
+                            <option value="reciente">Más recientes primero</option>
+                            <option value="antiguo">Más antiguo primero</option>
+                            <option value="mejor">Mejores valoraciones primero</option>
+                            <option value="peor">Peores valoraciones primero</option>
+                        </select>
+                      
+                    </div>
+                </form>
             </div>
             <div class="container  m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4">
                 <app-product-card></app-product-card>
