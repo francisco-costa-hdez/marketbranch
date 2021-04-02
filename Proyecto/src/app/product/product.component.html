@@ -1,4 +1,6 @@
-<app-photo-gallery *ngIf="show"></app-photo-gallery>
+<ng-container *ngIf="show">
+    <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+</ng-container>
 <section class="container-fluid m-0 p-0">
     <div class="product">
     <div class="section-header container-fluid pl-5">
@@ -16,17 +18,18 @@
             <div class="row">
                 <div class="col-12 col-lg-11  m-0 p-0">
                     <div class="row" style="margin:0; padding:10px;">
-                        <img src="assets/images/limon-eco.jpg" style="width:100%;" (click) = showGallery()>
+                        
+                        <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
                     </div>
                     <div class="row m-0 p-0" >
                         <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" style="width:100%;">
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
-                        <div class="col-4"  style="margin:0; padding:10px;">
-                            <img src="assets/images/limon-eco.jpg" style="width:100%;">
+                        <div class="col-4" style="margin:0; padding:10px;" >
+                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
-                        <div class="col-4" style="margin:0; padding:10px;">
-                            <img src="assets/images/AchoM2.png" style="width:100%;">
+                        <div class="col-4" style="margin:0; padding:10px;" >
+                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
                     </div>
                 </div>
