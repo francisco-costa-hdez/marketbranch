@@ -7,11 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  show:boolean = true;
+  show:boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  showGallery() {
+    this.show = true;
+  }
+
+  
 
 }
