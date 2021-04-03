@@ -2388,18 +2388,28 @@ NUESTRO*/
     .movement-icon {
         width: 1.5em;
     }
+
     .pruebas1 {
         background-color: greenyellow;
     }
+
     .pruebas2 {
         background-color: hotpink;
     }
+    
     .acho {
         height: 100px
     }
+
     .radius-0 {
         border-radius: 0;
     }
+
+    .radius-r0 {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
     .clickable {
         cursor: pointer;
     }

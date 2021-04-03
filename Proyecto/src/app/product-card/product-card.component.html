@@ -3,12 +3,12 @@
     <div class="card-img-overlay">
         <div class="float-right rounded rating">X.X <img src="assets/icons/star-fill.svg"></div>
         <div class="col-3  m-0 p-0" >
-            <a href="PAGINA DE TIENDA FERNANDO"><img class="shop-icon rounded-circle img-thumbnail" src="/assets/images/AchoM2.png" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
+            <a RouterLink="/shop"><img class="shop-icon rounded-circle img-thumbnail" src="/assets/images/AchoM2.png" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
         </div>
     </div>
     <div class="card-body row">
-        <p class="col-12">PRODUCTO EQUISCU</p>
-        <p class="col-12 col-lg-6">XX.XX€</p>
+        <p class="col-12">{{product.name}}</p>
+        <p class="col-12 col-lg-6">{{product.price | currency:" "}} €</p>
         <p class="col-12 col-lg-4" title="Añadir al carrito">
             <button type="button" class="btn w-100">
                 <img src="assets/icons/cart-plus.svg" >
