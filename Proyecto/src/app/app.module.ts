@@ -26,6 +26,7 @@ import { FormProductComponent } from './form-product/form-product.component';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
+import { FormShopComponent } from './form-shop/form-shop.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -40,6 +41,7 @@ const rutas=[
   { path: 'terminos', component: TermsComponent},
   { path: 'contacto', component: ContactComponent},
   { path: 'registroprod', component: FormProductComponent},
+  { path: 'registroshop', component: FormShopComponent},
   { path: 'faq', component: FAQComponent},
   { path: '**', component: Error404Component}
 ] 
@@ -67,7 +69,8 @@ const rutas=[
     TermsComponent,
     ContactComponent,
     FormProductComponent,
-    PhotoGalleryComponent
+    PhotoGalleryComponent,
+    FormShopComponent
   ],
   imports: [
     BrowserModule,
