@@ -15,39 +15,66 @@ class ProductController extends Controller
      */
     public function findAllProducts()
     {
-        $allProducts = Product::orderBy('created_at','asc')->get();
-        return response()->json($allProducts,200);
+        $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        FROM products p LEFT JOIN reviews r 
+        ON p.id = r.product_id
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        ORDER BY p.created_at ASC');
+        return response()->json(['products'=> $allProducts],200);
     }
 
     public function findProductBySubcategory($subcategory_id)
     {
-        $products = Product::where('subcategory_id',$subcategory_id)->get();
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        FROM products p LEFT JOIN reviews r 
+        ON p.id = r.product_id
+        WHERE p.subcategory_id = ?
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id',[$subcategory_id]);
          return response()->json($products,200);
     }
 
     public function findProductByCategory($category_id)
     {
-        $products = DB::select('SELECT * 
-        FROM products JOIN subcategories on products.subcategory_id = subcategories.id
-        WHERE subcategories.category_id = ?',[$category_id]);
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        FROM (products p LEFT JOIN reviews r 
+        ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
+        WHERE s.category_id = ?
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id
+        ORDER BY p.created_at ASC',[$category_id]);
         return response()->json($products,200);
 
     }
 
     public function findProductById($id)
     {
-        $product = Product::find($id);
+        $product = DB::select('SELECT p.*, ifnull(AVG(r.rating),0) AS media_rating
+        FROM (products p LEFT JOIN reviews r 
+        ON p.id = r.product_id)
+        WHERE p.id = ?
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.description,p.stock,p.availability,p.subcategory_id,p.trademark_id,p.created_at,p.updated_at
+        ORDER BY p.created_at ASC',[$id]);
         return response()->json($product,200);
     }
 
     public function findProductByShop($shop_id)    
     {
-        $products = Product::where('shop_id',$shop_id)->get();
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount, ifnull(AVG(r.rating),0) AS media_rating
+        FROM products p LEFT JOIN reviews r 
+        ON p.id = r.product_id
+        WHERE p.shop_id = ?
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        ORDER BY p.created_at ASC',[$shop_id]);
         return response()->json($products,200);
     }
-    public function findProductByString($string)    
+    public function findProductsByString($string)    
     {
-        $products = Product::where('name','LIKE','%'.$string.'%','OR','description','LIKE','%'.$string.'%')->get();
+        $str = '%'.$string.'%';
+        $products = DB::select("SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        FROM products p LEFT JOIN reviews r 
+        ON p.id = r.product_id
+        WHERE p.name LIKE ? OR p.description LIKE ?
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        ORDER BY p.created_at ASC",[$str,$str]);
         return response()->json($products,200);
     }
 

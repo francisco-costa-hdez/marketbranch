@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
@@ -23,5 +24,11 @@ class ShopController extends Controller
        $shops = Shop::where('name','LIKE','%'.$string.'%','OR','description','LIKE','%'.$string.'%')->get();
        return response()->json($shops,200);
     }
+    public function findShopByProduct($product_id){
+        $shops = DB::select('SELECT shops.* 
+        FROM shops JOIN products ON shops.id = products.shop_id
+        WHERE products.id = ?',[$product_id]);
+        return response()->json($shops,200);
+     }
 
 }
