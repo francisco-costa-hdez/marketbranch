@@ -1,108 +1,115 @@
-<ng-container *ngIf="show">
-    <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+<ng-container *ngIf="loading">
+    <div class=" col-12 d-flex justify-content-center">
+        <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 </ng-container>
-<section class="container-fluid m-0 p-0">
-    <div class="product">
-    <div class="section-header container-fluid pl-5">
-        <h1 class="row ">Producto Fernando Ipsum</h1>
-        <div class="row align-items-end">
-            <div class="col-2 col-lg-1  m-0 p-0">
-                <a href="PAGINA DE TIENDA FERNANDO"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
+<app-error404 *ngIf="!loading && !product"></app-error404>
+<ng-container *ngIf="product">
+    <ng-container *ngIf="show">
+        <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+    </ng-container>
+    <section class="container-fluid m-0 p-0">
+        <div class="product">
+        <div class="section-header container-fluid pl-5">
+            <h1 class="row ">{{product.name}}</h1>
+            <div class="row align-items-end">
+                <div class="col-2 col-lg-1  m-0 p-0">
+                    <a href="PAGINA DE TIENDA FERNANDO"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
+                </div>
+                <div class="col-10 col-lg-11 h3"><a href="LA-TIENDA-DE-FERNANDO">{{product.shop_id}}</a></div>
             </div>
-            <div class="col-10 col-lg-11 h3"><a href="LA-TIENDA-DE-FERNANDO">La tienda de Fernando</a></div>
         </div>
-    </div>
-    </div>
-    <div class="row" style="margin: auto 10%;">
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-lg-11  m-0 p-0">
-                    <div class="row" style="margin:0; padding:10px;">
-                        
-                        <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
-                    </div>
-                    <div class="row m-0 p-0" >
-                        <div class="col-4" style="margin:0; padding:10px;" >
+        </div>
+        <div class="row" style="margin: auto 10%;">
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-lg-11  m-0 p-0">
+                        <div class="row" style="margin:0; padding:10px;">
+                            
+                            <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                        </div>
+                        <div class="row m-0 p-0" >
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                    <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
                                 <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                        </div>
-                        <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                        </div>
-                        <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-1  m-0 p-0">
+                    </div>
                 </div>
-                <div class="col-12 col-lg-1  m-0 p-0">
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-1-lg  m-0 p-0">
+                    </div>
+                    <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h3">{{product.price | currency: " "}}€</span>
+                            </div>
+                            <h2 class="col-6">
+                                <button type="button" class="btn" style="width:100%">
+                                    Añadir al carrito <img src="assets/icons/cart-plus.svg" >
+                                </button>
+                            </h2>
+                        </div>
+                        <h3>{{product.media_rating}}
+                            <span>
+                                <img src="assets/icons/star-fill.svg">
+                                <img src="assets/icons/star-fill.svg">
+                                <img src="assets/icons/star-fill.svg">
+                                <img src="assets/icons/star-half.svg">
+                                <img src="assets/icons/star.svg">
+                            </span>
+                        </h3>
+                        <h3>Descripción del producto</h3>
+                        <p>{{product.description}}</p>
+                        <p>Marca: {{product.tademark_id}}</p>
+                        <p>Categoría: CATEGORIA</p>
+                        <p>Subcategoría: {{product.subcategory_id}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-1-lg  m-0 p-0">
-                </div>
-                <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
-                    <div class="row">
-                        <div class="col-6">
-                             <span class="h3">99</span><span class="h4">.99€</span>
-                        </div>
-                        <h2 class="col-6">
-                            <button type="button" class="btn" style="width:100%">
-                                Añadir al carrito <img src="assets/icons/cart-plus.svg" >
-                            </button>
-                        </h2>
-                    </div>
-                    <h3>3.76
-                        <span>
-                            <img src="assets/icons/star-fill.svg">
-                            <img src="assets/icons/star-fill.svg">
-                            <img src="assets/icons/star-fill.svg">
-                            <img src="assets/icons/star-half.svg">
-                            <img src="assets/icons/star.svg">
-                        </span>
-                    </h3>
-                    <h3>Descripción del producto</h3>
-                    <p>No funciona pero debería funcionar ¿Tú quién eres? estamos en el mundo de los objetos carai brait magia magia idi idi apeich urrel bueno, ya lo vemos después de clase dejádme solo hairen ¿Tú quién eres? la culpa es de Juanjo ¿Hay alguien ahí? pipol in mit dejádme solo fúrbol mi mujer me dice lo mismo... 
-                    </p>
-                    <p>mis amantes tambien lo vi, lo hice y lo entendí void hairen dejádme solo pi ich pi estamos en segundo, señores esto no sirve pa na pero yo os lo enseño bueno, ya lo vemos después de clase mi mujer me dice lo mismo... mis amantes tambien pipol in mit samit ¿Tú quién eres? wat japen any diude? trabajador de HP.
-                    </p>
-                    <p>Marca: Fernando</p>
-                    <p>Categoría: Fernando</p>
-                    <p>Subcategoría: Fernando</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container row" style="margin:0 auto;">
-        <div class="col-12 col-md-8 align-items-center justify-content-center" style="margin: 0 auto">
-            <h2>Añadir un comentario</h2>
-            <p>Se verá</p>
-            <div class="card" style="border-radius: 0;">
-                <div class="card-header">
-                    <div class="row ">
-                            <h2 class="col-12 col-md">Comentarios</h2>
-                            <form>
-                                <div class="form-group row">
-                                  <label for="orderByComment" class="col-sm-3 col-form-label">Ordenar</label>
-                                  <div class="col-sm-9">
-                                    <select class="form-control"id="orderByComment">
-                                        <option value="reciente">Más recientes primero</option>
-                                        <option value="antiguo">Más antiguo primero</option>
-                                        <option value="mejor">Mejores valoraciones primero</option>
-                                        <option value="peor">Peores valoraciones primero</option>
-                                    </select>
-                                  </div>
-                                </div>
-                            </form>
+        <br>
+        <div class="container row" style="margin:0 auto;">
+            <div class="col-12 col-md-8 align-items-center justify-content-center" style="margin: 0 auto">
+                <h2>Añadir un comentario</h2>
+                <p>Se verá</p>
+                <div class="card" style="border-radius: 0;">
+                    <div class="card-header">
+                        <div class="row ">
+                                <h2 class="col-12 col-md">Comentarios</h2>
+                                <form>
+                                    <div class="form-group row">
+                                    <label for="orderByComment" class="col-sm-3 col-form-label">Ordenar</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control"id="orderByComment">
+                                            <option value="reciente">Más recientes primero</option>
+                                            <option value="antiguo">Más antiguo primero</option>
+                                            <option value="mejor">Mejores valoraciones primero</option>
+                                            <option value="peor">Peores valoraciones primero</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                </form>
 
+                        </div>
                     </div>
                 </div>
+                <app-comment-card></app-comment-card>
+                <app-comment-card></app-comment-card>
+                <app-comment-card></app-comment-card>
             </div>
-            <app-comment-card></app-comment-card>
-            <app-comment-card></app-comment-card>
-            <app-comment-card></app-comment-card>
         </div>
-    </div>
-    <br>
-</section>
+        <br>
+    </section>
+</ng-container>
