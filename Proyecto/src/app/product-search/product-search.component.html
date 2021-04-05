@@ -1,6 +1,6 @@
 <article class="featured-product product">
     <div class="section-header pl-5 row">
-        <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "búsqueda"</h1>
+        <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "{{term}}"</h1>
         <form class="col-12 col-lg-3">
             <div class="form-group row">
                 <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <ng-container *ngFor="let product of products">
-                <app-product-card [product]="product"></app-product-card>
+                <app-product-card [product]="product" class="my-1"></app-product-card>
             </ng-container>
       </div>
     </div>

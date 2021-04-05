@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
                     <div class="product">
-                        <div class="section-header">
+                        <div>
                             <h3>Descripción de la tienda</h3>
                         </div
                     ></div>
@@ -48,9 +48,8 @@
                         mis amantes tambien lo vi, lo hice y lo entendí void hairen dejádme solo pi ich pi estamos en segundo, señores esto no sirve pa na pero yo os lo enseño bueno, ya lo vemos después de clase mi mujer me dice lo mismo... mis amantes tambien pipol in mit samit ¿Tú quién eres? wat japen any diude? trabajador de HP.
                     </p>
                     <div class="product">
-                        <div class="section-header">
+                        <div >
                             <div class="row">
-                                <h4 class="col">Valoración:</h4>
                                 <h4 class="col"> 3.76
                                     <span>
                                         <img src="assets/icons/star-fill.svg">
@@ -79,22 +78,20 @@
             <app-carousel-of-items [carouselId]="'best'"></app-carousel-of-items>
         </article>
         <article class="featured-product product">
-            <div class="section-header pl-5 row">
-                <h1 class="col-12 col-md-6">Todos sus productos</h1>
-                <form class="col-7 col-md-5">
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label"for="orderAllProducts">Ordenar</label>
-                    
-                        <select class="col-sm-10 form-control btn btn-primary"id="orderAllProducts">
-                            <option value="reciente">Más recientes primero</option>
-                            <option value="antiguo">Más antiguo primero</option>
-                            <option value="mejor">Mejores valoraciones primero</option>
-                            <option value="peor">Peores valoraciones primero</option>
-                        </select>
-                      
-                    </div>
-                </form>
+           <div class="section-header pl-5 row">
+        <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "búsqueda"</h1>
+        <form class="col-12 col-lg-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
+                <select class="col-6 col-md-4 col-lg-8 form-control w-100"id="orderAllProducts">
+                    <option value="reciente">Más recientes</option>
+                    <option value="antiguo">Más antiguos</option>
+                    <option value="mejor">Mejores valoraciones</option>
+                    <option value="peor">Peores valoraciones</option>
+                </select>
             </div>
+        </form>
+    </div>
             <div class="container  m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4">
                 <app-product-card></app-product-card>
                 <app-product-card></app-product-card>

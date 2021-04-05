@@ -1,4 +1,4 @@
-<div class="card bg-light mb-2 mr-2">
+<div class="card bg-light mb-2 mr-2 h-100">
     <img class="card-img" src="/assets/images/limon-eco.jpg" alt="Card image cap">
     <div class="card-img-overlay">
         <div class="float-right rounded rating">X.X <img src="assets/icons/star-fill.svg"></div>
@@ -8,8 +8,8 @@
     </div>
     <div class="card-body row">
         <p class="col-12">{{product.name}}</p>
-        <p class="col-12 col-lg-6">{{product.price | currency:" "}} €</p>
-        <p class="col-12 col-lg-4" title="Añadir al carrito">
+        <p class="col-12">{{product.price | currency:" "}} €</p>
+        <p class="col-12" title="Añadir al carrito">
             <button type="button" class="btn w-100">
                 <img src="assets/icons/cart-plus.svg" >
             </button>
