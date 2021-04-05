@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MarketPlaceDBService } from 'src/market-place-db.service';
 
 @Component({
   selector: 'app-shop',
@@ -7,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  show:boolean = false;
+  shop;
+  loading: boolean = true;
+  show: boolean = false;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
+    // this.getShop(this.route.snapshot.paramMap.get('id'));
   }
 
   chosePrincipal() {
@@ -21,4 +26,17 @@ export class ShopComponent implements OnInit {
   toggleGallery(state:boolean) {
     this.show = state;
   }
+
+//   getShop(id: string | number) {
+//     this.db.getShop(id).subscribe(
+//       (response) => {
+//         console.table(response);
+//         this.shop = response[0];
+//           this.loading = false;
+//         console.log(this.shop)
+//       },
+//       (error) =>  {});
+//     // this.movie = this.datos.getThisPelicula(id);
+//     // console.table(this.movie);
+//   }
 }
