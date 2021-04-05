@@ -11,14 +11,13 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 export class ProductComponent implements OnInit {
 
   product;
-  loading = true;
-  show:boolean = false;
+  loading: boolean = true;
+  show: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.getProduct(id);
+    this.getProduct(this.route.snapshot.paramMap.get('id'));
   }
 
   chosePrincipal() {
@@ -40,5 +39,5 @@ export class ProductComponent implements OnInit {
       (error) =>  {});
     // this.movie = this.datos.getThisPelicula(id);
     // console.table(this.movie);
-    }
+  }
 }
