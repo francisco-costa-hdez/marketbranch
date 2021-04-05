@@ -1,25 +1,29 @@
+<ng-container *ngIf="show">
+    <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+</ng-container>
 <section>
     <div class="product">
-    <div class="section-header container-fluid pl-5">
-        <h1 class="row ">La tienda de Fernado</h1>
-    </div>
+        <div class="section-header container-fluid pl-5">
+            <h1 class="row ">La tienda de Fernado</h1>
+        </div>
     </div>
     <div class="row" style="margin: auto 10%;">
         <div class="col-12 col-md-6">
             <div class="row">
                 <div class="col-12 col-lg-11  m-0 p-0">
                     <div class="row" style="margin:0; padding:10px;">
-                        <img src="assets/images/limon-eco.jpg" style="width:100%;">
+                        
+                        <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
                     </div>
                     <div class="row m-0 p-0" >
                         <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" style="width:100%;">
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
-                        <div class="col-4"  style="margin:0; padding:10px;">
-                            <img src="assets/images/limon-eco.jpg" style="width:100%;">
+                        <div class="col-4" style="margin:0; padding:10px;" >
+                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
-                        <div class="col-4" style="margin:0; padding:10px;">
-                            <img src="assets/images/AchoM2.png" style="width:100%;">
+                        <div class="col-4" style="margin:0; padding:10px;" >
+                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                         </div>
                     </div>
                 </div>
