@@ -7,13 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CarouselOfItemsComponent implements OnInit {
   
   @Input() carouselId;
-  @Input() latest=[];
+  @Input() group=[];
   
 
   constructor( ) { }
 
   ngOnInit(): void {
-    console.table(this.latest)
+    console.table(this.group)
     
   }
 

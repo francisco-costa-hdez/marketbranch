@@ -5,7 +5,7 @@
             <h1>Nuestra Selección de productos</h1>
         </div>
 
-    <app-carousel-of-items [carouselId]="'featured'"></app-carousel-of-items>
+    <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
 </article>
 <article class="featured-product product">
 
@@ -13,7 +13,7 @@
             <h1>Nuevos Productos</h1>
         </div>
 
-    <app-carousel-of-items [latest]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
+    <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
 </article>
 <article class="featured-product product">
 
@@ -84,5 +84,5 @@
         <div class="section-header pl-5">
             <h1>Productos Mejor Valorados</h1>
         </div>
-    <app-carousel-of-items [carouselId]="'best'"></app-carousel-of-items>
+        <app-carousel-of-items [group]="latest" [carouselId]="'best'"></app-carousel-of-items>
 </article>
