@@ -37,7 +37,7 @@
                     <div class="carousel-inner">
                         <ng-container *ngFor="let shop of latestshops;let firstshop=first">
 
-                        <div class="carousel-item" [ngClass]="active:firstshop===true">
+                        <div class="carousel-item"[ngClass]="{ 'active' : firstshop }">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <p>{{shop.name}}</p>
