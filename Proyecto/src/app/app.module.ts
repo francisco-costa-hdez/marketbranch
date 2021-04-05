@@ -34,7 +34,7 @@ const rutas=[
   { path: 'home', component: HomeComponent},
   { path: 'cliente', component: CustomerComponent},
   { path: 'registro', component: FormUserComponent},
-  { path: 'buscar', component: ProductSearchComponent},
+  { path: 'busqueda/:term', component: ProductSearchComponent},
   { path: 'producto/:id', component: ProductComponent},
   { path: 'tienda', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Options} from '@angular-slider/ngx-slider';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 
 @Component({
@@ -9,8 +10,9 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 })
 export class ProductSearchComponent implements OnInit {
 
-  products = [];
-  loading = true;
+  products;
+  loading: boolean = true;
+  term: string;
 
   minPrice: number = 0;
   maxPrice: number = 0;
@@ -19,10 +21,11 @@ export class ProductSearchComponent implements OnInit {
     ceil: 500
   };
 
-  constructor(  private db: MarketPlaceDBService ) { }
+  constructor(  private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.term = this.route.snapshot.paramMap.get('term');
+    this.getSearch(this.term);
   }
 
   updatePrice(minInput, maxInput) {
@@ -38,22 +41,26 @@ export class ProductSearchComponent implements OnInit {
     this.maxPrice = newValue
   }
 
-  getProducts() {
-    this.db.getAllProducts().subscribe(
+  getSearch(term: string) {
+    console.log("busco: " + term)
+    this.db.getProductsByString(term).subscribe(
       (response) => {
         this.products = [];
-        if (response["products"]) {
-          response["products"].forEach((item) => {
-            let nuevoResultado = {
-              id: item.id,
-              name: item.name,
-              price: item.price,
-              discount: item.discount,
-              shop_id: item.shop_id,
-              media_rating: item.media_rating
-            };
-            this.products.push(nuevoResultado);
-          });
+        if (response) {
+          console.log("hay respuesta")
+          this.products = response;
+
+          // response.forEach((item) => {
+          //   let nuevoResultado = {
+          //     id: item.id,
+          //     name: item.name,
+          //     price: item.price,
+          //     discount: item.discount,
+          //     shop_id: item.shop_id,
+          //     media_rating: item.media_rating
+          //   };
+          //   this.products.push(nuevoResultado);
+          // });
           this.loading = false;
         }
         console.table(this.products)
