@@ -15,7 +15,7 @@ class CreateShopUsersTable extends Migration
     {
         Schema::create('shop_users', function (Blueprint $table) {
                 $table->id();
-                $table->string('NIF',9)->unique();
+                $table->string('nif',9)->unique();
                 $table->string('admin_name',50);
                 $table->string('email',100)->unique();
                 $table->binary('profile_img');

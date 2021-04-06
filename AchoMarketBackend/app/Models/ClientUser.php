@@ -33,4 +33,13 @@ class ClientUser extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    protected $fillable = [
+        "name",
+        "email",
+        "tlf",
+        "profile_img",
+        "address",
+        "password"
+    ];
 }
