@@ -30,7 +30,8 @@ class ProductController extends Controller
         FROM products p LEFT JOIN reviews r 
         ON p.id = r.product_id
         WHERE p.subcategory_id = ?
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id',[$subcategory_id]);
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        ORDER By p.created_at DESC',[$subcategory_id]);
          return response()->json(['products'=> $products],200);
     }
 
@@ -41,7 +42,7 @@ class ProductController extends Controller
         ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
         WHERE s.category_id = ?
         GROUP By p.id, p.name,p.price,p.discount,p.shop_id
-        ORDER BY p.created_at ASC',[$category_id]);
+        ORDER BY p.created_at DESC',[$category_id]);
         return response()->json(['products'=> $products],200);
 
     }
@@ -53,7 +54,7 @@ class ProductController extends Controller
         ON p.id = r.product_id)
         WHERE p.id = ?
         GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.description,p.stock,p.availability,p.subcategory_id,p.trademark_id,p.created_at,p.updated_at
-        ORDER BY p.created_at ASC',[$id]);
+        ORDER BY p.created_at DESC',[$id]);
         return response()->json(['product'=> $product],200);
     }
 
@@ -64,7 +65,7 @@ class ProductController extends Controller
         ON p.id = r.product_id
         WHERE p.shop_id = ?
         GROUP By p.id, p.name, p.price,p.discount,p.shop_id
-        ORDER BY p.created_at ASC',[$shop_id]);
+        ORDER BY p.created_at DESC',[$shop_id]);
         return response()->json(['products'=> $products],200);
     }
     public function findProductsByString($string)    
@@ -75,7 +76,7 @@ class ProductController extends Controller
         ON p.id = r.product_id
         WHERE p.name LIKE ? OR p.description LIKE ?
         GROUP By p.id, p.name, p.price,p.discount,p.shop_id
-        ORDER BY p.created_at ASC",[$str,$str]);
+        ORDER BY p.created_at DESC",[$str,$str]);
         return response()->json(['products'=> $products],200);
     }
 
@@ -91,7 +92,6 @@ class ProductController extends Controller
             'subcategory_id' => $request->subcategory_id,
             'trademark_id' => $request->trademark_id
         ]);
-        $product->image = $request->image;
     }
     // public function update(Request $request,Product $product){
 
