@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shop;
+use App\Models\ShopImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,4 +58,16 @@ class ShopController extends Controller
            $shop->shop_user_id= $request->shop_user_id;
        $shop->save();
    }
+
+   public function uploadShopImage(Request $request){
+    ShopImage::create([
+        'image' => $request->image,
+        'shop_id' => $request->shop_id
+    ]);
+}
+
+public function deleteShopImage($img_id){
+    $img = ShopImage::find($img_id);
+    $img->delete();
+}
 }

@@ -18,9 +18,9 @@ class CreateClientUsersTable extends Migration
             $table->string('name',50);
             $table->string('email',100)->unique();
             $table->string('tlf',9)->unique();
-            $table->binary('profile_img');
+            $table->binary('profile_img')->nullable();
             $table->string('address',100);
-            $table->string('password',30);
+            $table->string('password');
             $table->timestamps();
         });
     }

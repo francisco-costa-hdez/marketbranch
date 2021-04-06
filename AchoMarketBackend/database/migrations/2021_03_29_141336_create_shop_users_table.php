@@ -19,7 +19,7 @@ class CreateShopUsersTable extends Migration
                 $table->string('admin_name',50);
                 $table->string('email',100)->unique();
                 $table->binary('profile_img');
-                $table->string('password',30);
+                $table->string('password');
                 $table->timestamps();
         });
     }

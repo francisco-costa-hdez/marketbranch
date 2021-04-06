@@ -16,7 +16,7 @@ class Shop extends Model
 
     public function shopImages()
     {
-        return $this->hasMany(ShopImages::class);
+        return $this->hasMany(ShopImage::class);
     }
 
     public function products()

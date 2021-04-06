@@ -32,7 +32,8 @@ Route::get('products/category/{category_id}',[ProductController::class, 'findPro
 Route::get('products/str/{string}',[ProductController::class, 'findProductsByString']);
 Route::post('products/create',[ProductController::class, 'createProduct']);
 Route::delete('products/delete/{id}',[ProductController::class, 'deleteProduct']);
-Route::post('product/uploadImage', [ProductController::class, 'uploadProductImage']);
+Route::post('products/uploadImage', [ProductController::class, 'uploadProductImage']);
+Route::delete('products/delete/img/{img_id}',[ProductController::class, 'deleteProductImage']);
 
 Route::get('shops',[ShopController::class, 'findAllShops']);
 Route::get('shops/{id}',[ShopController::class, 'findShopById']);
@@ -40,6 +41,8 @@ Route::get('shops/product/{product_id}',[ShopController::class, 'findShopByProdu
 Route::get('shops/str/{string}',[ShopController::class, 'findShopByString']);
 Route::post('shop/create',[ShopController::class, 'createShop']);
 Route::put('shop/update',[ShopController::class, 'updateShop']);
+Route::post('shop/uploadImage', [ProductController::class, 'uploadShopImage']);
+Route::delete('shop/delete/img/{img_id}',[ProductController::class, 'deleteShopImage']);
 
 Route::get('categories',[CategoryController::class,'findAllCategories']);
 Route::get('subcategories/{category_id}',[CategoryController::class,'findSubcategoryByCategoryId']);
