@@ -31,11 +31,11 @@ export class ProductComponent implements OnInit {
   getProduct(id: string | number) {
     this.db.getProduct(id).subscribe(
       (response) => {
-        console.table(response);
-        this.product = response[0];
+        if (response["product"]) {
+          this.product = response["product"][0];
           this.loading = false;
         console.log(this.product)
-      },
+      }},
       (error) =>  {});
     // this.movie = this.datos.getThisPelicula(id);
     // console.table(this.movie);
