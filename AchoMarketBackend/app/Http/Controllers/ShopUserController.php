@@ -35,4 +35,10 @@ class ShopUserController extends Controller
             $shopUser->password = encrypt($request->password);
             $shopUser->save();
     }
+
+    
+    public function deleteShopUser($id){
+        $user = ShopUser::find($id);
+        $user->delete();
+    }
 }

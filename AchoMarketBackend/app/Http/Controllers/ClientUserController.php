@@ -37,4 +37,9 @@ class ClientUserController extends Controller
             $clientUser->password = encrypt($request->password);
             $clientUser->save();
     }
+
+    public function deleteClientUser($id){
+        $user = ClientUser::find($id);
+        $user->delete();
+    }
 }

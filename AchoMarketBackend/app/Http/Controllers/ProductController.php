@@ -16,10 +16,12 @@ class ProductController extends Controller
      */
     public function findAllProducts()
     {
-        $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
-        FROM products p LEFT JOIN reviews r 
-        ON p.id = r.product_id
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
+        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(AVG(r.rating),0) 
+        AS media_rating FROM (((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
+        ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories 
+        on subcategories.category_id = categories.id GROUP By p.id, p.name, p.price,p.discount,p.shop_id,
+        shops.name,categories.id,p.subcategory_id
         ORDER BY p.created_at DESC');
         return response()->json(['products'=> $allProducts],200);
     }
@@ -71,11 +73,13 @@ class ProductController extends Controller
     public function findProductsByString($string)    
     {
         $str = '%'.$string.'%';
-        $products = DB::select("SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
-        FROM products p LEFT JOIN reviews r 
-        ON p.id = r.product_id
+        $products = DB::select("SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
+        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(AVG(r.rating),0) 
+        AS media_rating FROM (((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
+        ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories 
+        on subcategories.category_id = categories.id 
         WHERE p.name LIKE ? OR p.description LIKE ?
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id
+        GROUP BY p.id, p.name, p.price,p.discount,p.shop_id, shops.name,categories.id,p.subcategory_id
         ORDER BY p.created_at DESC",[$str,$str]);
         return response()->json(['products'=> $products],200);
     }

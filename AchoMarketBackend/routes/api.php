@@ -41,8 +41,9 @@ Route::get('shops/product/{product_id}',[ShopController::class, 'findShopByProdu
 Route::get('shops/str/{string}',[ShopController::class, 'findShopByString']);
 Route::post('shop/create',[ShopController::class, 'createShop']);
 Route::put('shop/update',[ShopController::class, 'updateShop']);
-Route::post('shop/uploadImage', [ProductController::class, 'uploadShopImage']);
-Route::delete('shop/delete/img/{img_id}',[ProductController::class, 'deleteShopImage']);
+Route::post('shop/uploadImage', [ShopController::class, 'uploadShopImage']);
+Route::delete('shop/delete/img/{img_id}',[ShopController::class, 'deleteShopImage']);
+Route::delete('shop/delete/{id}',[ShopController::class,'deleteShop']);
 
 Route::get('categories',[CategoryController::class,'findAllCategories']);
 Route::get('subcategories/{category_id}',[CategoryController::class,'findSubcategoryByCategoryId']);
@@ -51,7 +52,9 @@ Route::get('category/subcategory/{subcategory_id}',[CategoryController::class,'f
 Route::get('clientuser/{id}',[ClientUserController::class,'findClientUserById']);
 Route::post('clientuser/create',[ClientUserController::class,'createClientUser']);
 Route::put('clientuser/update', [ClientUserController::class, 'updateClientUser']);
+Route::delete('clientuser/delete/{id}',[ClientUserController::class,'deleteClientUser']);
 
 Route::get('shopuser/{id}',[ShopUserController::class,'findShopUserById']);
 Route::post('shopuser/create',[ShopUserController::class,'createShopUser']);
 Route::put('shopuser/update', [ShopUserController::class, 'updateShopUser']);
+Route::delete('shopuser/delete/{id}',[ShopUserController::class,'deleteShopUser']);
