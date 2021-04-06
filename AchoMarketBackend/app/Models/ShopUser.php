@@ -13,4 +13,12 @@ class ShopUser extends Model
     {
         return $this->hasOne(Shop::class);
     }
+
+    protected $fillable =[
+        'admin_name',
+        'nif',
+        'profile_img',
+        'email',
+        'password'
+    ];  
 }

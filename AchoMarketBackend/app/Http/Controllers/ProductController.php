@@ -81,7 +81,7 @@ class ProductController extends Controller
     }
 
     public function createProduct(Request $request){
-         $product = Product::create([
+         Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'discount' => $request->discount,
@@ -93,17 +93,32 @@ class ProductController extends Controller
             'trademark_id' => $request->trademark_id
         ]);
     }
-    // public function update(Request $request,Product $product){
+    public function updateProduct(Request $request){
+           
+        $product = Product::find($request->id);
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->description= $request->description;
+            $product->discount = $request->discount;
+            $product->stock= $request->stock;
+            $product->availability =  $request->availability;
+        $product->save();
+    }
 
-    //     $product = Product::create([ 
-    //         'name'=>$request->name,
-    //         'price' => $request->price,
-    //         'description'=>$request->description,
-    //         'discount' => $request->discount,
-    //         'stock'=>$request->stock,
-    //         'availability' => $request->availability,
-    //     ]);
-    //     $product->images = $request->images;
-    //     $product->save();
-    // }
+    public function deleteProduct($id){
+        $product = Product::find($id);
+        $product->delete();
+    }
+
+    public function uploadProductImage(Request $request){
+        ProductImage::create([
+            'image' => $request->image,
+            'product_id' => $request->product_id
+        ]);
+    }
+
+    public function deleteProductImage($img_id){
+        $img = ProductImage::find($img_id);
+        $img->delete();
+    }
 }

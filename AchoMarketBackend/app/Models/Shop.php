@@ -23,4 +23,13 @@ class Shop extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    protected $fillable =[
+        'name',
+        'description',
+        'address',
+        'tlf',
+        'email',
+        'shop_user_id'
+    ];
 }

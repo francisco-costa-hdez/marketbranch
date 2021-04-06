@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShopUserController;
 use App\Models\ClientUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,15 +30,25 @@ Route::get('products/shop/{shop_id}',[ProductController::class, 'findProductBySh
 Route::get('products/subcategory/{subcategory_id}',[ProductController::class, 'findProductBySubcategory']);
 Route::get('products/category/{category_id}',[ProductController::class, 'findProductByCategory']);
 Route::get('products/str/{string}',[ProductController::class, 'findProductsByString']);
-Route::post('products/create',[ProductController::class, 'createProduct'])->name('product.create');
+Route::post('products/create',[ProductController::class, 'createProduct']);
+Route::delete('products/delete/{id}',[ProductController::class, 'deleteProduct']);
+Route::post('product/uploadImage', [ProductController::class, 'uploadProductImage']);
 
 Route::get('shops',[ShopController::class, 'findAllShops']);
+Route::get('shops/{id}',[ShopController::class, 'findShopById']);
 Route::get('shops/product/{product_id}',[ShopController::class, 'findShopByProduct']);
-Route::get('shops/{string}',[ShopController::class, 'findShopByString']);
+Route::get('shops/str/{string}',[ShopController::class, 'findShopByString']);
+Route::post('shop/create',[ShopController::class, 'createShop']);
+Route::put('shop/update',[ShopController::class, 'updateShop']);
 
 Route::get('categories',[CategoryController::class,'findAllCategories']);
 Route::get('subcategories/{category_id}',[CategoryController::class,'findSubcategoryByCategoryId']);
+Route::get('category/subcategory/{subcategory_id}',[CategoryController::class,'findCategoryBySubcategoryId']);
 
 Route::get('clientuser/{id}',[ClientUserController::class,'findClientUserById']);
 Route::post('clientuser/create',[ClientUserController::class,'createClientUser']);
 Route::put('clientuser/update', [ClientUserController::class, 'updateClientUser']);
+
+Route::get('shopuser/{id}',[ShopUserController::class,'findShopUserById']);
+Route::post('shopuser/create',[ShopUserController::class,'createShopUser']);
+Route::put('shopuser/update', [ShopUserController::class, 'updateShopUser']);
