@@ -20,7 +20,7 @@ class ProductController extends Controller
         FROM products p LEFT JOIN reviews r 
         ON p.id = r.product_id
         GROUP By p.id, p.name, p.price,p.discount,p.shop_id
-        ORDER BY p.created_at ASC');
+        ORDER BY p.created_at DESC');
         return response()->json(['products'=> $allProducts],200);
     }
 
