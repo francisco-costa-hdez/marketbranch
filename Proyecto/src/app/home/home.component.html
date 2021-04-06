@@ -32,23 +32,15 @@
                 </a>
             </div>
             <div class="col">
+                
                 <div id="newShops" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row align-items-center">
-                                <div class="col-md py-2">
-                                    <p> Text text text here. Text here, here, here, here is the text. Text here, here, here, here is the text. </p>
-                                    <button class="btn btn-primary">More here</button>
-                                </div>
-                                <div class="col-md py-2">
-                                    <img class="d-block img-fluid" src="//placehold.it/900x500" alt="First slide">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
+                        <ng-container *ngFor="let shop of latestShops; let firstShop=first">
+
+                        <div class="carousel-item" [ngClass]="{ 'active' : firstShop }">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <p> Text text text here. Text here, here, here, here is the text. Text here, here, here, here is the text. </p>
+                                    <p>{{shop.name}}</p>
                                     <button class="btn btn-primary">More...</button>
                                 </div>
                                 <div class="col">
@@ -56,17 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <p> Text text text here. Text here, here, here, here is the text. Text here, here, here, here is the text. </p>
-                                    <button class="btn btn-primary">More...</button>
-                                </div>
-                                <div class="col">
-                                    <img class="d-block img-fluid" src="//placehold.it/900x500/ffcc00" alt="3rd slide">
-                                </div>
-                            </div>
-                        </div>
+                    </ng-container>
                     </div>
                 </div>
             </div>

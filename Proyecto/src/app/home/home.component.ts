@@ -10,11 +10,14 @@ export class HomeComponent implements OnInit {
 
   products = [];
   latest=[];
+  shops;
+  latestShops=[];
   loading = true;
   constructor(private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
   this.getProducts()
+  this.getAllShops()
   }
 
 
@@ -25,7 +28,7 @@ export class HomeComponent implements OnInit {
         this.products = [];
         if (response["products"]) {
           response["products"].forEach((item) => {
-            let nuevoResultado = {
+            let newProduct = {
               id: item.id,
               name: item.name,
               price: item.price,
@@ -33,7 +36,7 @@ export class HomeComponent implements OnInit {
               shop_id: item.shop_id,
               media_rating: item.media_rating
             };
-            this.products.push(nuevoResultado);
+            this.products.push(newProduct);
           });
           for(let i=0;i<=11;i++){
             this.latest[i]=this.products[i];
@@ -50,5 +53,30 @@ export class HomeComponent implements OnInit {
       });
   
     }
+
+    getAllShops() {
+      this.db.getShops().subscribe(
+        (response) => {
+          this.shops = [];
+          if (response["shops"]) {
+            response["shops"].forEach((item) =>{
+              let newShop = item;
+              this.shops.push(newShop);
+            });
+            for(let i=0;i<=3;i++){
+              this.latestShops[i]=this.shops[i];
+            }
+            console.table(this.latestShops)
+            this.loading = false;
+  
+          }
+          console.table(this.shops)
+        },
+        (error) => {
+          console.error('Request failed with error');
+          console.error(error);
+        });
+    
+      }
 
 }

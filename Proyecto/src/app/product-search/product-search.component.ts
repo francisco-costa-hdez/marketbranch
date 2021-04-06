@@ -10,7 +10,7 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 })
 export class ProductSearchComponent implements OnInit {
 
-  products;
+  products = [];
   loading: boolean = true;
   term: string;
 
@@ -46,10 +46,11 @@ export class ProductSearchComponent implements OnInit {
     this.db.getProductsByString(term).subscribe(
       (response) => {
         this.products = [];
-        if (response) {
-          console.log("hay respuesta")
-          this.products = response;
-
+        if (response["products"]) {
+          response["products"].forEach((item) =>{
+            let newProduct = item;
+            this.products.push(newProduct);
+          });
           // response.forEach((item) => {
           //   let nuevoResultado = {
           //     id: item.id,
