@@ -7,36 +7,39 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{route('store.product',['shop_id' => 1])}}" method="POST">
+    <form action="{{route('product.create')}}" method="POST" enctype="multipart/form-data">
       @csrf
         <form style="margin-left: auto;margin-right: auto;width:30%;">
+          <input type="hidden" name="shop_id" value="1">
+          <input type="hidden" name="subcategory_id" value="11">
+          <input type="hidden" name="trademark_id" value="2">
             <div class="form-group">
                 <label for="nombre">Nombre *</label>
                 <input type="text" name="name" id="nombre" class="form-control" required>
               </div>
               <div class="form-group">
-                <label for="nombre">Precio *</label>
+                <label for="nombre">price *</label>
                 <input type="text" name="price" id="nombre" class="form-control" required>
               </div>
               <div class="form-group">
-                <label for="nombre">Descuento </label>
-                <input type="text" name="discount" id="nombre" class="form-control" required>
+                <label for="nombre">discount </label>
+                <input type="text" name="discount" class="form-control" required>
               </div>
               <div class="form-group">
-                <label for="nombre">Stock *</label>
+                <label for="nombre">stock </label>
                 <input type="text" name="stock" id="nombre" class="form-control" required>
               </div>
               <div class="form-group">
-                <label for="nombre">Disponibilidad *</label>
+                <label for="nombre">availability </label>
                 <input type="text" name="availability" id="nombre" class="form-control" required>
               </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Descripción *</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1"  name="description" rows="3"></textarea>
-                  </div>
+              <div class="form-group">
+                <label for="nombre">description </label>
+                <textarea name="description" cols="30" rows="10"></textarea>
+              </div>
                   <div class="form-group">
-                    <label for="exampleFormControlFile1">Seleccione imagen de producto</label>
-                    <input type="file" name="images" class="form-control-file" id="exampleFormControlFile1">
+                    <label for="exampleFormControlFile1">Seleccione imagen </label>
+                    <input type="file" name="image" class="form-control-file">
                   </div>
                 <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
             </form>

@@ -11,12 +11,12 @@ class CategoryController extends Controller
     public function findAllCategories()
     {
         $categories = Category::all();
-        return response()->json($categories,200);
+        return response()->json(['categories'=>$categories],200);
     }
 
     public function findSubcategoryByCategoryId($category_id)
     {
-        $categories = Subcategory::where('category_id',$category_id)->get();
-        return response()->json($categories,200);
+        $subcategories = Subcategory::where('category_id',$category_id)->get();
+        return response()->json(['subcategories'=>$subcategories],200);
     }
 }

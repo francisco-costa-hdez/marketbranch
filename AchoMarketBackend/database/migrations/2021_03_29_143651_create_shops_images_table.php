@@ -19,7 +19,6 @@ class CreateShopsImagesTable extends Migration
             $table->foreignId('shop_id')->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

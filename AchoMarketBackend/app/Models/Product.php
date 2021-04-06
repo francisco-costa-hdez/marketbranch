@@ -54,5 +54,10 @@ class Product extends Model
         return $this->belongsToMany(Order::class);
     }
 
-    protected $fillable = ['name','price','description','discount','stock','availability'];
+    protected $fillable = [
+        'name','price',
+        'description','discount',
+        'stock','availability',
+        'shop_id','trademark_id',
+        'subcategory_id'];
 }

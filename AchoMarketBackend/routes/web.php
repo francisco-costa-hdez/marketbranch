@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ClientUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = ClientUser::find(1);
+    return view('welcome',['clientUser' => $user]);
 });
