@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
 
   getProducts() {
-    this.db.getAllProducts().subscribe(
+    this.db.findAllProducts().subscribe(
       (response) => {
         this.products = [];
         if (response["products"]) {
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     }
 
     getAllShops() {
-      this.db.getShops().subscribe(
+      this.db.findAllShops().subscribe(
         (response) => {
           this.shops = [];
           if (response["shops"]) {

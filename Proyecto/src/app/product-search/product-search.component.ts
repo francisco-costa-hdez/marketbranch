@@ -43,7 +43,7 @@ export class ProductSearchComponent implements OnInit {
 
   getSearch(term: string) {
     console.log("busco: " + term)
-    this.db.getProductsByString(term).subscribe(
+    this.db.findProductsByString(term).subscribe(
       (response) => {
         this.products = [];
         if (response["products"]) {

@@ -29,7 +29,7 @@ export class ProductComponent implements OnInit {
   }
 
   getProduct(id: string | number) {
-    this.db.getProduct(id).subscribe(
+    this.db.findProductById(id).subscribe(
       (response) => {
         if (response["product"]) {
           this.product = response["product"][0];
