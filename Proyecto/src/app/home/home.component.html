@@ -35,9 +35,15 @@
                 
                 <div id="newShops" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
+<<<<<<< HEAD
                         <ng-container *ngFor="let shop of latestShops; let firstShop=first">
 
                         <div class="carousel-item" [ngClass]="{ 'active' : firstShop }">
+=======
+                        <ng-container *ngFor="let shop of latestshops;let firstshop=first">
+
+                        <div class="carousel-item" [ngClass]="active:firstshop===true">
+>>>>>>> 2382fd478a52310b8bfb687d5f51ec737759aea5
                             <div class="row align-items-center">
                                 <div class="col">
                                     <p>{{shop.name}}</p>

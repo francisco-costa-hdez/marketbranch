@@ -11,7 +11,11 @@ export class HomeComponent implements OnInit {
   products = [];
   latest=[];
   shops;
+<<<<<<< HEAD
   latestShops=[];
+=======
+  latestshops=[];
+>>>>>>> 2382fd478a52310b8bfb687d5f51ec737759aea5
   loading = true;
   constructor(private db: MarketPlaceDBService) { }
 
@@ -58,6 +62,7 @@ export class HomeComponent implements OnInit {
       this.db.getShops().subscribe(
         (response) => {
           this.shops = [];
+<<<<<<< HEAD
           if (response["shops"]) {
             response["shops"].forEach((item) =>{
               let newShop = item;
@@ -67,6 +72,14 @@ export class HomeComponent implements OnInit {
               this.latestShops[i]=this.shops[i];
             }
             console.table(this.latestShops)
+=======
+          if (response) {
+            this.shops=response
+            for(let i=0;i<=3;i++){
+              this.latestshops[i]=this.shops[i];
+            }
+            console.table(this.latestshops)
+>>>>>>> 2382fd478a52310b8bfb687d5f51ec737759aea5
             this.loading = false;
   
           }
