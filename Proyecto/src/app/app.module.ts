@@ -28,6 +28,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
+import { FormsModule } from '@angular/forms';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -79,6 +80,7 @@ const rutas=[
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(rutas),
+    FormsModule,
     NgxSliderModule,
   ],
   providers: [],

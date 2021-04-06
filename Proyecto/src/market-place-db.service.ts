@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ClientUser } from './app/client-user';
 
 @Injectable({
   providedIn: 'root'
@@ -92,8 +93,8 @@ export class MarketPlaceDBService {
   }
 
   //Creates a client user
-  createClientUser() {
-    return this.http.get( this.url + "/clientuser/create")
+  createClientUser(client) {
+    return this.http.post( this.url + "/clientuser/create", client)
   }
 
   //Updates the data of an existent client user
