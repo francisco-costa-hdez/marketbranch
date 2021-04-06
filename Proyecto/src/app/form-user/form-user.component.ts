@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MarketPlaceDBService } from 'src/market-place-db.service';
 
 @Component({
   selector: 'app-form-user',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormUserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private db: MarketPlaceDBService,private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  createUser(){
+    this.db.createClientUser().subscribe(
+      (response) => {
+
+      },
+      (error) => {
+        console.error('Request failed with error');
+        console.error(error);
+      });
   }
 
 }
