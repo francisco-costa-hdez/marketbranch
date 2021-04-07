@@ -1,109 +1,108 @@
-<ng-container *ngIf="show">
-    <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
-</ng-container>
-<section class="container-fluid">
-    <div class="product">
-        <div class="section-header container-fluid pl-5">
-            <h1 class="row ">{{shop.name}}</h1>
+<ng-container *ngIf="loading">
+    <div class=" col-12 d-flex justify-content-center">
+        <div class="spinner-border text-warning" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="row" style="margin: auto 10%;">
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-lg-11  m-0 p-0">
-                    <div class="row" style="margin:0; padding:10px;">
-                        
-                        <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
-                    </div>
-                    <div class="row m-0 p-0" >
-                        <div class="col-4" style="margin:0; padding:10px;" >
-                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                        </div>
-                        <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                        </div>
-                        <div class="col-4" style="margin:0; padding:10px;" >
-                            <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-1  m-0 p-0">
-                </div>
+</ng-container>
+<app-error404 *ngIf="!loading && !shop"></app-error404>
+<ng-container *ngIf="shop">
+    <ng-container *ngIf="show">
+        <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+    </ng-container>
+    <section class="container-fluid">
+        <div class="product">
+            <div class="section-header container-fluid pl-5">
+                <h1 class="row ">{{shop.name}}</h1>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-1-lg  m-0 p-0">
-                </div>
-                <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
-                    <div class="product">
-                        <div>
-                            <h3>Descripción de la tienda</h3>
-                        </div
-                    ></div>
-                    <p>{{shop.description}}</p>
-                    <div class="product">
-                        <div >
-                            <div class="row">
-                                <h4 class="col"> 3.76
-                                    <span>
-                                        <img src="assets/icons/star-fill.svg">
-                                        <img src="assets/icons/star-fill.svg">
-                                        <img src="assets/icons/star-fill.svg">
-                                        <img src="assets/icons/star-half.svg">
-                                        <img src="assets/icons/star.svg">
-                                    </span>
-                                </h4>
+        <div class="row" style="margin: auto 10%;">
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-lg-11  m-0 p-0">
+                        <div class="row" style="margin:0; padding:10px;">
+                            <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                        </div>
+                        <div class="row m-0 p-0" >
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                    <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                             </div>
                         </div>
                     </div>
-                    <h3>Contacto</h3>
-                    <p>Teléfono: {{shop.tlf}}</p>
-                    <p>Correo electrónico: {{shop.email}}</p>
-                    <p>Dirección: {{shop.address}}</p>
+                    <div class="col-12 col-lg-1  m-0 p-0">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-1-lg  m-0 p-0">
+                    </div>
+                    <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
+                        <div class="product">
+                            <div>
+                                <h3>Descripción de la tienda</h3>
+                            </div
+                        ></div>
+                        <p>{{shop.description}}</p>
+                        <div class="product">
+                            <div >
+                                <div class="row">
+                                    <h4 class="col"> 3.76
+                                        <span>
+                                            <img src="assets/icons/star-fill.svg">
+                                            <img src="assets/icons/star-fill.svg">
+                                            <img src="assets/icons/star-fill.svg">
+                                            <img src="assets/icons/star-half.svg">
+                                            <img src="assets/icons/star.svg">
+                                        </span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Contacto</h3>
+                        <p>Teléfono: {{shop.tlf}}</p>
+                        <p>Correo electrónico: {{shop.email}}</p>
+                        <p>Dirección: {{shop.address}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-        <article class="featured-product product">
-            <div class="section-header pl-5">
-                <h1>Productos Mejor Valorados</h1>
+        <br>
+            <article class="featured-product product">
+                <div class="section-header pl-5">
+                    <h1>Productos Mejor Valorados</h1>
+                </div>
+                <div class="container-fluid">
+                    <app-carousel-of-items [group]="best" [carouselId]="'best'"></app-carousel-of-items>
+                </div>
+            </article>
+            <article class="featured-product product">
+            <div class="section-header pl-5 row">
+            <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "búsqueda"</h1>
+            <form class="col-12 col-lg-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
+                    <select class="col-6 col-md-4 col-lg-8 form-control w-100"id="orderAllProducts">
+                        <option value="reciente">Más recientes</option>
+                        <option value="antiguo">Más antiguos</option>
+                        <option value="mejor">Mejores valoraciones</option>
+                        <option value="peor">Peores valoraciones</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+                <div class="container  m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4">
+                    <ng-container *ngFor="let product of products">
+                        <app-product-card [product]="product" class="my-1"></app-product-card>
+                    </ng-container>
             </div>
-            <app-carousel-of-items [carouselId]="'best'"></app-carousel-of-items>
-        </article>
-        <article class="featured-product product">
-           <div class="section-header pl-5 row">
-        <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "búsqueda"</h1>
-        <form class="col-12 col-lg-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
-                <select class="col-6 col-md-4 col-lg-8 form-control w-100"id="orderAllProducts">
-                    <option value="reciente">Más recientes</option>
-                    <option value="antiguo">Más antiguos</option>
-                    <option value="mejor">Mejores valoraciones</option>
-                    <option value="peor">Peores valoraciones</option>
-                </select>
-            </div>
-        </form>
-    </div>
-            <div class="container  m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4">
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-                <app-product-card></app-product-card>
-          </div>
-        </article>
-    <br>
-</section>
+            </article>
+        <br>
+    </section>
+</ng-container>

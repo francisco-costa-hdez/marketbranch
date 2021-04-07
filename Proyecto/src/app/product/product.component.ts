@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit {
         if (response["product"]) {
           this.product = response["product"][0];
           this.loading = false;
-        console.log(this.product)
+          //console.log(this.product)
       }},
       (error) =>  {});
     // this.movie = this.datos.getThisPelicula(id);

@@ -10,6 +10,9 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 export class ShopComponent implements OnInit {
 
   shop;
+  products;
+  best = [];
+
   loading: boolean = true;
   show: boolean = false;
 
@@ -30,13 +33,53 @@ export class ShopComponent implements OnInit {
   getShop(id: string | number) {
     this.db.findShopById(id).subscribe(
       (response) => {
-        if (response["shop"]) {
+        if (response) {
           this.shop = response["shop"];
           this.loading = false;
-        console.log(this.shop)
-      }},
-      (error) =>  {});
-    // this.movie = this.datos.getThisPelicula(id);
-    // console.table(this.movie);
+          //console.log(this.shop)
+          if (this.shop) {
+            this.getProducts(id);
+          }
+        };
+      }, (error) =>  {});
+      
   }
+
+  getProducts(id) {
+    this.db.findProductByShop(id).subscribe(
+      (response) => {
+        this.products = [];
+        let aux = [];
+        if (response["products"]) {
+          response["products"].forEach((item) => {
+            let newProduct = item;
+            this.products.push(newProduct);
+            aux.push(newProduct);
+          });
+          //console.table(aux);
+          for(let z=0;z<(aux.length-1);z++) {
+            for(let j=z+1;j<aux.length;j++) {
+              if(Number.parseFloat(aux[z].price)<Number.parseFloat(aux[j].price)){
+                //Intercambiamos valores
+                let au =aux[z];
+                aux[z]=aux[j];
+                aux[j]=au;
+              }
+            }
+          }
+          for(let i = 0; i <= 11; i++) {
+            if (i < aux.length) {
+              this.best[i]=aux[i];
+            }
+          }
+          //console.table(aux)
+        }
+        //console.table(this.products)
+      },
+      (error) => {
+        console.error('Request failed with error');
+        console.error(error);
+      });
+  
+    }
 }

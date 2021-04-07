@@ -19,102 +19,166 @@ export class MarketPlaceDBService {
   
   //Gets all the products in the database
   findAllProducts() {
-    return this.http.get( this.url + "/products")
+    return this.http.get( this.url + "/products");
   }
   //Gets a product with detailed info
   findProductById(product_id: string | number) {
-    return this.http.get( this.url + "/products/" + product_id)
+    return this.http.get( this.url + "/products/" + product_id);
   }
   //Gets all the products from an especific shop
   findProductByShop(shop_id: string | number) {
-    return this.http.get( this.url + "/products/shop/" + shop_id)
+    return this.http.get( this.url + "/products/shop/" + shop_id);
   }
 
   //Gets all the products from an especific subcategory
   findProductsBySubcategory(subcategory_id: string | number) {
-    return this.http.get( this.url + "/products/subcategory/" + subcategory_id)
+    return this.http.get( this.url + "/products/subcategory/" + subcategory_id);
   }
 
   //Gets all the products from an especific category
   findProductsByCategory(category_id: string | number) {
-    return this.http.get( this.url + "/products/category/" + category_id)
+    return this.http.get( this.url + "/products/category/" + category_id);
   }
 
   //Gets all the products a with coincidence with a pattern in name or description
   findProductsByString(search_term: string) {
-    return this.http.get( this.url + "/products/str/" + search_term)
+    return this.http.get( this.url + "/products/str/" + search_term);
   }
 
   //Creates a product
-  createProduct() {
-    return this.http.get( this.url + "/products/create/")
+  createProduct(product) {
+    return this.http.post( this.url + "/products/create/", product);
+  }
+  
+  //Delete a product
+  deleteProduct(product_id: string | number) {
+    return this.http.delete( this.url + "/products/delete/" + product_id);
+  }
+  
+  //Creates a product image
+  uploadProductImage(img) {
+    return this.http.put( this.url + "/products/uploadImage/", img);
   }
 
-
+  //Deletes a product image
+  deleteProductImage(image_id: string | number) {
+    return this.http.delete( this.url + "/products/uploadImage/" + image_id);
+  }
   
   /**********************************************************************************
    ***** Shops **********************************************************************
-  ***********************************************************************************/
-
-   //
-   findShopById(shop_id: string | number)
-   {
-     return this.http.get( this.url + "/shops/" + shop_id)
-   }
+   ***********************************************************************************/
 
   //Gets all the shops in the database
   findAllShops() {
-    return this.http.get( this.url + "/shops")
+    return this.http.get( this.url + "/shops");
   }
-
+  
+  //Gets a shop with detailed info
+  findShopById(shop_id: string | number)  {
+    return this.http.get( this.url + "/shops/" + shop_id);
+  }
+  
   //Gets a shop by one of its products
   findShopByProduct(product_id: string | number) {
-    return this.http.get( this.url + "/shops/product/" + product_id)
+    return this.http.get( this.url + "/shops/product/" + product_id);
   }
   
   //Gets all the shops with a coincidence with a pattern in name or description
   findShopByString(search_term: string) {
-    return this.http.get( this.url + "/shops/" + search_term)
+    return this.http.get( this.url + "/shops/" + search_term);
   }
- 
- /**********************************************************************************
-  ***** Categories *****************************************************************
- ***********************************************************************************/
+  
+  //Creates a shop
+  createShop(shop) {
+    return this.http.post( this.url + "/shop/create/", shop);
+  }
+  
+  //Updates a shop
+  updateShop(shop) {
+    return this.http.put( this.url + "/shop/update/", shop);
+  }
+  
+  //Delete a shop
+  deleteShop(shop_id: string | number) {
+    return this.http.delete( this.url + "/shop/delete/" + shop_id);
+  }
+  
+  //Creates a shop image
+  uploadShopImage(img) {
+    return this.http.post( this.url + "/shop/uploadImage/", img);
+  }
+  
+  //Deletes a shop image
+  deleteShopImage(image_id: string | number) {
+    return this.http.delete( this.url + "/shop/delete/img/" + image_id);
+  }
+
+  /**********************************************************************************
+   ***** Categories *****************************************************************
+   ***********************************************************************************/
   
   //Gets all the shops in the database
   findAllCategories() {
-    return this.http.get( this.url + "/categories")
+    return this.http.get( this.url + "/categories");
   }
 
   //Gets all the subcategories of an especific category
   findSubcategoryByCategoryId(category_id: string | number) {
-    return this.http.get( this.url + "/subcategories/" + category_id)
+    return this.http.get( this.url + "/subcategories/" + category_id);
+  }
+  
+  //Gets the category of an especific subcategory
+  findCategoryBysubCategoryId(subcategory_id: string | number) {
+    return this.http.get( this.url + "/subcategory/" + subcategory_id);
   }
  
  /**********************************************************************************
   ***** Client User ***************************************************************
  ***********************************************************************************/
  
-  //Gets all the subcategories of an especific category
+  //Gets a clientUser with detailed info
   findClientUserById(user_id: string | number) {
-    return this.http.get( this.url + "/clientuser/" + user_id)
+    return this.http.get( this.url + "/clientuser/" + user_id);
   }
 
   //Creates a client user
-  createClientUser(client) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        Authorization: ''
-      })
-    };
-    return this.http.post( this.url + "/clientuser/create", client, httpOptions)
+  createClientUser(user) {
+    return this.http.post( this.url + "/clientuser/create", user);
   }
-
+  
   //Updates the data of an existent client user
-  updateClientUser() {
-    return this.http.get( this.url + "/clientuser/update")
+  updateClientUser(user) {
+    return this.http.put( this.url + "/clientuser/update", user);
+  }
+  
+  //Deletes a client user
+  deleteClientUser(user_id) {
+    return this.http.delete( this.url + "/clientuser/delete/", user_id);
   }
 
+ /**********************************************************************************
+  ***** Shop User ******************************************************************
+ ***********************************************************************************/
+ 
+  //Gets a shop user with detailed info
+  findShopUserById(user_id: string | number) {
+    return this.http.get( this.url + "/clientuser/" + user_id);
+  }
+
+  //Creates a shop user
+  createShopUser(user) {
+    return this.http.post( this.url + "/clientuser/create", user);
+  }
+  
+  //Updates the data of an existent shop user
+  updateShoptUser(user) {
+    return this.http.put( this.url + "/clientuser/update", user);
+  }
+  
+  //Deletes a shop user
+  deleteShopUser(user_id) {
+    return this.http.delete( this.url + "/clientuser/delete/", user_id);
+  }
 
 }

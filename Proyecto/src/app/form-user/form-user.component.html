@@ -6,11 +6,8 @@
         
     </div>
     </div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-2 col-lg-3"></div>
-<form (ngSubmit)="onSubmit()"
-#clientForm="ngForm" class="col-12 col-md-8 col-lg-6 mb-3">
+<form (ngSubmit)="onSubmit()"  style="margin-left: auto;margin-right: auto;width:30%;"
+#clientForm="ngForm">
     
     <div class="form-group">
         <label for="name">Nombre</label>
@@ -45,12 +42,10 @@
           <input type="password" class="form-control" id="Password2" name="Password2" >
           <small class="form-text text-muted">No compartas tu contraseña con terceros.</small>
         </div>
-        <div class="form-check form-group">
+        <div class="form-check">
           <input type="checkbox" class="form-check-input" id="Check1" name="Check1" required>
           <label class="form-check-label" for="Check1">Acepto los <a href="">términos y condiciones</a> de la web</label>
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top:5%;">Registrarse</button>
       
     </form>
-  </div>
-</div>
