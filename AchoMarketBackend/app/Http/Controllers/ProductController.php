@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function findAllProducts()
     {
         $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
-        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(AVG(r.rating),0) 
+        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) 
         AS media_rating FROM (((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
         ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories 
         on subcategories.category_id = categories.id GROUP By p.id, p.name, p.price,p.discount,p.shop_id,
@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     public function findProductBySubcategory($subcategory_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM products p LEFT JOIN reviews r 
         ON p.id = r.product_id
         WHERE p.subcategory_id = ?
@@ -39,7 +39,7 @@ class ProductController extends Controller
 
     public function findProductByCategory($category_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(AVG(r.rating),0) AS media_rating
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM (products p LEFT JOIN reviews r 
         ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
         WHERE s.category_id = ?
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
     public function findProductById($id)
     {
-        $product = DB::select('SELECT p.*, ifnull(AVG(r.rating),0) AS media_rating
+        $product = DB::select('SELECT p.*, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM (products p LEFT JOIN reviews r 
         ON p.id = r.product_id)
         WHERE p.id = ?
@@ -62,7 +62,7 @@ class ProductController extends Controller
 
     public function findProductByShop($shop_id)    
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount, ifnull(AVG(r.rating),0) AS media_rating
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM products p LEFT JOIN reviews r 
         ON p.id = r.product_id
         WHERE p.shop_id = ?
@@ -74,7 +74,7 @@ class ProductController extends Controller
     {
         $str = '%'.$string.'%';
         $products = DB::select("SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
-        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(AVG(r.rating),0) 
+        categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) 
         AS media_rating FROM (((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
         ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories 
         on subcategories.category_id = categories.id 
