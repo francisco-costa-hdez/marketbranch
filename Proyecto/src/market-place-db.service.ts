@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { ClientUser } from './app/client-user';
 
 @Injectable({
@@ -8,7 +10,7 @@ import { ClientUser } from './app/client-user';
 export class MarketPlaceDBService {
 
   private url = "http://127.0.0.1:8000/api";
-  
+ 
   constructor(private http: HttpClient) { }
   
   /**********************************************************************************
@@ -54,6 +56,12 @@ export class MarketPlaceDBService {
    ***** Shops **********************************************************************
   ***********************************************************************************/
 
+   //
+   findShopById(shop_id: string | number)
+   {
+     return this.http.get( this.url + "/shops/" + shop_id)
+   }
+
   //Gets all the shops in the database
   findAllShops() {
     return this.http.get( this.url + "/shops")
@@ -94,7 +102,13 @@ export class MarketPlaceDBService {
 
   //Creates a client user
   createClientUser(client) {
-    return this.http.post( this.url + "/clientuser/create", client)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: ''
+      })
+    };
+    return this.http.post( this.url + "/clientuser/create", client, httpOptions)
   }
 
   //Updates the data of an existent client user

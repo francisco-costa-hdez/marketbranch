@@ -1,10 +1,10 @@
 <ng-container *ngIf="show">
     <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
 </ng-container>
-<section>
+<section class="container-fluid">
     <div class="product">
         <div class="section-header container-fluid pl-5">
-            <h1 class="row ">La tienda de Fernado</h1>
+            <h1 class="row ">{{shop.name}}</h1>
         </div>
     </div>
     <div class="row" style="margin: auto 10%;">
@@ -41,12 +41,7 @@
                             <h3>Descripción de la tienda</h3>
                         </div
                     ></div>
-                    <p>
-                        No funciona pero debería funcionar ¿Tú quién eres? estamos en el mundo de los objetos carai brait magia magia idi idi apeich urrel bueno, ya lo vemos después de clase dejádme solo hairen ¿Tú quién eres? la culpa es de Juanjo ¿Hay alguien ahí? pipol in mit dejádme solo fúrbol mi mujer me dice lo mismo... 
-                    </p>
-                    <p>
-                        mis amantes tambien lo vi, lo hice y lo entendí void hairen dejádme solo pi ich pi estamos en segundo, señores esto no sirve pa na pero yo os lo enseño bueno, ya lo vemos después de clase mi mujer me dice lo mismo... mis amantes tambien pipol in mit samit ¿Tú quién eres? wat japen any diude? trabajador de HP.
-                    </p>
+                    <p>{{shop.description}}</p>
                     <div class="product">
                         <div >
                             <div class="row">
@@ -63,9 +58,9 @@
                         </div>
                     </div>
                     <h3>Contacto</h3>
-                    <p>Teléfono: 696969696</p>
-                    <p>Correo electrónico: Fernando</p>
-                    <p>Dirección: Fernando</p>
+                    <p>Teléfono: {{shop.tlf}}</p>
+                    <p>Correo electrónico: {{shop.email}}</p>
+                    <p>Dirección: {{shop.address}}</p>
                 </div>
             </div>
         </div>

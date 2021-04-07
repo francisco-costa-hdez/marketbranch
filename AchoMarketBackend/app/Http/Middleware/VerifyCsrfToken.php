@@ -17,7 +17,7 @@ class VerifyCsrfToken extends Middleware
         'product/uploadImage',
         'shop/create',
         'shop/update',
-        'clientuser/create',
+        'http://127.0.0.1:8000/api/clientuser/create',
         'clientuser/update',
         'shopuser/create',
         'shopuser/update',

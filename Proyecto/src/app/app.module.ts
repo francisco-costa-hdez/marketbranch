@@ -29,6 +29,7 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { FormsModule } from '@angular/forms';
+import { FormSearchComponent } from './form-search/form-search.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -74,7 +75,8 @@ const rutas=[
     FormProductComponent,
     PhotoGalleryComponent,
     FormShopComponent,
-    ShopManagementComponent
+    ShopManagementComponent,
+    FormSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@ export class ShopComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
-    // this.getShop(this.route.snapshot.paramMap.get('id'));
+    this.getShop(this.route.snapshot.paramMap.get('id'));
   }
 
   chosePrincipal() {
@@ -27,16 +27,16 @@ export class ShopComponent implements OnInit {
     this.show = state;
   }
 
-//   getShop(id: string | number) {
-//     this.db.getShop(id).subscribe(
-//       (response) => {
-//         console.table(response);
-//         this.shop = response[0];
-//           this.loading = false;
-//         console.log(this.shop)
-//       },
-//       (error) =>  {});
-//     // this.movie = this.datos.getThisPelicula(id);
-//     // console.table(this.movie);
-//   }
+  getShop(id: string | number) {
+    this.db.findShopById(id).subscribe(
+      (response) => {
+        if (response["shop"]) {
+          this.shop = response["shop"];
+          this.loading = false;
+        console.log(this.shop)
+      }},
+      (error) =>  {});
+    // this.movie = this.datos.getThisPelicula(id);
+    // console.table(this.movie);
+  }
 }

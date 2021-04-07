@@ -1,70 +1,75 @@
-<!-- Featured Product Start -->
-<article class="featured-product product">
+<section class="container-fluid m-0 p-0">
+    <!-- Featured Product Start -->
+    <article class="featured-product product">
 
         <div class="section-header pl-5">
             <h1>Nuestra Selección de productos</h1>
         </div>
-
-    <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
-</article>
-<article class="featured-product product">
+        <div class="container-fluid">
+            <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
+        </div>  
+    </article>
+    <article class="featured-product product">
 
         <div class="section-header pl-5">
             <h1>Nuevos Productos</h1>
         </div>
-
-    <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
-</article>
-<article class="featured-product product">
+        <div class="container-fluid">
+            <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
+        </div>
+    </article>
+    <article class="featured-product product">
 
         <div class="section-header pl-5">
             <h1>Nuevas Tiendas</h1>
+        </div>
 
-    </div>
-
-    <div class="container my-4">
-        <div class="row align-items-center">
-            <div class="col-1">
+        <div class="row align-items-center container-fluid">
+            <div class="col-1 align-self-center">
                 <a class="h1" href="#newShops" role="button" data-slide="prev">
                     <span style="color: hotpink"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                      </svg></span>
+                    </svg></span>
                 </a>
             </div>
-            <div class="col">
+            <div class="col-10">
                 
                 <div id="newShops" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <ng-container *ngFor="let shop of latestShops; let firstShop=first">
-                          <div class="carousel-item" [ngClass]="{ 'active' : firstShop }">
-                              <div class="row align-items-center">
-                                  <div class="col">
-                                      <h2>{{shop.name}}</h2>
-                                      <p>{{shop.description}}</p>
-                                      <button class="btn btn-primary">More...</button>
-                                  </div>
-                                  <div class="col">
-                                      <img class="d-block img-fluid" src="//placehold.it/900x500/990033" alt="2nd slide">
-                                  </div>
-                              </div>
-                          </div>
-                      </ng-container>
-                  </div>
+                            <div class="carousel-item" [ngClass]="{ 'active' : firstShop }">
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-md-8">
+                                        <h2>{{shop.name}}</h2>
+                                        <p>{{shop.description}}</p>
+                                        <button class="btn btn-primary mb-4" style="margin: 0 auto;">Visitar</button>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <img class="d-block img-fluid" src="/assets/images/limon-eco.jpg" alt="2nd slide">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-            <div class="col-1">
+            <div class="col-1 align-self-center">
                 <a class="h1" href="#newShops" role="button" data-slide="next">
                     <span style="color: hotpink"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                      </svg></span>
+                    </svg></span>
                 </a>
             </div>
         </div>
-    </div>
-</article>
-<article class="featured-product product">
-        <div class="section-header pl-5">
-            <h1>Productos Mejor Valorados</h1>
-        </div>
-        <app-carousel-of-items [group]="latest" [carouselId]="'best'"></app-carousel-of-items>
-</article>
+    </article>
+    <article class="featured-product product">
+            <div class="section-header pl-5">
+                <h1>Productos Mejor Valorados</h1>
+            </div>
+            <div class="container-fluid">
+                <app-carousel-of-items [group]="latest" [carouselId]="'best'"></app-carousel-of-items>
+            </div>
+    </article>
+</section>
