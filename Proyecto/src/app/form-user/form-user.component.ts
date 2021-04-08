@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { ClientUser } from '../client-user';
@@ -10,7 +11,27 @@ import { ClientUser } from '../client-user';
 })
 export class FormUserComponent implements OnInit {
 
-  constructor(private db: MarketPlaceDBService,private router: Router) { }
+ signform:FormGroup
+
+
+  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
+    this.signform=this.form.group({
+      name:['',Validators.required],
+      address:['',Validators.required],
+      tlf:['',Validators.required],
+      email:['',Validators.required],
+      profile_img:['',Validators.required],
+      password:['',Validators.required],
+    })
+  }
+
+  /*registerForm=this.form.group({
+    name:[''],
+    address:[''],
+    tlf:[''],
+    email:[''],
+    Check1:[true]
+  })*/
 
   client = new ClientUser;
 
@@ -28,15 +49,5 @@ export class FormUserComponent implements OnInit {
     this.db.createClientUser(this.client).subscribe();
   }
 
-  createUser(){
-    // this.db.createClientUser().subscribe(
-    //   (response) => {
-
-    //   },
-    //   (error) => {
-    //     console.error('Request failed with error');
-    //     console.error(error);
-    //   });
-  }
 
 }

@@ -10,37 +10,37 @@
 <div class="row">
   <div class="col-md-2 col-lg-3"></div>
 <form (ngSubmit)="onSubmit()"
-#clientForm="ngForm" class="col-12 col-md-8 col-lg-6 mb-3">
+#clientForm="ngForm" class="col-12 col-md-8 col-lg-6 mb-3" [formGroup]="signform">
   
   <div class="form-group">
       <label for="name">Nombre</label>
       <input type="text" name="name" id="name" class="form-control" required
-      [(ngModel)]="client.name" name="name" #name="ngModel">
+      [(ngModel)]="client.name" name="name" formControlName="name">
     </div>
     <div class="form-group">
       <label for="address">Dirección</label>
       <input type="text" name="address" id ="address" class="form-control" required
-      [(ngModel)]="client.address" name="address" #address="ngModel">
+      [(ngModel)]="client.address" name="address" formControlName="address">
     </div>
     <div class="form-group">
       <label for="tlf">Teléfono</label>
       <input type="tel" name="tlf" id="tlf" class="form-control" required
-      [(ngModel)]="client.tlf" name="tlf" #tlf="ngModel">
+      [(ngModel)]="client.tlf" name="tlf" formControlName="tlf">
     </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" required
-        [(ngModel)]="client.email" name="email" #email="ngModel">
+        [(ngModel)]="client.email" name="email" formControlName="email">
       </div>
       <div class="form-group">
         <label for="profile_img">Seleccione imagen de perfil</label>
         <input type="file" class="form-control-file" id="profile_img" name="profile_img"
-        [(ngModel)]="client.profile_img" name="profile_img" #profile_img="ngModel">
+        [(ngModel)]="client.profile_img" name="profile_img" formControlName="profile_img">
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
         <input type="password" class="form-control" id="password" name="password" required
-        [(ngModel)]="client.password" name="password" #password="ngModel">
+        [(ngModel)]="client.password" name="password" formControlName="password">
         <label for="Password2">Repita Contraseña</label>
         <input type="password" class="form-control" id="Password2" name="Password2" >
         <small class="form-text text-muted">No compartas tu contraseña con terceros.</small>
@@ -49,7 +49,7 @@
         <input type="checkbox" class="form-check-input" id="Check1" name="Check1" required>
         <label class="form-check-label" for="Check1">Acepto los <a href="">términos y condiciones</a> de la web</label>
       </div>
-      <button type="submit" class="btn btn-primary" style="margin-top:5%;">Registrarse</button>
+      <button type="submit" class="btn btn-primary" style="margin-top:5%;"[disabled]="signform.invalid">Registrarse</button>
     
   </form>
 </div>

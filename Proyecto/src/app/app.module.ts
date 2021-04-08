@@ -28,7 +28,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { FormSearchComponent } from './form-search/form-search.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { ShopCardComponent } from './shop-card/shop-card.component';
@@ -87,6 +87,7 @@ const rutas=[
     HttpClientModule,
     RouterModule.forRoot(rutas),
     FormsModule,
+    ReactiveFormsModule,
     NgxSliderModule,
   ],
   providers: [],
