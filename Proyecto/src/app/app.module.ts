@@ -30,13 +30,15 @@ import { FormShopComponent } from './form-shop/form-shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { FormsModule } from '@angular/forms';
 import { FormSearchComponent } from './form-search/form-search.component';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
+import { ShopCardComponent } from './shop-card/shop-card.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
   { path: 'cliente', component: CustomerComponent},
   { path: 'registro', component: FormUserComponent},
-  { path: 'busqueda/:term', component: ProductSearchComponent},
+  { path: 'busqueda', component: ProductSearchComponent},
   { path: 'producto/:id', component: ProductComponent},
   { path: 'tienda/:id', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},
@@ -76,7 +78,9 @@ const rutas=[
     PhotoGalleryComponent,
     FormShopComponent,
     ShopManagementComponent,
-    FormSearchComponent
+    FormSearchComponent,
+    LoadingScreenComponent,
+    ShopCardComponent
   ],
   imports: [
     BrowserModule,

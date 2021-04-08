@@ -13,7 +13,7 @@ export class CarouselOfItemsComponent implements OnInit {
   constructor( ) { }
 
   ngOnInit(): void {
-    console.table(this.group)
+    //console.table(this.group)
     
   }
 

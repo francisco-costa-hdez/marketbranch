@@ -1,10 +1,4 @@
-<ng-container *ngIf="loading">
-    <div class=" col-12 d-flex justify-content-center">
-        <div class="spinner-border text-warning" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-</ng-container>
+<app-loading-screen *ngIf="loading"></app-loading-screen>
 <app-error404 *ngIf="!loading && !shop"></app-error404>
 <ng-container *ngIf="shop">
     <ng-container *ngIf="show">

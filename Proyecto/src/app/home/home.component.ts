@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
 
   contentLoaded = 0;
   latestShops=[];
-  loading = true;
   constructor(private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
