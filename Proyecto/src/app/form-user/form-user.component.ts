@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +14,7 @@ export class FormUserComponent implements OnInit {
 
  signform:FormGroup
 
+ client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
     this.signform=this.form.group({
@@ -20,25 +22,29 @@ export class FormUserComponent implements OnInit {
       address:['',Validators.required],
       tlf:['',Validators.required],
       email:['',Validators.required],
-      profile_img:['',Validators.required],
+      profile_img:[''],
       password:['',Validators.required],
     })
   }
 
-  /*registerForm=this.form.group({
-    name:[''],
-    address:[''],
-    tlf:[''],
-    email:[''],
-    Check1:[true]
-  })*/
-
-  client = new ClientUser;
+  get name() { return this.signform.get('name'); }
+  get email() { return this.signform.get('email'); }
+  get address() { return this.signform.get('address'); }
+  get tlf() { return this.signform.get('tlf'); }
+  get img() { return this.signform.get('profile_img'); }
+  get password() { return this.signform.get('password'); }
 
   ngOnInit(): void {
   }
   
   onSubmit() {
+    this.client.name=this.name.value
+    this.client.email=this.email.value
+    this.client.tlf=this.tlf.value
+    this.client.password=this.password.value
+    this.client.address=this.address.value
+    this.client.profile_img=this.img.value
+
     console.log(this.client)
     let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
     console.log(arrayClient)
@@ -48,6 +54,5 @@ export class FormUserComponent implements OnInit {
     console.log(jsonArrayClient)
     this.db.createClientUser(this.client).subscribe();
   }
-
 
 }
