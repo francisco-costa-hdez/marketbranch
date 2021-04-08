@@ -10,7 +10,8 @@ export class HomeComponent implements OnInit {
 
   latest=[];
   best=[];
-  shops;
+
+  contentLoaded = 0;
   latestShops=[];
   loading = true;
   constructor(private db: MarketPlaceDBService) { }
@@ -34,56 +35,52 @@ export class HomeComponent implements OnInit {
           for(let i=0;i<=11;i++){
             this.latest[i]=products[i];
           }
-          console.table(this.latest)
+          //console.table(this.latest)
           for(let z=0;z<(products.length-1);z++){
             for(let j=z+1;j<products.length;j++){
-                if(Number.parseFloat(products[z].price)<Number.parseFloat(products[j].price)){
-                    //Intercambiamos valores
-                    let aux=products[z]
-                    products[z]=products[j]
-                    products[j]=aux
- 
-                }
+              if(Number.parseFloat(products[z].price)<Number.parseFloat(products[j].price)){
+                //Intercambiamos valores
+                let aux=products[z];
+                products[z]=products[j];
+                products[j]=aux;
+              }
             }
+          }
+          this.best=products;
+          this.contentLoaded += 1;
         }
-        
-        this.best=products
-          this.loading = false;
-
-
-        }
-        console.table(products)
+        //console.table(products)
       },
       (error) => {
-        console.error('Request failed with error');
-        console.error(error);
-      });
-  
+        this.contentLoaded = -2;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }); 
     }
-
     getAllShops() {
-      this.db.findAllShops().subscribe(
-        (response) => {
-          this.shops = [];
-          if (response["shops"]) {
-            response["shops"].forEach((item) =>{
-              let newShop = item;
-              this.shops.push(newShop);
-            });
-            for(let i=0;i<=3;i++){
-              this.latestShops[i]=this.shops[i];
-            }
-            console.table(this.latestShops)
-            this.loading = false;
-  
+    this.db.findAllShops().subscribe(
+      (response) => {
+        let shops = [];
+        this.latestShops = [];
+        if (response["shops"]) {
+          response["shops"].forEach((item) =>{
+            let newShop = item;
+            shops.push(newShop);
+          });
+          for(let i=0;i<=3;i++){
+            this.latestShops[i] = shops[i];
           }
-          console.table(this.shops)
-        },
-        (error) => {
-          console.error('Request failed with error');
-          console.error(error);
-        });
-    
-      }
+          //console.table(this.latestShops)
+          this.contentLoaded += 1;
+          
+        }
+        //onsole.table(shops)
+      },
+      (error) => {
+        this.contentLoaded = -2;
+        // console.error('Request failed with error');
+        // console.error(error);
+      });
+  }
 
 }
