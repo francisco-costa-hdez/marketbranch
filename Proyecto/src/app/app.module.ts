@@ -32,6 +32,7 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { FormSearchComponent } from './form-search/form-search.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { ShopCardComponent } from './shop-card/shop-card.component';
+import { Error500Component } from './error500/error500.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -80,7 +81,8 @@ const rutas=[
     ShopManagementComponent,
     FormSearchComponent,
     LoadingScreenComponent,
-    ShopCardComponent
+    ShopCardComponent,
+    Error500Component
   ],
   imports: [
     BrowserModule,

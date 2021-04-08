@@ -1,7 +1,7 @@
 <section class="container-fluid m-0 p-0">
     <article class="featured-product product">
         <div class="section-header pl-5 row w-100">
-            <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "{{search.term}}"</h1>
+            <h1 class="col-12 col-lg-9">{{title}}</h1>
             <form class="col-12 col-lg-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
@@ -75,7 +75,8 @@
                 </ul>
                 </form>
             </div>
-            <app-loading-screen *ngIf="loading" class="col-12 col-lg-9"></app-loading-screen>
+            <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
+            <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>
             <div *ngIf="search.type == 'Producto'"
             class="col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto">
                 <ng-container *ngFor="let result of results">
