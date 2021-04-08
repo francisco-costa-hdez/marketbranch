@@ -1,11 +1,5 @@
 <app-error404 *ngIf="contentLoaded < 0"></app-error404>
-<ng-container *ngIf="contentLoaded == 0 || contentLoaded == 1">
-    <div class=" col-12 d-flex justify-content-center">
-        <div class="spinner-border text-warning" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-</ng-container>
+<app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>
 <section *ngIf="contentLoaded == 2" class="container-fluid m-0 p-0">
     <!-- Featured Product Start -->
     <article class="featured-product product">

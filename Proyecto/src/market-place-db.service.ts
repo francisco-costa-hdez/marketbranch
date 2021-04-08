@@ -86,7 +86,7 @@ export class MarketPlaceDBService {
   
   //Gets all the shops with a coincidence with a pattern in name or description
   findShopByString(search_term: string) {
-    return this.http.get( this.url + "/shops/" + search_term);
+    return this.http.get( this.url + "/shops/str/" + search_term);
   }
   
   //Creates a shop
@@ -118,7 +118,7 @@ export class MarketPlaceDBService {
    ***** Categories *****************************************************************
    ***********************************************************************************/
   
-  //Gets all the shops in the database
+  //Gets all the categories in the database
   findAllCategories() {
     return this.http.get( this.url + "/categories");
   }

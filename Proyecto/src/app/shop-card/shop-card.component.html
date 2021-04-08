@@ -1,0 +1,12 @@
+<div class="card bg-light mb-2 mr-2">
+    <div class="row p-1">
+
+        <div class="col-8">
+            <h4><a routerLink="/tienda/{{shop.id}}">{{shop.name}}</a></h4>
+            <p>{{shop.description | slice:0:100}}...</p>
+        </div>
+        <div class="col-4 w-100">
+            <a routerLink="/tienda/{{shop.id}}"><img class="w-100 img-thumbnail" src="/assets/images/limon-eco.jpg" alt="{{shop.name}} image"></a>
+        </div>
+    </div>
+</div>

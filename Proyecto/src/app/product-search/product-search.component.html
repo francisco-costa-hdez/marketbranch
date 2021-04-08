@@ -1,7 +1,7 @@
 <section class="container-fluid m-0 p-0">
     <article class="featured-product product">
         <div class="section-header pl-5 row w-100">
-            <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "{{term}}"</h1>
+            <h1 class="col-12 col-lg-9">Resultados de la búsqueda: "{{search.term}}"</h1>
             <form class="col-12 col-lg-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
@@ -75,14 +75,17 @@
                 </ul>
                 </form>
             </div>
-            <div class="col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto">
-                <div *ngIf="loading" class=" col-12 d-flex justify-content-center">
-                    <div class="spinner-border text-warning" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
-                <ng-container *ngFor="let product of products">
-                    <app-product-card [product]="product" class="my-1"></app-product-card>
+            <app-loading-screen *ngIf="loading" class="col-12 col-lg-9"></app-loading-screen>
+            <div *ngIf="search.type == 'Producto'"
+            class="col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto">
+                <ng-container *ngFor="let result of results">
+                    <app-product-card [product]="result" class="my-1"></app-product-card>
+                </ng-container>
+            </div>
+            <div *ngIf="search.type == 'Tienda'"
+            class="col-12 col-lg-9 row row-cols-1 row-cols-lg-2  mx-auto px-auto">
+            <ng-container *ngFor="let result of results">
+                    <app-shop-card [shop]="result" class="my-1"></app-shop-card>
                 </ng-container>
             </div>
         </div>
