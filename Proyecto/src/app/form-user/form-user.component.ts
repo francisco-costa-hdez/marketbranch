@@ -21,9 +21,10 @@ export class FormUserComponent implements OnInit {
       name:['',Validators.required],
       address:['',Validators.required],
       tlf:['',Validators.required],
-      email:['',Validators.required],
+      email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
       profile_img:[''],
       password:['',Validators.required],
+      password2:['',Validators.required]
     })
   }
 
@@ -33,6 +34,7 @@ export class FormUserComponent implements OnInit {
   get tlf() { return this.signform.get('tlf'); }
   get img() { return this.signform.get('profile_img'); }
   get password() { return this.signform.get('password'); }
+  get password2() { return this.signform.get('password2'); }
 
   ngOnInit(): void {
   }
@@ -41,7 +43,8 @@ export class FormUserComponent implements OnInit {
     this.client.name=this.name.value
     this.client.email=this.email.value
     this.client.tlf=this.tlf.value
-    this.client.password=this.password.value
+    if(this.password==this.password2){
+    this.client.password=this.password.value}
     this.client.address=this.address.value
     this.client.profile_img=this.img.value
 
@@ -54,5 +57,22 @@ export class FormUserComponent implements OnInit {
     console.log(jsonArrayClient)
     this.db.createClientUser(this.client).subscribe();
   }
+
+  /*isValidField(field:string):boolean{
+    return (this.signform.get(field).touched || this.signform.get(field).dirty ) && this.signform.get(field).valid
+  }
+
+  getError(field:string):string{
+    let message
+
+    if(this.signform.get(field).errors.required){
+      message='no has introducido datos'
+    }
+    else{
+      message='email invalido'
+    }
+    return message
+
+  }*/
 
 }
