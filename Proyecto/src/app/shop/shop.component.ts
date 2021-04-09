@@ -11,6 +11,7 @@ export class ShopComponent implements OnInit {
 
   shop;
   products;
+  aux;
   best = [];
 
   loading: boolean = true;
@@ -49,30 +50,25 @@ export class ShopComponent implements OnInit {
     this.db.findProductByShop(id).subscribe(
       (response) => {
         this.products = [];
-        let aux = [];
+        this.aux = [];
         if (response["products"]) {
           response["products"].forEach((item) => {
-            let newProduct = item;
-            this.products.push(newProduct);
-            aux.push(newProduct);
+            this.products.push(item);
           });
-          //console.table(aux);
-          for(let z=0;z<(aux.length-1);z++) {
-            for(let j=z+1;j<aux.length;j++) {
-              if(Number.parseFloat(aux[z].price)<Number.parseFloat(aux[j].price)){
-                //Intercambiamos valores
-                let au =aux[z];
-                aux[z]=aux[j];
-                aux[j]=au;
-              }
-            }
-          }
+          this.aux = [...this.products];
+          //console.table(this.products);
+          //console.table(this.aux);
+          this.aux.sort(function(a, b){
+            return b.price - a.price;
+          });
           for(let i = 0; i <= 11; i++) {
-            if (i < aux.length) {
-              this.best[i]=aux[i];
+            if (i < this.aux.length) {
+              this.best[i] = this.aux[i];
             }
           }
-          //console.table(aux)
+          this.aux = [...this.products];
+          //console.table(this.aux)
+          //console.table(this.best
         }
         //console.table(this.products)
       },
@@ -81,5 +77,61 @@ export class ShopComponent implements OnInit {
         console.error(error);
       });
   
+  }
+
+  orderProducts(order) {
+    console.log("cambiar el orden a :" + order.value)
+    switch (order.value) {
+      case "reciente": {
+        console.log("pre")
+        console.table(this.products);
+        console.table(this.aux);
+        this.products = [...this.aux];
+        console.log("post")
+        console.table(this.products);
+        console.table(this.aux);
+        break;
+      };
+      case "antiguo": {
+        console.log("pre")
+        console.table(this.products);
+        console.table(this.aux);
+        this.products = [...this.aux];
+        this.products.reverse();
+        console.log("post")
+        console.table(this.products);
+        console.table(this.aux);
+        break;
+      };
+      case "mejor": {
+        console.log("pre")
+        console.table(this.products);
+        console.table(this.aux);
+        this.products.sort(function(a, b){
+          return b.price - a.price;
+        });
+        console.log("post")
+        console.table(this.products);
+        console.table(this.aux);
+        break;
+      };
+      case "peor": {
+        console.log("pre")
+        console.table(this.products);
+        console.table(this.aux);
+        this.products.sort(function(a, b){
+          return a.price - b.price;
+        });
+        console.log("post")
+        console.table(this.products);
+        console.table(this.aux);
+        break;
+      };
+      default: {
+        order.value="reciente"
+        this.products = [...this.aux];
+        break;
+      }
     }
+  }
 }

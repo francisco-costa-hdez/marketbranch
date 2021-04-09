@@ -9,7 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { CustomerComponent } from './customer/customer.component';
 import { FormUserComponent } from './form-user/form-user.component';
-import { ProductSearchComponent } from './product-search/product-search.component';
+import { SearchComponent } from './search/search.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { CarouselOfItemsComponent } from './carousel-of-items/carousel-of-items.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
@@ -39,7 +39,7 @@ const rutas=[
   { path: 'home', component: HomeComponent},
   { path: 'cliente', component: CustomerComponent},
   { path: 'registro', component: FormUserComponent},
-  { path: 'busqueda', component: ProductSearchComponent},
+  { path: 'busqueda', component: SearchComponent},
   { path: 'producto/:id', component: ProductComponent},
   { path: 'tienda/:id', component: ShopComponent},
   { path: 'informar', component: ReportABugComponent},
@@ -62,7 +62,7 @@ const rutas=[
     HomeComponent,
     CustomerComponent,
     FormUserComponent,
-    ProductSearchComponent,
+    SearchComponent,
     ProductCardComponent,
     CarouselOfItemsComponent,
     ScrollToTopComponent,

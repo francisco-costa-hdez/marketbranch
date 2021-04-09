@@ -20,8 +20,6 @@ export class HomeComponent implements OnInit {
   this.getAllShops()
   }
 
-
-
   getProducts() {
     this.db.findAllProducts().subscribe(
       (response) => {
@@ -35,17 +33,12 @@ export class HomeComponent implements OnInit {
             this.latest[i]=products[i];
           }
           //console.table(this.latest)
-          for(let z=0;z<(products.length-1);z++){
-            for(let j=z+1;j<products.length;j++){
-              if(Number.parseFloat(products[z].price)<Number.parseFloat(products[j].price)){
-                //Intercambiamos valores
-                let aux=products[z];
-                products[z]=products[j];
-                products[j]=aux;
-              }
-            }
+          products.sort(function(a, b){
+            return b.price - a.price;
+          });
+          for(let i=0;i<=11;i++){
+            this.best[i]=products[i];
           }
-          this.best=products;
           this.contentLoaded += 1;
         }
         //console.table(products)

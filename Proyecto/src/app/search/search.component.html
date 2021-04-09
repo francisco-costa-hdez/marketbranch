@@ -1,0 +1,95 @@
+<section class="container-fluid m-0 p-0">
+    <article class="featured-product product">
+        <div class="section-header pl-5 row w-100">
+            <h1 class="col-12 col-lg-9">{{title}}</h1>
+            <form class="col-12 col-lg-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
+                    <select #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
+                    id="orderAllProducts" (change)="orderResults(order)">
+                        <option value="reciente">Más recientes</option>
+                        <option value="antiguo">Más antiguo</option>
+                        <option *ngIf="search.type == 'Producto'" value="mejor">Mejor valorados</option>
+                        <option *ngIf="search.type == 'Producto'" value="peor">Peor valorados</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row container-fluid mx-auto p-0">
+            <div class="col-12 col-lg-3 mx-auto px-auto pb-4">
+                <form>
+                    <ul class="list-group form-group">
+                    <li class="list-group-item">
+                        <h4>Filtros</h4>
+                    </li>
+                    <li *ngIf="search.type == 'Producto'" class="list-group-item">
+                        <h5>Subcategorías</h5>
+                        <div class="pl-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="subcategory" value="tal" id="subc-1" checked>
+                                <label class="form-check-label" for="subc-1">
+                                Tal
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="subcategory" value="cual" id="subc-2" checked>
+                                <label class="form-check-label" for="subc-2">
+                                Cual
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="subcategory" value="pascual" id="subc-3" checked>
+                                <label class="form-check-label" for="subc-3">
+                                Pascual
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    <li *ngIf="search.type == 'Producto'" class="list-group-item">
+                        <h5>Rango de precios</h5>
+                        <div class="form-row pl-3">
+                            <div class="col-6">
+                            <label for="minPrice">Desde: </label>
+                            <input #minInput type="number" class="form-control" id="minPrice"  min="0" max="500" step="5" (change)="updateMin(minInput.value)">
+                            </div>
+                            <div class="col-6">
+                                <label for="maxPrice">Hasta: </label>
+                                <input #maxInput type="number" class="form-control"  id="maxPrice" min="0" max="500" step="5" (change)="updateMax(maxInput.value)">
+                            </div>
+                            <ngx-slider #rangeInput [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="updatePrice(minInput, maxInput)"
+                                (highValueChange)="updatePrice(minInput, maxInput)"></ngx-slider>
+                        </div>
+                        </li>
+                    <li class="list-group-item">
+                        <h5>Rango de valoraciones</h5>
+                        <div class="form-row pl-3">
+                            <div class="col-6">
+                            <label for="minRating">Desde: </label>
+                            <input #minRating type="number" class="form-control" id="minRating"  min="0" max="5" step="0.5">
+                            </div>
+                            <div class="col-6">
+                                <label for="maxRating">Hasta: </label>
+                                <input #maxRating type="number" class="form-control"  id="maxRating" min="0" max="5" step="0.5">
+                            </div>
+                        </div>                    
+                    </li>
+                </ul>
+                </form>
+            </div>
+            <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
+            <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>
+            <div *ngIf="search.type == 'Producto'"
+            class="col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto">
+                <ng-container *ngFor="let result of results">
+                    <app-product-card [product]="result" class="my-1"></app-product-card>
+                </ng-container>
+            </div>
+            <div *ngIf="search.type == 'Tienda'"
+            class="col-12 col-lg-9 row row-cols-1 row-cols-lg-2  mx-auto px-auto">
+            <ng-container *ngFor="let result of results">
+                    <app-shop-card [shop]="result" class="my-1"></app-shop-card>
+                </ng-container>
+            </div>
+        </div>
+    </article>
+</section>

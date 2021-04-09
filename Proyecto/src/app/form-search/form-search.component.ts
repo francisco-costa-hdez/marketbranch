@@ -20,8 +20,8 @@ export class FormSearchComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("submit");
-    console.table(this.search);
+    //console.log("submit");
+    //console.table(this.search);
     this.goToSearch()
   }
 
@@ -42,6 +42,10 @@ export class FormSearchComponent implements OnInit {
     }
 
   goToSearch() {
-    this.router.navigate(['/busqueda'], { queryParams: { filter: this.search.filter, term: this.search.term }, queryParamsHandling: 'merge' });
+    if (this.search.term) {
+      this.router.navigate(['/busqueda'], { queryParams: { filter: this.search.filter, term: this.search.term }, queryParamsHandling: 'merge' });
+    } else {
+      this.router.navigate(['/busqueda'], { queryParams: { filter: this.search.filter}});
+    }
   }
 }
