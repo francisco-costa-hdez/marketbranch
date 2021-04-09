@@ -33,6 +33,8 @@ import { FormSearchComponent } from './form-search/form-search.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { ShopCardComponent } from './shop-card/shop-card.component';
 import { Error500Component } from './error500/error500.component';
+import { PriceFilterPipe } from './price-filter.pipe';
+import { RateFilterPipe } from './rate-filter.pipe';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -82,7 +84,9 @@ const rutas=[
     FormSearchComponent,
     LoadingScreenComponent,
     ShopCardComponent,
-    Error500Component
+    Error500Component,
+    PriceFilterPipe,
+    RateFilterPipe
   ],
   imports: [
     BrowserModule,

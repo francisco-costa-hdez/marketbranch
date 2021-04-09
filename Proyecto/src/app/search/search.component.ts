@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Options} from '@angular-slider/ngx-slider';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
@@ -8,8 +8,25 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements AfterViewInit {
 
+  @ViewChild('minPricing') minPricing: ElementRef<HTMLInputElement>;
+  @ViewChild('maxPricing') maxPricing: ElementRef<HTMLInputElement>;
+
+  @ViewChild('maxRating') minRating: ElementRef<HTMLInputElement>;
+  @ViewChild('maxRating') maxRating: ElementRef<HTMLInputElement>;
+
+  minPrice: number = 0;
+  maxPrice: number = 10000;
+  
+  minRate: number = 0;
+  maxRate: number = 5;
+  
+  sliderOptions: Options = {
+    floor: 0,
+    ceil: 10000
+  };
+  
   title: string = "Mostrando todos los productos";
   error = false;
   results = [];
@@ -19,14 +36,9 @@ export class SearchComponent implements OnInit {
   search = {"filter": '',
             "term": '',
             "type": ''};
-
-  minPrice: number = 0;
-  maxPrice: number = 0;
-  options: Options = {
-    floor: 0,
-    ceil: 10000
-  };
-
+            
+            
+            
   constructor(  private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) {
     
     this.router.events.subscribe((event: Event) => {
@@ -38,7 +50,7 @@ export class SearchComponent implements OnInit {
         this.search = {"filter": '',
           "term": '',
           "type": ''};
-
+        
         this.route.queryParams.subscribe(params => {
           this.search.filter = params.filter;
           this.search.term = params.term;
@@ -87,8 +99,10 @@ export class SearchComponent implements OnInit {
     });
   } 
 
-  ngOnInit(): void {
-   
+  ngAfterViewInit(): void {
+   this.updatePrice(this.minPricing.nativeElement, this.maxPricing.nativeElement)
+   this.updateRate(this.minRating.nativeElement, this.maxRating.nativeElement)
+
   }
 
   updatePrice(minInput, maxInput) {
@@ -96,12 +110,25 @@ export class SearchComponent implements OnInit {
     maxInput.value = this.maxPrice;
   }
 
-  updateMin(newValue) {
+  updateRate(minInput, maxInput) {
+    minInput.value = this.minRate;
+    maxInput.value = this.maxRate;
+  }
+
+  updateMinPrice(newValue) {
     this.minPrice = newValue;
   }
   
-  updateMax(newValue) {
+  updateMinRate(newValue) {
+    this.minRate = newValue;
+  }
+
+  updateMaxPrice(newValue) {
     this.maxPrice = newValue;
+  }
+
+  updateMaxRate(newValue) {
+    this.maxRate = newValue;
   }
   
   productSearch(term: string) {
@@ -113,9 +140,7 @@ export class SearchComponent implements OnInit {
             this.results.push(item);
           });
           this.results.forEach((item) => {
-            console.log(item.price -2);
           })
-          console.log
           this.loading = false;
           this.aux = [...this.results];
         } 
@@ -190,56 +215,30 @@ export class SearchComponent implements OnInit {
   }
 
   orderResults(order) {
-    console.log("cambiar el orden a :" + order.value)
+    //console.log("order :" + order.value);
+    this.results = [...this.aux];
     switch (order.value) {
       case "reciente": {
-        console.log("pre")
-        console.table(this.results);
-        console.table(this.aux);
-        this.results = [...this.aux];
-        console.log("post")
-        console.table(this.results);
-        console.table(this.aux);
         break;
       };
       case "antiguo": {
-        console.log("pre")
-        console.table(this.results);
-        console.table(this.aux);
-        this.results = [...this.aux];
         this.results.reverse();
-        console.log("post")
-        console.table(this.results);
-        console.table(this.aux);
         break;
       };
       case "mejor": {
-        console.log("pre")
-        console.table(this.results);
-        console.table(this.aux);
         this.results.sort(function(a, b){
           return b.price - a.price;
         });
-        console.log("post")
-        console.table(this.results);
-        console.table(this.aux);
         break;
       };
       case "peor": {
-        console.log("pre")
-        console.table(this.results);
-        console.table(this.aux);
         this.results.sort(function(a, b){
           return a.price - b.price;
         });
-        console.log("post")
-        console.table(this.results);
-        console.table(this.aux);
         break;
       };
       default: {
         order.value="reciente"
-        this.results = [...this.aux];
         break;
       }
     }
