@@ -1,11 +1,11 @@
-<div class="card bg-light mb-2 mr-2 h-100">
-    <div class="row p-1">
+<div class="card bg-light mx-1 my-1 h-100">
+    <div class="row p-2 h-100">
         <div class="col-8">
             <h4><a routerLink="/tienda/{{shop.id}}">{{shop.name}}</a></h4>
             <p>{{shop.description | slice:0:150}}...</p>
         </div>
-        <div class="col-4 w-100">
-            <a routerLink="/tienda/{{shop.id}}"><img class="w-100 img-thumbnail" src="/assets/images/limon-eco.jpg" alt="{{shop.name}} image"></a>
+        <div class="col-4 h-100 d-flex align-items-center">
+            <img routerLink="/tienda/{{shop.id}}" class="w-100 img-thumbnail clickable" src="/assets/images/limon-eco.jpg" alt="{{shop.name}} image">
         </div>
     </div>
 </div>

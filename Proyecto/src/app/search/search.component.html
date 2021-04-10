@@ -16,7 +16,7 @@
             </form>
         </div>
         <div class="row container-fluid mx-auto p-0">
-            <div class="col-12 col-lg-3 mx-auto px-auto pb-4">
+            <div class="col-12 col-lg-3 my-2 mx-auto px-auto pb-4">
                <app-search-sidebar [type]="search.type" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)"></app-search-sidebar>
             </div>
             <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
