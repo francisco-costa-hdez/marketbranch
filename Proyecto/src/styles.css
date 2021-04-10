@@ -1,3 +1,4 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
     html {
         margin: 0;
@@ -2412,4 +2413,8 @@ NUESTRO*/
 
     .clickable {
         cursor: pointer;
+    }
+
+    .carousel-controller {
+        font-size: 2em;
     }
