@@ -12,4 +12,5 @@ export class RateFilterPipe implements PipeTransform {
     return array;
   }
 
+
 }

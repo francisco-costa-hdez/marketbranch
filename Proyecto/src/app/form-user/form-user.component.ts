@@ -17,17 +17,15 @@ export class FormUserComponent implements OnInit {
  client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
-    this.signform=this.form.group(
-      {
+    this.signform=this.form.group({
       name:['',Validators.required],
       address:['',Validators.required],
-      tlf:['',Validators.compose([Validators.minLength(9),Validators.required])],
+      tlf:['',Validators.required],
       email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
       profile_img:[''],
-      password:['',Validators.compose([Validators.minLength(8),Validators.required])],
+      password:['',Validators.required],
       password2:['',Validators.required]
-    }
-    )
+    })
   }
 
   get name() { return this.signform.get('name'); }
@@ -42,15 +40,13 @@ export class FormUserComponent implements OnInit {
   }
   
   onSubmit() {
-    if(this.signform.valid){
     this.client.name=this.name.value
     this.client.email=this.email.value
     this.client.tlf=this.tlf.value
-    this.client.password=this.password.value
+    if(this.password==this.password2){
+    this.client.password=this.password.value}
     this.client.address=this.address.value
     this.client.profile_img=this.img.value
-  
-  }
 
     console.log(this.client)
     let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
@@ -59,16 +55,7 @@ export class FormUserComponent implements OnInit {
     console.log(jsonClient)
     let jsonArrayClient = JSON.stringify(arrayClient)
     console.log(jsonArrayClient)
-    this.db.createClientUser(this.client).subscribe(
-      (response) => {
-        console.log("Todo ha ido bien")
-      },
-      (error) => {
-        console.log("Se ha produsido un error");
-        console.log(error)
-        
-      }); 
-    
+    this.db.createClientUser(this.client).subscribe();
   }
 
   /*isValidField(field:string):boolean{
