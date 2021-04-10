@@ -25,7 +25,7 @@
       <input type="text" name="address" id ="address" class="form-control" required
         formControlName="address">
     </div>
-    <div *ngIf="signform.get('address').hasError('required') && address.touched" style="background-color:red">
+    <div *ngIf="(signform.get('address').hasError('required') && address.touched)" style="background-color:red">
       error, no has puesto la direccion
     </div>
     <div class="form-group">
@@ -62,10 +62,10 @@
         <small class="form-text text-muted">No compartas tu contraseña con terceros.</small>
       </div>
       <div class="form-check form-group">
-        <input type="checkbox" class="form-check-input" id="Check1" name="Check1" required>
-        <label class="form-check-label" for="Check1">Acepto los <a href="">términos y condiciones</a> de la web</label>
+        <input type="checkbox" class="form-check-input" id="check1" name="check1" formControlName="check1" required>
+        <label class="form-check-label" for="check1">Acepto los <a href="">términos y condiciones</a> de la web</label>
       </div>
-      <button type="submit" class="btn btn-primary" style="margin-top:5%;">Registrarse</button>
+      <button type="submit"  class="btn btn-primary" style="margin-top:5%;">Registrarse</button>
     
   </form>
 </div>
