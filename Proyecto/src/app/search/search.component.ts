@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Options} from '@angular-slider/ngx-slider';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 
@@ -8,25 +7,8 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements AfterViewInit {
+export class SearchComponent {
 
-  @ViewChild('minPricing') minPricing: ElementRef<HTMLInputElement>;
-  @ViewChild('maxPricing') maxPricing: ElementRef<HTMLInputElement>;
-
-  @ViewChild('maxRating') minRating: ElementRef<HTMLInputElement>;
-  @ViewChild('maxRating') maxRating: ElementRef<HTMLInputElement>;
-
-  minPrice: number = 0;
-  maxPrice: number = 10000;
-  
-  minRate: number = 0;
-  maxRate: number = 5;
-  
-  sliderOptions: Options = {
-    floor: 0,
-    ceil: 10000
-  };
-  
   title: string = "Mostrando todos los productos";
   error = false;
   results = [];
@@ -37,13 +19,17 @@ export class SearchComponent implements AfterViewInit {
             "term": '',
             "type": ''};
             
-            
+  price = {min: 0,
+           max: 10000};
+   
+  rate = {min: 0,
+          max: 5};         
             
   constructor(  private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) {
     
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        //console.log("end");
+        // console.log("end");
 
         this.results = [];
         this.aux = [];
@@ -56,8 +42,7 @@ export class SearchComponent implements AfterViewInit {
           this.search.term = params.term;
         });
         
-        // console.log("obtengo:");
-        console.table(this.search)
+        // console.table(this.search)
         this.loading = true;
       
         switch(this.search.filter) {
@@ -99,40 +84,7 @@ export class SearchComponent implements AfterViewInit {
     });
   } 
 
-  ngAfterViewInit(): void {
-   this.updatePrice(this.minPricing.nativeElement, this.maxPricing.nativeElement)
-   this.updateRate(this.minRating.nativeElement, this.maxRating.nativeElement)
-
-  }
-
-  updatePrice(minInput, maxInput) {
-    minInput.value = this.minPrice;
-    maxInput.value = this.maxPrice;
-  }
-
-  updateRate(minInput, maxInput) {
-    minInput.value = this.minRate;
-    maxInput.value = this.maxRate;
-  }
-
-  updateMinPrice(newValue) {
-    this.minPrice = newValue;
-  }
-  
-  updateMinRate(newValue) {
-    this.minRate = newValue;
-  }
-
-  updateMaxPrice(newValue) {
-    this.maxPrice = newValue;
-  }
-
-  updateMaxRate(newValue) {
-    this.maxRate = newValue;
-  }
-  
   productSearch(term: string) {
-    console.log("busco el producto: " + term)
     this.db.findProductsByString(term).subscribe(
       (response) => {
         if (response["products"]) {
@@ -154,7 +106,6 @@ export class SearchComponent implements AfterViewInit {
     }
     
     productShow() {
-      console.log("veo todos los productos")
       this.db.findAllProducts().subscribe(
         (response) => {
           if (response["products"]) {
@@ -174,7 +125,6 @@ export class SearchComponent implements AfterViewInit {
     }
       
     shopSearch(term: string) {
-      console.log("busco la tienda: " + term)
       this.db.findShopByString(term).subscribe(
         (response) => {
           if (response) {
@@ -195,7 +145,6 @@ export class SearchComponent implements AfterViewInit {
     }
     
     shopShow() {
-      console.log("veo todas las tiendas")
       this.db.findAllShops().subscribe(
         (response) => {
           if (response) {
@@ -242,6 +191,14 @@ export class SearchComponent implements AfterViewInit {
         break;
       }
     }
+  }
+
+  updatePriceFilter(price) {
+    this.price = price;
+  }
+
+  updateRateFilter(rate) {
+    this.rate = rate;
   }
 
 }

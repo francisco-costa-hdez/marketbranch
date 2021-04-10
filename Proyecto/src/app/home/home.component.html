@@ -1,4 +1,4 @@
-<app-error404 *ngIf="contentLoaded < 0"></app-error404>
+<app-error500 *ngIf="contentLoaded < 0"></app-error500>
 <app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>
 <section *ngIf="contentLoaded == 2" class="container-fluid m-0 p-0">
     <!-- Featured Product Start -->
@@ -25,42 +25,40 @@
         <div class="section-header pl-5">
             <h1>Nuevas Tiendas</h1>
         </div>
-
-        <div id="newShops" class="carousel slide" data-ride="carousel">
-        <div class="row align-items-center container-fluid">
-            <div class="col-1 align-self-center">
-                <a href="#newShops" role="button" data-slide="prev">
-                    <i class="bi bi-chevron-left carousel-controller"></i>
-                </a>
-            </div>
-            <div class="col-10">
-                
-                    <div class="carousel-inner">
+        <div class="container-fluid">
+            <div id="newShops" class="carousel slide row" data-ride="carousel">
+                <div class="col-1 align-self-center">
+                    <div class=" row justify-content-center">
+                        <a href="#newShops" role="button" data-slide="prev">
+                            <i class="bi bi-chevron-left carousel-controller"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="carousel-inner" role="listbox">
                         <ng-container *ngFor="let shop of latestShops; let firstShop=first">
                             <div class="carousel-item" [ngClass]="{ 'active' : firstShop }">
-                                <div class="row align-items-center">
+                                <div class="row align-items-center m-0 p-0">
                                     <div class="col-12 col-md-8">
                                         <h2>{{shop.name}}</h2>
                                         <p>{{shop.description}}</p>
                                         <button class="btn btn-primary mb-4" style="margin: 0 auto;">Visitar</button>
                                     </div>
-
                                     <div class="col-12 col-md-4">
-                                        <img class="d-block img-fluid" src="/assets/images/limon-eco.jpg" alt="2nd slide">
+                                        <img class="d-block img-fluid img-thumbnail" src="/assets/images/limon-eco.jpg" alt="2nd slide">
                                     </div>
                                 </div>
-                                
                             </div>
                         </ng-container>
                     </div>
                 </div>
-            </div>
-            <div class="col-1 align-self-center">
-                <a class="h1" href="#newShops" role="button" data-slide="next">
-                    <span style="color: hotpink"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg></span>
-                </a>
+                <div class="col-1 align-self-center ">
+                    <div class=" row justify-content-center">
+                        <a href="#newShops" role="button" data-slide="next">
+                            <i class="bi bi-chevron-right carousel-controller"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </article>
