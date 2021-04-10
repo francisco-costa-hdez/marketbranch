@@ -4,7 +4,7 @@ import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { ClientUser } from '../client-user';
-
+import { validarIguales } from '../app.validator';
 @Component({
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
@@ -25,7 +25,11 @@ export class FormUserComponent implements OnInit {
       email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
       profile_img:[''],
       password:['',Validators.compose([Validators.minLength(8),Validators.required])],
-      password2:['',Validators.required]
+      password2:['',Validators.required],
+      check1:[false,Validators.required]
+    }
+    , {
+      validators: validarIguales
     }
     )
   }
