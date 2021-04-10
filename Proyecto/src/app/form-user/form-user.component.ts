@@ -12,12 +12,12 @@ import { validarIguales } from '../app.validator';
 })
 export class FormUserComponent implements OnInit {
 
- signform:FormGroup
+  userForm:FormGroup
 
  client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
-    this.signform=this.form.group(
+    this.userForm=this.form.group(
       {
       name:['',Validators.required],
       address:['',Validators.required],
@@ -34,27 +34,48 @@ export class FormUserComponent implements OnInit {
     )
   }
 
-  get name() { return this.signform.get('name'); }
-  get email() { return this.signform.get('email'); }
-  get address() { return this.signform.get('address'); }
-  get tlf() { return this.signform.get('tlf'); }
-  get img() { return this.signform.get('profile_img'); }
-  get password() { return this.signform.get('password'); }
-  get password2() { return this.signform.get('password2'); }
+  get name() { return this.userForm.get('name'); }
+  get email() { return this.userForm.get('email'); }
+  get address() { return this.userForm.get('address'); }
+  get tlf() { return this.userForm.get('tlf'); }
+  get img() { return this.userForm.get('profile_img'); }
+  get password() { return this.userForm.get('password'); }
+  get password2() { return this.userForm.get('password2'); }
 
   ngOnInit(): void {
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // var pass1 = document.getElementById('password');
+        // var pass2 = document.getElementById('password2');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          
+          }, false);
+        });
+      }, false);
+    })();
+    
   }
   
   onSubmit() {
     
-    if(this.signform.valid){
+    if(this.userForm.valid){
     this.client.name=this.name.value
     this.client.email=this.email.value
     this.client.tlf=this.tlf.value
     this.client.password=this.password.value
     this.client.address=this.address.value
     this.client.profile_img=this.img.value
-  }
+  
 
     console.log(this.client)
     let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
@@ -68,28 +89,19 @@ export class FormUserComponent implements OnInit {
         console.log("Todo ha ido bien")
       },
       (error) => {
-        console.log("Se ha produsido un error");
+        console.log("Se ha producido un error:")
         console.log(error)
         
       }); 
+    }
     
   }
 
-  /*isValidField(field:string):boolean{
-    return (this.signform.get(field).touched || this.signform.get(field).dirty ) && this.signform.get(field).valid
-  }
-
-  getError(field:string):string{
-    let message
-
-    if(this.signform.get(field).errors.required){
-      message='no has introducido datos'
-    }
-    else{
-      message='email invalido'
-    }
-    return message
-
-  }*/
+  // samePass(){
+  //   if(this.password.value==this.password2.value){
+  //     return this.password.valid==true
+  //   }
+  //   else return this.password.valid==false
+  // }
 
 }
