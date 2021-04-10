@@ -17,7 +17,7 @@
         </div>
         <div class="row container-fluid mx-auto p-0">
             <div class="col-12 col-lg-3 mx-auto px-auto pb-4">
-               <app-search-sidebar [type]="search.filter" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)"></app-search-sidebar>
+               <app-search-sidebar [type]="search.type" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)"></app-search-sidebar>
             </div>
             <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
             <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>

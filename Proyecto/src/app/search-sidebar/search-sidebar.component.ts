@@ -34,9 +34,11 @@ export class SearchSidebarComponent implements AfterViewInit {
   constructor() { };
 
   ngAfterViewInit(): void {
-    this.updatePrice(this.minPricing.nativeElement, this.maxPricing.nativeElement);
+    if ((this.minPricing && this.maxPricing)) {
+      this.updatePrice(this.minPricing.nativeElement, this.maxPricing.nativeElement);
+      this.priceChange();
+    }
     this.updateRate(this.minRating.nativeElement, this.maxRating.nativeElement);
-    this.priceChange();
     this.rateChange();
   }
 
