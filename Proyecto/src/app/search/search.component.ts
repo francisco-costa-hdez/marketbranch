@@ -5,15 +5,49 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
+  
 })
 export class SearchComponent {
+
+
+  initResults(array: Array<object>) {
+    this.results = []
+    for (let i = 0; i < array.length && i < this.sum; i++) {
+      this.results.push(array[i]);
+    }
+  }
+
+  addItems(startIndex, endIndex) {
+    for (let i = startIndex; i < this.sum && this.totalResults[i]; ++i) {
+      this.results.push(this.totalResults[i]);
+    }
+  }
+
+  appendItems(startIndex, endIndex) {
+    this.addItems(startIndex, endIndex);
+  }
+
+  onScrollDown() {
+    //console.log("scrolled down!!");
+    const start = this.sum;
+    this.sum += 12;
+    this.appendItems(start, this.sum);
+    this.direction = "down";
+  }
 
   title: string = "Mostrando todos los productos";
   error = false;
   results = [];
+  totalResults = [];
   aux = [];
   loading: boolean = true;
+
+  sum = 12;
+  throttle = 300;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+  direction = "";
 
   search = {"filter": '',
             "term": '',
@@ -31,7 +65,7 @@ export class SearchComponent {
       if (event instanceof NavigationEnd) {
         // console.log("end");
 
-        this.results = [];
+        this.totalResults = [];
         this.aux = [];
         this.search = {"filter": '',
           "term": '',
@@ -89,14 +123,15 @@ export class SearchComponent {
       (response) => {
         if (response["products"]) {
           response["products"].forEach((item) =>{
-            this.results.push(item);
+            this.totalResults.push(item);
           });
-          this.results.forEach((item) => {
+          this.totalResults.forEach((item) => {
           })
           this.loading = false;
-          this.aux = [...this.results];
+          this.aux = [...this.totalResults];
+          this.initResults(this.totalResults);
         } 
-        //console.table(this.results)
+        //console.table(this.totalResults)
       },
       (error) => {
         this.error = true;
@@ -110,78 +145,81 @@ export class SearchComponent {
         (response) => {
           if (response["products"]) {
             response["products"].forEach((item) =>{
-              this.results.push(item);
+              this.totalResults.push(item);
             });
             this.loading = false;
-            this.aux = [...this.results];
+            this.aux = [...this.totalResults];
+            this.initResults(this.totalResults);
           }
-          //console.table(this.results)
+          //console.table(this.totalResults)
         },
         (error) => {
           this.error = true;
           // console.error('Request failed with error');
           // console.error(error);
         });
-    }
+      }
       
-    shopSearch(term: string) {
-      this.db.findShopByString(term).subscribe(
-        (response) => {
-          if (response) {
-            response["shops"].forEach((item) =>{
-              this.results.push(item);
-            });
-            this.loading = false;
-            this.aux = [...this.results];
-          }
-          // console.table(this.results);
-          // console.log(this.search.type)
-        },
-        (error) => {
-          this.error = true;
-          // console.error('Request failed with error');
-          // console.error(error);
-        });
-    }
-    
-    shopShow() {
-      this.db.findAllShops().subscribe(
-        (response) => {
-          if (response) {
-            response["shops"].forEach((item) =>{
-            this.results.push(item);
+      shopSearch(term: string) {
+        this.db.findShopByString(term).subscribe(
+          (response) => {
+            if (response) {
+              response["shops"].forEach((item) =>{
+                this.totalResults.push(item);
+              });
+              this.loading = false;
+              this.aux = [...this.totalResults];
+              this.initResults(this.totalResults);
+            }
+            // console.table(this.totalResults);
+            // console.log(this.search.type)
+          },
+          (error) => {
+            this.error = true;
+            // console.error('Request failed with error');
+            // console.error(error);
           });
-          this.loading = false;
-          this.aux = [...this.results];
-          }
-          //console.table(this.results)
-        },
-        (error) => {
+        }
+        
+        shopShow() {
+          this.db.findAllShops().subscribe(
+            (response) => {
+              if (response) {
+                response["shops"].forEach((item) =>{
+                  this.totalResults.push(item);
+                });
+                this.loading = false;
+                this.aux = [...this.totalResults];
+                this.initResults(this.totalResults);
+              }
+              //console.table(this.totalResults)
+            },
+            (error) => {
           this.error = true;
           // console.error('Request failed with error');
           // console.error(error);
         });
-  }
-
+      }
+      
   orderResults(order) {
     //console.log("order :" + order.value);
-    this.results = [...this.aux];
+    this.totalResults = [...this.aux];
     switch (order.value) {
       case "reciente": {
         break;
       };
       case "antiguo": {
-        this.results.reverse();
+        this.totalResults.reverse();
         break;
       };
       case "mejor": {
-        this.results.sort(function(a, b){
+        this.totalResults.sort(function(a, b){
           return b.price - a.price;
         });
         break;
       };
       case "peor": {
-        this.results.sort(function(a, b){
+        this.totalResults.sort(function(a, b){
           return a.price - b.price;
         });
         break;
@@ -191,8 +229,9 @@ export class SearchComponent {
         break;
       }
     }
+    this.initResults(this.totalResults);
   }
-
+  
   updatePriceFilter(price) {
     this.price = price;
   }

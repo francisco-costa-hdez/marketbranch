@@ -2,6 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+
+
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+import { RateFilterPipe } from './rate-filter.pipe';
+import { PriceFilterPipe } from './price-filter.pipe';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -23,18 +31,13 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { TermsComponent } from './terms/terms.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormProductComponent } from './form-product/form-product.component';
-
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { FormSearchComponent } from './form-search/form-search.component';
 import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { ShopCardComponent } from './shop-card/shop-card.component';
 import { Error500Component } from './error500/error500.component';
-import { RateFilterPipe } from './rate-filter.pipe';
-import { PriceFilterPipe } from './price-filter.pipe';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
 
 const rutas=[
@@ -86,9 +89,9 @@ const rutas=[
     LoadingScreenComponent,
     ShopCardComponent,
     Error500Component,
+    SearchSidebarComponent,
     RateFilterPipe,
-    PriceFilterPipe,
-    SearchSidebarComponent
+    PriceFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -97,6 +100,7 @@ const rutas=[
     FormsModule,
     ReactiveFormsModule,
     NgxSliderModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]
