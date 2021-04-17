@@ -13,12 +13,13 @@ class CreateShopsImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shops_images', function (Blueprint $table) {
+        Schema::create('shop_images', function (Blueprint $table) {
             $table->id();
             $table->binary('image')->nullable();
             $table->foreignId('shop_id')->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateShopsImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shops_images');
+        Schema::dropIfExists('shop_images');
     }
 }

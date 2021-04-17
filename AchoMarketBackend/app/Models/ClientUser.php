@@ -11,6 +11,8 @@ class ClientUser extends Model
     use HasFactory;
     use HasRoles; 
 
+    protected $guard_name = 'web';
+    
     public function reviews()
     {
         return $this->hasMany(Review::class);

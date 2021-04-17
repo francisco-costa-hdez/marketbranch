@@ -31,6 +31,7 @@ Route::get('products/subcategory/{subcategory_id}',[ProductController::class, 'f
 Route::get('products/category/{category_id}',[ProductController::class, 'findProductByCategory']);
 Route::get('products/str/{string}',[ProductController::class, 'findProductsByString']);
 Route::post('products/create',[ProductController::class, 'createProduct']);
+Route::put('products/update/{id}', [ProductController::class, 'updateProduct']);
 Route::delete('products/delete/{id}',[ProductController::class, 'deleteProduct']);
 Route::post('products/uploadImage', [ProductController::class, 'uploadProductImage']);
 Route::delete('products/delete/img/{img_id}',[ProductController::class, 'deleteProductImage']);

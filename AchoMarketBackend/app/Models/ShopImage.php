@@ -12,4 +12,6 @@ class ShopImage extends Model
     public function shop(){
         return $this->belongsTo(Shop::class);
     }
+
+    protected $fillable = ['image'];
 }

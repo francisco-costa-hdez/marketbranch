@@ -4,81 +4,64 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use App\Models\ShopImage;
+use App\Services\ShopService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function findShopById($id)
+    protected $shopService;
+
+    public function __construct(ShopService $shopService)
     {
-        $shop = Shop::find($id);
+        $this->shopService = $shopService;
+    }
+    public function findShopById(int $id)
+    {
+        $shop = $this->shopService->findShopById($id);
         return response()->json(['shop' => $shop], 200);
     }
+
     public function findAllShops()
     {
-        $allShops = Shop::orderBy('created_at', 'desc')->get();
-        return response()->json(['shops' => $allShops], 200);
+        $shops = $this->shopService->findAllShops();
+        return response()->json(['shops' => $shops], 200);
     }
 
-    public function findShopByString($string)
+    public function findShopByString(string $string)
     {
-        $str = "%" . $string . "%";
-        $shops = DB::select('select * from shops where name like ? OR description like ? order by created_at desc', [$str, $str]);
+        $shops = $this->shopService->findShopByString($string);
         return response()->json(['shops' => $shops], 200);
     }
-    public function findShopByProduct($product_id)
+
+    public function findShopByProduct(int $product_id)
     {
-        $shops = DB::select('SELECT shops.* 
-        FROM shops JOIN products ON shops.id = products.shop_id
-        WHERE products.id = ?', [$product_id]);
-        return response()->json(['shops' => $shops], 200);
+        $shops = $this->shopService->findShopByProduct($product_id);
+        return response()->json(['shop' => $shops], 200);
     }
 
     public function createShop(Request $request)
     {
-        Shop::create([
-            'name' => $request->name,
-            'tlf' => $request->tlf,
-            'description' => $request->description,
-            'address' => $request->address,
-            'email' => $request->email,
-            'shop_user_id' => $request->shop_user_id
-        ]);
+      $this->shopService->createShop($request);
     }
+
     public function updateShop(Request $request)
     {
-
-        $shop = Shop::find($request->id);
-        $shop->name = $request->name;
-        $shop->description = $request->description;
-        $shop->address = $request->address;
-        $shop->email = $request->email;
-        $shop->shop_user_id = $request->shop_user_id;
-        $shop->save();
+        $this->shopService->updateShop($request);
     }
 
     public function uploadShopImage(Request $request)
     {
-        ShopImage::create([
-            'image' => $request->image,
-            'shop_id' => $request->shop_id
-        ]);
+        $this->shopService->uploadShopImage($request);
     }
 
-    public function deleteShopImage($img_id)
+    public function deleteShopImage(int $img_id)
     {
-        $img = ShopImage::find($img_id);
-        $img->delete();
+        $this->shopService->deleteShopImage($img_id);
     }
 
-    
-    public function deleteShop($id){
-        $user = Shop::find($id);
-        $user->delete();
+    public function deleteShop(int $id)
+    {
+        $this->shopService->deleteShop($id);
     }
 }
