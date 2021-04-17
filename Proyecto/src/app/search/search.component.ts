@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { PriceFilterPipe } from '../price-filter.pipe';
+import { RateFilterPipe } from '../rate-filter.pipe';
 
 @Component({
   selector: 'app-search',
@@ -10,43 +12,18 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 })
 export class SearchComponent {
 
-
-  initResults(array: Array<object>) {
-    this.results = []
-    for (let i = 0; i < array.length && i < this.sum; i++) {
-      this.results.push(array[i]);
-    }
-  }
-
-  addItems(startIndex, endIndex) {
-    for (let i = startIndex; i < this.sum && this.totalResults[i]; ++i) {
-      this.results.push(this.totalResults[i]);
-    }
-  }
-
-  appendItems(startIndex, endIndex) {
-    this.addItems(startIndex, endIndex);
-  }
-
-  onScrollDown() {
-    //console.log("scrolled down!!");
-    const start = this.sum;
-    this.sum += 12;
-    this.appendItems(start, this.sum);
-    this.direction = "down";
-  }
-
+  order = "reciente";
   title: string = "Mostrando todos los productos";
   error = false;
+  loading: boolean = true;
+
   results = [];
   totalResults = [];
   aux = [];
-  loading: boolean = true;
 
   sum = 12;
   throttle = 300;
   scrollDistance = 1;
-  scrollUpDistance = 2;
   direction = "";
 
   search = {"filter": '',
@@ -55,16 +32,16 @@ export class SearchComponent {
             
   price = {min: 0,
            max: 10000};
-   
+
   rate = {min: 0,
-          max: 5};         
+        max: 5};         
             
-  constructor(  private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) {
+  constructor( private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) {
     
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // console.log("end");
-
+        this.sum = 12;
         this.totalResults = [];
         this.aux = [];
         this.search = {"filter": '',
@@ -116,7 +93,40 @@ export class SearchComponent {
         }
       }
     });
+   
   } 
+
+  filter(array: Array<object>, min: number, max: number, type: string) {
+    console.log(min, max, type)
+    const filterPipe =  (type == "price" ? new PriceFilterPipe(): new RateFilterPipe());
+    return filterPipe.transform(array,min, max);
+  }
+
+  initResults(array: Array<object>) {
+    this.results = [];
+    console.log(this.sum);
+
+    for (let i = 0; i < array.length && i < this.sum; i++) {
+      this.results.push(array[i]);
+    }
+    // this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max)
+    // this.initResults(this.totalResults)
+  }
+
+  appendItems(startIndex, endIndex) {
+    for (let i = startIndex; i < endIndex && this.totalResults[i]; ++i) {
+      this.results.push(this.totalResults[i]);
+    }
+    this.results
+  }
+
+  onScrollDown() {
+    // console.log("scrolled down!!");
+    const start = this.sum;
+    this.sum += 12;
+    this.appendItems(start, this.sum);
+    this.direction = "down";
+  }
 
   productSearch(term: string) {
     this.db.findProductsByString(term).subscribe(
@@ -125,8 +135,6 @@ export class SearchComponent {
           response["products"].forEach((item) =>{
             this.totalResults.push(item);
           });
-          this.totalResults.forEach((item) => {
-          })
           this.loading = false;
           this.aux = [...this.totalResults];
           this.initResults(this.totalResults);
@@ -201,10 +209,13 @@ export class SearchComponent {
         });
       }
       
-  orderResults(order) {
+  orderResults(order = null) {
     //console.log("order :" + order.value);
     this.totalResults = [...this.aux];
-    switch (order.value) {
+    if (order != null && this.order != order.value) {
+      this.order = order.value;
+    }
+    switch (this.order) {
       case "reciente": {
         break;
       };
@@ -225,7 +236,7 @@ export class SearchComponent {
         break;
       };
       default: {
-        order.value="reciente"
+        order.value = "reciente";
         break;
       }
     }
@@ -233,11 +244,29 @@ export class SearchComponent {
   }
   
   updatePriceFilter(price) {
-    this.price = price;
+    if (this.price.max != price.max || this.price.min != price.min) {
+      this.price.max = Number(price.max);
+      this.price.min = Number(price.min);
+      this.orderResults();
+      this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max, "price")
+      console.table(this.totalResults)
+      console.table(this.results)
+      this.initResults(this.totalResults)
+      console.table(this.results)
+    }
   }
 
   updateRateFilter(rate) {
-    this.rate = rate;
+    if (this.rate.max != rate.max || this.rate.min != rate.min) {
+      this.rate.max = Number(rate.max);
+      this.rate.min = Number(rate.min);
+      this.orderResults();
+      this.totalResults = this.filter(this.totalResults, this.rate.min, this.rate.max, "rate")
+      console.table(this.totalResults)
+      console.table(this.results)
+      this.initResults(this.totalResults)
+      console.table(this.results)
+    }
   }
 
 }

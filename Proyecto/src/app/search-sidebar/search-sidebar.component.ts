@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { Options} from '@angular-slider/ngx-slider';
 
 @Component({
@@ -31,15 +32,27 @@ export class SearchSidebarComponent implements AfterViewInit {
     ceil: 10000
   };
 
-  constructor() { };
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        // console.log("end");
+        this.rate.min = 0;
+        this.rate.max = 5;
+        this.price = {min: 0,
+                      max: 10000};
+  }
+    });
+  }
 
   ngAfterViewInit(): void {
     if ((this.minPricing && this.maxPricing)) {
       this.updatePrice(this.minPricing.nativeElement, this.maxPricing.nativeElement);
       this.priceChange();
     }
-    this.updateRate(this.minRating.nativeElement, this.maxRating.nativeElement);
-    this.rateChange();
+    if ((this.minRating && this.maxRating)) {
+      this.updateRate(this.minRating.nativeElement, this.maxRating.nativeElement);
+      this.rateChange();
+    }
   }
 
   priceChange() {
@@ -57,8 +70,8 @@ export class SearchSidebarComponent implements AfterViewInit {
   }
   
   updateRate(minInput, maxInput) {
-    minInput.value = this.rate.min;
-    maxInput.value = this.rate.max;
+    minInput.value = Number(this.rate["min"]);
+    maxInput.value = Number(this.rate["max"]);
     this.rateChange()
   }
   
@@ -68,7 +81,12 @@ export class SearchSidebarComponent implements AfterViewInit {
   }
   
   updateMinRate(newValue) {
-    this.rate.min = newValue;
+    if (this.rate.max <= newValue) {
+      this.rate.min = this.rate.max;
+      this.rate.max = newValue;
+    } else {
+      this.rate.min = newValue;
+    }
     this.rateChange()
   }
   

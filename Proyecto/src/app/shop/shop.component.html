@@ -83,7 +83,7 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
                     <select  #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
-                    id="orderAllProducts" (change)="orderProducts(order)">
+                    id="orderAllProducts" (change)="orderResults(order)">
                         <option value="reciente">Más recientes</option>
                         <option value="antiguo">Más antiguos</option>
                         <option value="mejor">Mejor valorados</option>
@@ -92,11 +92,14 @@
                 </div>
             </form>
         </div>
-                <div class="container  m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4">
-                    <ng-container *ngFor="let product of products">
-                        <app-product-card [product]="product" class="my-1"></app-product-card>
-                    </ng-container>
+                <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
+                infinite-scroll
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
+                <app-product-card *ngFor="let result of results " [product]="result" class="my-1"></app-product-card>
             </div>
+
             </article>
         <br>
     </section>

@@ -10,9 +10,16 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 export class ShopComponent implements OnInit {
 
   shop;
-  products;
+  results = [];
+  totalResults;
   aux;
   best = [];
+
+  order = "reciente";
+  sum = 6;
+  throttle = 300;
+  scrollDistance = 1;
+  direction = "";
 
   loading: boolean = true;
   show: boolean = false;
@@ -21,6 +28,33 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.getShop(this.route.snapshot.paramMap.get('id'));
+  }
+
+  initResults(array: Array<object>) {
+    this.results = [];
+    console.log(this.sum);
+
+    for (let i = 0; i < array.length && i < this.sum; i++) {
+      this.results.push(array[i]);
+    }
+    console.table(this.results);
+    // this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max)
+    // this.initResults(this.totalResults)
+  }
+
+  appendItems(startIndex, endIndex) {
+    for (let i = startIndex; i < endIndex && this.totalResults[i] != null; ++i) {
+      this.results.push(this.totalResults[i]);
+    }
+    this.results
+  }
+
+  onScrollDown() {
+    // console.log("scrolled down!!");
+    const start = this.sum;
+    this.sum += 6;
+    this.appendItems(start, this.sum);
+    this.direction = "down";
   }
 
   chosePrincipal() {
@@ -49,14 +83,14 @@ export class ShopComponent implements OnInit {
   getProducts(id) {
     this.db.findProductByShop(id).subscribe(
       (response) => {
-        this.products = [];
+        this.totalResults = [];
         this.aux = [];
         if (response["products"]) {
           response["products"].forEach((item) => {
-            this.products.push(item);
+            this.totalResults.push(item);
           });
-          this.aux = [...this.products];
-          //console.table(this.products);
+          this.aux = [...this.totalResults];
+          //console.table(this.totalResults);
           //console.table(this.aux);
           this.aux.sort(function(a, b){
             return b.price - a.price;
@@ -66,11 +100,13 @@ export class ShopComponent implements OnInit {
               this.best[i] = this.aux[i];
             }
           }
-          this.aux = [...this.products];
+          this.aux = [...this.totalResults];
+          this.initResults(this.totalResults);
+          // console.table(this.results)
           //console.table(this.aux)
           //console.table(this.best
         }
-        //console.table(this.products)
+        //console.table(this.totalResults)
       },
       (error) => {
         console.error('Request failed with error');
@@ -79,59 +115,37 @@ export class ShopComponent implements OnInit {
   
   }
 
-  orderProducts(order) {
-    console.log("cambiar el orden a :" + order.value)
-    switch (order.value) {
+  orderResults(order = null) {
+    //console.log("order :" + order.value);
+    this.totalResults = [...this.aux];
+    if (order != null && this.order != order.value) {
+      this.order = order.value;
+    }
+    switch (this.order) {
       case "reciente": {
-        console.log("pre")
-        console.table(this.products);
-        console.table(this.aux);
-        this.products = [...this.aux];
-        console.log("post")
-        console.table(this.products);
-        console.table(this.aux);
         break;
       };
       case "antiguo": {
-        console.log("pre")
-        console.table(this.products);
-        console.table(this.aux);
-        this.products = [...this.aux];
-        this.products.reverse();
-        console.log("post")
-        console.table(this.products);
-        console.table(this.aux);
+        this.totalResults.reverse();
         break;
       };
       case "mejor": {
-        console.log("pre")
-        console.table(this.products);
-        console.table(this.aux);
-        this.products.sort(function(a, b){
+        this.totalResults.sort(function(a, b){
           return b.price - a.price;
         });
-        console.log("post")
-        console.table(this.products);
-        console.table(this.aux);
         break;
       };
       case "peor": {
-        console.log("pre")
-        console.table(this.products);
-        console.table(this.aux);
-        this.products.sort(function(a, b){
+        this.totalResults.sort(function(a, b){
           return a.price - b.price;
         });
-        console.log("post")
-        console.table(this.products);
-        console.table(this.aux);
         break;
       };
       default: {
-        order.value="reciente"
-        this.products = [...this.aux];
+        order.value = "reciente";
         break;
       }
     }
+    this.initResults(this.totalResults);
   }
 }

@@ -37,18 +37,35 @@
         </div> -->
         <!-- Without infinite-scroll -->
 
-            <div class="search-results col-12 col-lg-9 row mx-auto px-auto" [ngClass]="{ 'row-cols-2 row-cols-md-3 row-cols-lg-4' : search.type == 'Producto', 'row-cols-1 row-cols-lg-2' : search.type == 'Tienda' }"
+            <!-- <div class="search-results col-12 col-lg-9 row mx-auto px-auto" [ngClass]="{ 'row-cols-2 row-cols-md-3 row-cols-lg-4' : search.type == 'Producto', 'row-cols-1 row-cols-lg-2' : search.type == 'Tienda' }"
                 infinite-scroll
                 [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollUpDistance]="scrollUpDistance"
                 [infiniteScrollThrottle]="throttle"
                 (scrolled)="onScrollDown()">
                 <ng-container *ngIf="search.type == 'Producto'">
-                    <app-product-card *ngFor="let result of results " [product]="result" class="my-1"></app-product-card>
+                    <ng-container *ngFor="let result of ( results | priceFilter:price.min:price.max | rateFilter:rate.min:rate.max )">
+                        <app-product-card [product]="result" class="my-1"></app-product-card>
+                    </ng-container>
                 </ng-container>
                 <ng-container *ngIf="search.type == 'Tienda'">
                     <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
                 </ng-container>
+            </div> -->
+             <div *ngIf="search.type == 'Producto'" class="search-results col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto"
+                infinite-scroll
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
+                        <app-product-card  *ngFor="let result of results" [product]="result" class="my-1"></app-product-card>
+               
+            </div>
+            <div *ngIf="search.type == 'Tienda'" class="search-results col-12 col-lg-9 row row-cols-1 row-cols-lg-2 mx-auto px-auto"
+                infinite-scroll
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
+                <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
+               
             </div>
         </div>
     </article>
