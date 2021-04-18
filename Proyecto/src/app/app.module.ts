@@ -39,11 +39,13 @@ import { LoadingScreenComponent } from './loading-screen/loading-screen.componen
 import { ShopCardComponent } from './shop-card/shop-card.component';
 import { Error500Component } from './error500/error500.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
+import { FormLogInComponent } from './form-log-in/form-log-in.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
   { path: 'cliente', component: CustomerComponent},
+  { path: 'login', component: FormLogInComponent},
   { path: 'registro', component: FormUserComponent},
   { path: 'busqueda', component: SearchComponent},
   { path: 'producto/:id', component: ProductComponent},
@@ -91,7 +93,8 @@ const rutas=[
     Error500Component,
     SearchSidebarComponent,
     RateFilterPipe,
-    PriceFilterPipe
+    PriceFilterPipe,
+    FormLogInComponent
   ],
   imports: [
     BrowserModule,

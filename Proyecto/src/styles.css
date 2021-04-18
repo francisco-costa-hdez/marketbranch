@@ -2418,3 +2418,8 @@ NUESTRO*/
     .carousel-controller {
         font-size: 2em;
     }
+
+    .border-y-0 {
+        border-top: none;
+        border-bottom: none;
+    }
