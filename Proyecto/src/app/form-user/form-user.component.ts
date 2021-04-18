@@ -24,7 +24,7 @@ export class FormUserComponent implements OnInit {
       tlf:['',Validators.compose([Validators.minLength(9),Validators.required])],
       email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
       profile_img:[''],
-      password:['',Validators.compose([Validators.minLength(8),Validators.required])],
+      password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])],
       password2:['',Validators.required],
       check1:[false,Validators.required]
     }
@@ -77,13 +77,13 @@ export class FormUserComponent implements OnInit {
     this.client.profile_img=this.img.value
   
 
-    console.log(this.client)
-    let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
-    console.log(arrayClient)
-    let jsonClient = JSON.stringify(this.client)
-    console.log(jsonClient)
-    let jsonArrayClient = JSON.stringify(arrayClient)
-    console.log(jsonArrayClient)
+    // console.log(this.client)
+    // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
+    // console.log(arrayClient)
+    // let jsonClient = JSON.stringify(this.client)
+    // console.log(jsonClient)
+    // let jsonArrayClient = JSON.stringify(arrayClient)
+    // console.log(jsonArrayClient)
     this.db.createClientUser(this.client).subscribe(
       (response) => {
         console.log("Todo ha ido bien")
@@ -97,11 +97,5 @@ export class FormUserComponent implements OnInit {
     
   }
 
-  // samePass(){
-  //   if(this.password.value==this.password2.value){
-  //     return this.password.valid==true
-  //   }
-  //   else return this.password.valid==false
-  // }
 
 }
