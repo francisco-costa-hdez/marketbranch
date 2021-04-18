@@ -47,10 +47,9 @@ export class SearchComponent {
         this.search = {"filter": '',
           "term": '',
           "type": ''};
-        
         this.route.queryParams.subscribe(params => {
-          this.search.filter = params.filter;
-          this.search.term = params.term;
+            this.search.filter = params.filter;
+            this.search.term = params.term;
         });
         
         // console.table(this.search)
@@ -82,10 +81,10 @@ export class SearchComponent {
           default: {
             this.search.type = "Producto";
             if (!this.search.term) {
-              this.title = "Todos los productos";
-              this.productShow();
+              this.title = "Todos los productos en " + this.search.filter;
+              this.productByCategory();
             } else {
-              this.title = "Productos relacionados con \"" + this.search.term + "\"";
+              this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
               this.productSearch(this.search.term);
             }
             break;
@@ -166,6 +165,26 @@ export class SearchComponent {
           // console.error('Request failed with error');
           // console.error(error);
         });
+      }
+
+    productByCategory(category: string) {
+      // this.db.findProductsByCategory(category_id: Number).subscribe(
+      //   (response) => {
+      //     if (response["products"]) {
+      //       response["products"].forEach((item) =>{
+      //         this.totalResults.push(item);
+      //       });
+      //       this.loading = false;
+      //       this.aux = [...this.totalResults];
+      //       this.initResults(this.totalResults);
+      //     }
+      //     //console.table(this.totalResults)
+      //   },
+      //   (error) => {
+      //     this.error = true;
+      //     // console.error('Request failed with error');
+      //     // console.error(error);
+      //   });
       }
       
       shopSearch(term: string) {
