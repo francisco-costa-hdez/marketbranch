@@ -81,11 +81,15 @@ export class SearchComponent {
           default: {
             this.search.type = "Producto";
             if (!this.search.term) {
-              this.title = "Todos los productos en " + this.search.filter;
-              this.productByCategory(this.search.filter);
+              this.title = "Todos los productos";
+              this.productShow();
+              // this.title = "Todos los productos en " + this.search.filter;
+              // this.productByCategory(this.search.filter);
             } else {
-              this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
+              this.title = "Productos relacionados con \"" + this.search.term + "\"";
               this.productSearch(this.search.term);
+              // this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
+              // this.productSearch(this.search.term);
             }
             break;
           }
