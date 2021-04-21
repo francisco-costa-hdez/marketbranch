@@ -11,6 +11,8 @@ import { MarketPlaceDBService } from 'src/market-place-db.service';
 export class ProductComponent implements OnInit {
 
   product;
+  shop;
+  categorization;
   loading: boolean = true;
   show: boolean = false;
 
@@ -33,11 +35,36 @@ export class ProductComponent implements OnInit {
       (response) => {
         if (response["product"]) {
           this.product = response["product"][0];
-          this.loading = false;
-          //console.log(this.product)
+          console.log(this.product)
+          this.getCategorization(this.product.subcategory_id)
+          this.getShop(this.product.shop_id) 
       }},
       (error) =>  {});
-    // this.movie = this.datos.getThisPelicula(id);
-    // console.table(this.movie);
   }
+
+  getCategorization(subcategory_id: string | number) {
+    this.db.findCategoryBysubCategoryId(subcategory_id).subscribe(
+      (response) => {
+        if (response["category"]) {
+          this.categorization = response["category"][0];
+          this.loading = false;
+          console.log(this.categorization)
+         
+      }},
+      (error) =>  {});
+  }
+
+  getShop(shop_id: string | number) {
+    console.log("here");
+    this.db.findShopByProduct(shop_id).subscribe(
+      (response) => {
+        if (response) {
+          this.shop = response["shop"];
+          this.loading = false;
+          console.log(this.shop)
+         
+      }},
+      (error) =>  {});
+  }
+
 }

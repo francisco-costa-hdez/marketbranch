@@ -130,7 +130,7 @@ export class MarketPlaceDBService {
   
   //Gets the category of an especific subcategory
   findCategoryBysubCategoryId(subcategory_id: string | number) {
-    return this.http.get( this.url + "/subcategory/" + subcategory_id);
+    return this.http.get( this.url + "/category/subcategory/" + subcategory_id);
   }
  
  /**********************************************************************************

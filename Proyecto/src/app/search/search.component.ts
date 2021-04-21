@@ -82,7 +82,7 @@ export class SearchComponent {
             this.search.type = "Producto";
             if (!this.search.term) {
               this.title = "Todos los productos en " + this.search.filter;
-              this.productByCategory();
+              this.productByCategory(this.search.filter);
             } else {
               this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
               this.productSearch(this.search.term);
