@@ -1,8 +1,10 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { CategoryListService } from '../category-list.service';
 import { PriceFilterPipe } from '../price-filter.pipe';
 import { RateFilterPipe } from '../rate-filter.pipe';
+import { SubcategoryFilterPipe } from '../subcategory-filter.pipe';
 
 @Component({
   selector: 'app-search',
@@ -16,6 +18,7 @@ export class SearchComponent {
   title: string = "Mostrando todos los productos";
   error = false;
   loading: boolean = true;
+  categoryId: number;
 
   results = [];
   totalResults = [];
@@ -34,16 +37,22 @@ export class SearchComponent {
            max: 10000};
 
   rate = {min: 0,
-        max: 5};         
+        max: 5};
+  
+  subcategories = [];
             
-  constructor( private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService ) {
+  constructor( private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService, private categoryList: CategoryListService) {
     
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // console.log("end");
+        this.loading = true;
+        this.error = false;
         this.sum = 12;
+        this.results = [];
         this.totalResults = [];
         this.aux = [];
+        this.categoryId = 0;
         this.search = {"filter": '',
           "term": '',
           "type": ''};
@@ -54,185 +63,110 @@ export class SearchComponent {
         
         // console.table(this.search)
         this.loading = true;
-      
-        switch(this.search.filter) {
-          case "Producto": {
-            this.search.type = this.search.filter;
-            if (!this.search.term) {
-              this.title = "Todos los productos";
-              this.productShow();
-            } else {
-              this.title = "Productos relacionados con \"" + this.search.term + "\"";
-              this.productSearch(this.search.term);
-            }
-            break;
+
+        if (this.search.filter == "Producto") {
+          this.choseProduct();
+        } else if (this.search.filter == "Tienda") {
+          this.choseShop();
+        } else if (this.search.filter != undefined) {
+          if (!(this.categoryList.getCategories).length) {
+            this.db.findAllCategories().subscribe(
+            (response) => {
+              let categories = []
+              if (response["categories"]) {
+                response["categories"].forEach((item) =>{
+                  categories.push(item);
+                });
+                this.categoryList.setCategoriesFromArray(categories);
+                this.choseCategory();
+              }
+            },
+            (error) => {
+              console.error('Request failed with error');
+              console.error(error);
+            });
+          } else {
+            this.choseCategory();
           }
-          case "Tienda": {
-            this.search.type = this.search.filter;
-            if (!this.search.term) {
-              this.title = "Todas las tiendas";
-              this.shopShow();
-            } else {
-              this.title = "Tiendas relacionadas con \"" + this.search.term + "\"";
-              this.shopSearch(this.search.term);
-            }
-            break;
-          }
-          default: {
-            this.search.type = "Producto";
-            if (!this.search.term) {
-              this.title = "Todos los productos";
-              this.productShow();
-              // this.title = "Todos los productos en " + this.search.filter;
-              // this.productByCategory(this.search.filter);
-            } else {
-              this.title = "Productos relacionados con \"" + this.search.term + "\"";
-              this.productSearch(this.search.term);
-              // this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
-              // this.productSearch(this.search.term);
-            }
-            break;
-          }
+        } else {
+          this.choseProduct();
         }
       }
-    });
-   
+    }); 
   } 
 
-  filter(array: Array<object>, min: number, max: number, type: string) {
+  choseShop() {
+    this.search.type = this.search.filter;
+    if (!this.search.term) {
+      this.title = "Todas las tiendas";
+      this.showShops();
+    } else {
+      this.title = "Tiendas relacionadas con \"" + this.search.term + "\"";
+      this.searchShop(this.search.term);
+    }
+  }
+
+  choseProduct() {
+    this.search.type = "Producto";
+    if (!this.search.term) {
+      this.title = "Todos los productos";
+      this.showProducts();
+    } else {
+      this.title = "Productos relacionados con \"" + this.search.term + "\"";
+      this.searchProduct(this.search.term);
+    }
+  }
+
+  choseCategory() {
+    this.search.type = "Producto";
+    this.categoryId = this.categoryList.getCategoryId(this.search.filter);
+    if (this.categoryId) {
+      if (!this.search.term) {
+        this.title = "Todos los productos en " + this.search.filter;
+        this.showByCategory(this.categoryId);
+      } else {
+        this.title = "Productos relacionados con \"" + this.search.term + "\" en " + this.search.filter;
+        this.searchByCategory(this.categoryId, this.search.term);
+      }
+    } else {
+      this.choseProduct();
+    }
+  }
+
+  filterNumeric(array: Array<object>, min: number, max: number, type: string) {
     console.log(min, max, type)
     const filterPipe =  (type == "price" ? new PriceFilterPipe(): new RateFilterPipe());
     return filterPipe.transform(array,min, max);
   }
 
-  initResults(array: Array<object>) {
-    this.results = [];
-    console.log(this.sum);
 
-    for (let i = 0; i < array.length && i < this.sum; i++) {
-      this.results.push(array[i]);
-    }
-    // this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max)
-    // this.initResults(this.totalResults)
+  onScrollDown() {
+    // console.log("scrolled down!!");
+    const start = this.sum;
+    this.sum += 12;
+    this.rersultsAppend(start, this.sum);
+    this.direction = "down";
   }
 
-  appendItems(startIndex, endIndex) {
+  rersultsAppend(startIndex, endIndex) {
     for (let i = startIndex; i < endIndex && this.totalResults[i]; ++i) {
       this.results.push(this.totalResults[i]);
     }
     this.results
   }
 
-  onScrollDown() {
-    // console.log("scrolled down!!");
-    const start = this.sum;
-    this.sum += 12;
-    this.appendItems(start, this.sum);
-    this.direction = "down";
+  resultsInit(array: Array<object>) {
+    this.results = [];
+    // console.log(this.sum);
+
+    for (let i = 0; i < array.length && i < this.sum; i++) {
+      this.results.push(array[i]);
+    }
+    // this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max)
+    // this.resultsInit(this.totalResults)
   }
 
-  productSearch(term: string) {
-    this.db.findProductsByString(term).subscribe(
-      (response) => {
-        if (response["products"]) {
-          response["products"].forEach((item) =>{
-            this.totalResults.push(item);
-          });
-          this.loading = false;
-          this.aux = [...this.totalResults];
-          this.initResults(this.totalResults);
-        } 
-        //console.table(this.totalResults)
-      },
-      (error) => {
-        this.error = true;
-        // console.error('Request failed with error');
-        // console.error(error);
-      });
-    }
-    
-    productShow() {
-      this.db.findAllProducts().subscribe(
-        (response) => {
-          if (response["products"]) {
-            response["products"].forEach((item) =>{
-              this.totalResults.push(item);
-            });
-            this.loading = false;
-            this.aux = [...this.totalResults];
-            this.initResults(this.totalResults);
-          }
-          //console.table(this.totalResults)
-        },
-        (error) => {
-          this.error = true;
-          // console.error('Request failed with error');
-          // console.error(error);
-        });
-      }
-
-    productByCategory(category: string) {
-      // this.db.findProductsByCategory(category_id: Number).subscribe(
-      //   (response) => {
-      //     if (response["products"]) {
-      //       response["products"].forEach((item) =>{
-      //         this.totalResults.push(item);
-      //       });
-      //       this.loading = false;
-      //       this.aux = [...this.totalResults];
-      //       this.initResults(this.totalResults);
-      //     }
-      //     //console.table(this.totalResults)
-      //   },
-      //   (error) => {
-      //     this.error = true;
-      //     // console.error('Request failed with error');
-      //     // console.error(error);
-      //   });
-      }
-      
-      shopSearch(term: string) {
-        this.db.findShopByString(term).subscribe(
-          (response) => {
-            if (response) {
-              response["shops"].forEach((item) =>{
-                this.totalResults.push(item);
-              });
-              this.loading = false;
-              this.aux = [...this.totalResults];
-              this.initResults(this.totalResults);
-            }
-            // console.table(this.totalResults);
-            // console.log(this.search.type)
-          },
-          (error) => {
-            this.error = true;
-            // console.error('Request failed with error');
-            // console.error(error);
-          });
-        }
-        
-        shopShow() {
-          this.db.findAllShops().subscribe(
-            (response) => {
-              if (response) {
-                response["shops"].forEach((item) =>{
-                  this.totalResults.push(item);
-                });
-                this.loading = false;
-                this.aux = [...this.totalResults];
-                this.initResults(this.totalResults);
-              }
-              //console.table(this.totalResults)
-            },
-            (error) => {
-          this.error = true;
-          // console.error('Request failed with error');
-          // console.error(error);
-        });
-      }
-      
-  orderResults(order = null) {
+  resultsOrder(order = null) {
     //console.log("order :" + order.value);
     this.totalResults = [...this.aux];
     if (order != null && this.order != order.value) {
@@ -263,19 +197,145 @@ export class SearchComponent {
         break;
       }
     }
-    this.initResults(this.totalResults);
+    this.resultsInit(this.totalResults);
+  }
+
+  searchByCategory(category_id, term: string) {
+    console.log(category_id + " " + term + " " + this.search.filter);
+    this.db.findProductsByCategoryAndName(category_id, term).subscribe(
+      (response) => {
+        if (response["products"]) {
+          response["products"].forEach((item) =>{
+            this.totalResults.push(item);
+          });
+          this.aux = [...this.totalResults];
+          this.resultsInit(this.totalResults);
+          this.loading = false;
+        }
+        //console.table(this.totalResults)
+      },
+      (error) => {
+        this.error = true;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }
+    );
+  }
+
+  searchProduct(term: string) {
+    this.db.findProductsByString(term).subscribe(
+      (response) => {
+        if (response["products"]) {
+          response["products"].forEach((item) =>{
+            this.totalResults.push(item);
+          });
+          this.aux = [...this.totalResults];
+          this.resultsInit(this.totalResults);
+          this.loading = false;
+        } 
+        //console.table(this.totalResults)
+      },
+      (error) => {
+        this.error = true;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }
+    );
+  }
+    
+  searchShop(term: string) {
+    this.db.findShopByString(term).subscribe(
+      (response) => {
+        if (response) {
+          response["shops"].forEach((item) =>{
+            this.totalResults.push(item);
+          });
+          this.aux = [...this.totalResults];
+          this.resultsInit(this.totalResults);
+          this.loading = false;
+        }
+        // console.table(this.totalResults);
+        // console.log(this.search.type)
+      },
+      (error) => {
+        this.error = true;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }
+    );
+  }
+
+  showByCategory(category_id) {
+    console.log(category_id + " " + this.search.filter);
+    this.db.findProductsByCategory(category_id).subscribe(
+      (response) => {
+        if (response["products"]) {
+          response["products"].forEach((item) =>{
+            this.totalResults.push(item);
+          });
+          this.aux = [...this.totalResults];
+          this.resultsInit(this.totalResults);
+          this.loading = false;
+        }
+        //console.table(this.totalResults)
+      },
+      (error) => {
+        this.error = true;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }
+    );
+  }
+
+  showProducts() {
+    this.db.findAllProducts().subscribe(
+      (response) => {
+        if (response["products"]) {
+          response["products"].forEach((item) =>{
+            this.totalResults.push(item);
+          });
+          this.aux = [...this.totalResults];
+          this.resultsInit(this.totalResults);
+          this.loading = false;
+        }
+        //console.table(this.totalResults)
+      },
+      (error) => {
+        this.error = true;
+        // console.error('Request failed with error');
+        // console.error(error);
+      }
+    );
+  }
+
+  showShops() {
+    this.db.findAllShops().subscribe(
+      (response) => {
+          if (response) {
+            response["shops"].forEach((item) =>{
+              this.totalResults.push(item);
+            });
+            this.aux = [...this.totalResults];
+            this.resultsInit(this.totalResults);
+            this.loading = false;
+          }
+          //console.table(this.totalResults)
+        },
+        (error) => {
+      this.error = true;
+      // console.error('Request failed with error');
+      // console.error(error);
+      }
+    );
   }
   
   updatePriceFilter(price) {
     if (this.price.max != price.max || this.price.min != price.min) {
       this.price.max = Number(price.max);
       this.price.min = Number(price.min);
-      this.orderResults();
-      this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max, "price")
-      console.table(this.totalResults)
-      console.table(this.results)
-      this.initResults(this.totalResults)
-      console.table(this.results)
+      this.resultsOrder();
+      this.totalResults = this.filterNumeric(this.totalResults, this.price.min, this.price.max, "price")
+      this.resultsInit(this.totalResults)
     }
   }
 
@@ -283,13 +343,22 @@ export class SearchComponent {
     if (this.rate.max != rate.max || this.rate.min != rate.min) {
       this.rate.max = Number(rate.max);
       this.rate.min = Number(rate.min);
-      this.orderResults();
-      this.totalResults = this.filter(this.totalResults, this.rate.min, this.rate.max, "rate")
-      console.table(this.totalResults)
-      console.table(this.results)
-      this.initResults(this.totalResults)
-      console.table(this.results)
+      this.resultsOrder();
+      this.totalResults = this.filterNumeric(this.totalResults, this.rate.min, this.rate.max, "rate")
+      this.resultsInit(this.totalResults)
     }
+  }
+  updateSubcategoryFilter(subcategories) {
+    this.resultsOrder();
+    const SubcategoryFilter = new SubcategoryFilterPipe();
+    this.subcategories = [];
+    subcategories.forEach(subcategory => {
+      if (subcategory.Value == true) {
+        this.subcategories.push(subcategory.id);
+      }
+    });
+    SubcategoryFilter.transform(this.totalResults, this.subcategories);
+    this.resultsInit(this.totalResults)
   }
 
 }

@@ -6,7 +6,7 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
                     <select #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
-                    id="orderAllProducts" (change)="orderResults(order)">
+                    id="orderAllProducts" (change)="resultsOrder(order)">
                         <option value="reciente">Más recientes</option>
                         <option value="antiguo">Más antiguo</option>
                         <option *ngIf="search.type == 'Producto'" value="mejor">Mejor valorados</option>
@@ -17,40 +17,10 @@
         </div>
         <div class="row container-fluid mx-auto p-0">
             <div class="col-12 col-lg-3 my-2  px-auto pb-4">
-               <app-search-sidebar [type]="search.type" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)"></app-search-sidebar>
+               <app-search-sidebar [type]="search.type" [categoryId]="categoryId" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)" (subcategoryChangeEvent)="updateSubcategoryFilter($event)"></app-search-sidebar>
             </div>
-            <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
             <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>
-
-            <!-- Without infinite-scroll: start-->
-            <!-- <div *ngIf="search.type == 'Producto'"
-                class="col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto">
-                <ng-container *ngFor="let result of results | priceFilter:price.min:price.max | rateFilter:rate.min:rate.max ">
-                    <app-product-card [product]="result" class="my-1"></app-product-card>
-                </ng-container>
-            </div>
-            <div *ngIf="search.type == 'Tienda'"
-            class="col-12 col-lg-9 row row-cols-1 row-cols-lg-2  mx-auto px-auto">
-            <ng-container *ngFor="let result of results">
-                <app-shop-card [shop]="result" class="my-1"></app-shop-card>
-            </ng-container>
-        </div> -->
-        <!-- Without infinite-scroll -->
-
-            <!-- <div class="search-results col-12 col-lg-9 row mx-auto px-auto" [ngClass]="{ 'row-cols-2 row-cols-md-3 row-cols-lg-4' : search.type == 'Producto', 'row-cols-1 row-cols-lg-2' : search.type == 'Tienda' }"
-                infinite-scroll
-                [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollThrottle]="throttle"
-                (scrolled)="onScrollDown()">
-                <ng-container *ngIf="search.type == 'Producto'">
-                    <ng-container *ngFor="let result of ( results | priceFilter:price.min:price.max | rateFilter:rate.min:rate.max )">
-                        <app-product-card [product]="result" class="my-1"></app-product-card>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngIf="search.type == 'Tienda'">
-                    <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
-                </ng-container>
-            </div> -->
+            <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
              <div *ngIf="search.type == 'Producto'" class="search-results col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto"
                 infinite-scroll
                 [infiniteScrollDistance]="scrollDistance"
@@ -66,7 +36,7 @@
                 (scrolled)="onScrollDown()">
                 <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
                
-            </div>
+            </div>  
         </div>
     </article>
 </section>

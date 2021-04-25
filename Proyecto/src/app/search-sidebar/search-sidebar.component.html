@@ -3,25 +3,21 @@
     <li class="list-group-item">
         <h4>Filtros</h4>
     </li>
-    <li *ngIf="type == 'Producto'" class="list-group-item">
+    <li *ngIf="categoryId && subcategories.length" class="list-group-item">
         <h5>Subcategorías</h5>
         <div class="pl-3">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="subcategory" value="tal" id="subc-1" checked>
-                <label class="form-check-label" for="subc-1">
-                Tal
+            <div class="form-check" *ngIf="subcategories.length > 1">
+                <input class="form-check-input" type="checkbox" name="all"
+                id="all" [(ngModel)]="all" (change)="updateAllChecked()">
+                <label class="form-check-label" for="all">
+                Seleccionar todas
                 </label>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="subcategory" value="cual" id="subc-2" checked>
-                <label class="form-check-label" for="subc-2">
-                Cual
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="subcategory" value="pascual" id="subc-3" checked>
-                <label class="form-check-label" for="subc-3">
-                Pascual
+            <div *ngFor="let subcategory of subcategories; let i=index"class="form-check">
+                <input class="form-check-input" type="checkbox" name="sub_{{subcategory.id}}" 
+                id="sub_{{subcategory.id}}" [(ngModel)]="checked[i].Value" (change)="updateChecked()">
+                <label class="form-check-label" for="sub_{{subcategory.id}}">
+                {{subcategory.name}}
                 </label>
             </div>
         </div>
@@ -31,11 +27,11 @@
         <div class="form-row pl-3">
             <div class="col-6">
             <label for="minPrice">Desde: </label>
-            <input #minPricing type="number" class="form-control" id="minPrice"  min="0" max="10000" step="5" (change)="updateMinPrice(minPricing.value)">
+            <input #minPricing [(ngModel)]="price.min" type="number" class="form-control" id="minPrice" name="minPrice" min="0" max="10000" step="5" (change)="updateMinPrice(minPricing.value)">
             </div>
             <div class="col-6">
                 <label for="maxPrice">Hasta: </label>
-                <input #maxPricing type="number" class="form-control"  id="maxPrice" min="0" max="10000" step="5" (change)="updateMaxPrice(maxPricing.value)">
+                <input #maxPricing [(ngModel)]="price.max" type="number" class="form-control"  id="maxPrice" name="maxPrice" min="0" max="10000" step="5" (change)="updateMaxPrice(maxPricing.value)">
             </div>
             <ngx-slider #rangeInput [(value)]="price.min" [(highValue)]="price.max" [options]="sliderOptions" (valueChange)="updatePrice(minPricing, maxPricing)"
                 (highValueChange)="updatePrice(minPricing, maxPricing)"></ngx-slider>

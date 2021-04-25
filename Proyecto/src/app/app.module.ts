@@ -40,6 +40,7 @@ import { ShopCardComponent } from './shop-card/shop-card.component';
 import { Error500Component } from './error500/error500.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
 import { FormLogInComponent } from './form-log-in/form-log-in.component';
+import { SubcategoryFilterPipe } from './subcategory-filter.pipe';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -94,7 +95,8 @@ const rutas=[
     SearchSidebarComponent,
     RateFilterPipe,
     PriceFilterPipe,
-    FormLogInComponent
+    FormLogInComponent,
+    SubcategoryFilterPipe
   ],
   imports: [
     BrowserModule,

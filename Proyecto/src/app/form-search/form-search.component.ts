@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { CategoryListService } from '../category-list.service';
 
 @Component({
   selector: 'app-form-search',
@@ -13,10 +14,12 @@ export class FormSearchComponent implements OnInit {
             "term": ''};
   categories = [];
 
-  constructor(private router: Router, private db: MarketPlaceDBService) { }
+  constructor(private router: Router, private db: MarketPlaceDBService, private categoryList: CategoryListService) { }
 
   ngOnInit(): void {
-    this.getCategories();
+    if (!this.categoryList.getCategories().length) {
+      this.setCategories();
+    }
   }
 
   onSubmit() {
@@ -26,6 +29,10 @@ export class FormSearchComponent implements OnInit {
   }
 
   getCategories() {
+    this.categories = this.categoryList.getCategories();
+  }
+
+  setCategories() {
     this.db.findAllCategories().subscribe(
       (response) => {
         this.categories = [];
@@ -33,13 +40,14 @@ export class FormSearchComponent implements OnInit {
           response["categories"].forEach((item) =>{
             this.categories.push(item);
           });
+          this.categoryList.setCategoriesFromArray(this.categories);
         }
       },
       (error) => {
         console.error('Request failed with error');
         console.error(error);
-      });
-    }
+    });
+  }
 
   goToSearch() {
     if (this.search.term) {

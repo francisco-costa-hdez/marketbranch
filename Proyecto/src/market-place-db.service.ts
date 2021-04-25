@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { ClientUser } from './app/client-user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +18,12 @@ export class MarketPlaceDBService {
   findAllProducts() {
     return this.http.get( this.url + "/products");
   }
+  
   //Gets a product with detailed info
   findProductById(product_id: string | number) {
     return this.http.get( this.url + "/products/" + product_id);
   }
+
   //Gets all the products from an especific shop
   findProductByShop(shop_id: string | number) {
     return this.http.get( this.url + "/products/shop/" + shop_id);
@@ -38,6 +37,10 @@ export class MarketPlaceDBService {
   //Gets all the products from an especific category
   findProductsByCategory(category_id: string | number) {
     return this.http.get( this.url + "/products/category/" + category_id);
+  }
+  //Gets all the products from an especific category with coincidence with a pattern in name or description
+  findProductsByCategoryAndName(category_id: string | number, search_term: string) {
+    return this.http.get( this.url + "/products/category/" + category_id + "/name/" + search_term);
   }
 
   //Gets all the products a with coincidence with a pattern in name or description
