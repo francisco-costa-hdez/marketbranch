@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{route('product.create')}}" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
       @csrf
         <form style="margin-left: auto;margin-right: auto;width:30%;">
           <input type="hidden" name="shop_id" value="1">

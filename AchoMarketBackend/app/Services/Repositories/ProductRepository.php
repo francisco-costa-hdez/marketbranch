@@ -52,6 +52,19 @@ class ProductRepository
 
     }
 
+    public function findProductByCategoryAndName(int $category_id, string $name)
+    {
+        $str = '%'.$name.'%';
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
+        FROM (products p LEFT JOIN reviews r 
+        ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
+        WHERE s.category_id = ? and p.name like ?
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id
+        ORDER BY p.created_at DESC',[$category_id,$str]);
+        return $products;
+
+    }
+
     public function findProductById(int $id)
     {
         $product = DB::select('SELECT p.*, ifnull(round(AVG(r.rating),1),0)  AS media_rating
@@ -98,8 +111,11 @@ class ProductRepository
             'stock'=> $request->stock,
             'availability' =>  $request->availability,
             'subcategory_id' => $request->subcategory_id,
-            'trademark_id' => $request->trademark_id
+            'trademark_id' => $request->trademark_id,
+            'shop_id' => $request->shop_id
          ]);
+
+         return response()->json(['message' => 'Producto creado correctamente']);
     }
 
     public function updateProduct(int $id, Request $request)

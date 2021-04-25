@@ -29,18 +29,17 @@ class ShopRepository
         return $this->shop->orderBy('created_at', 'desc')->get();
     }
 
-    public function findShopByString(string $string)
-    {
-        $str = "%" . $string . "%";
-        $shops = DB::select('select * from shops where name like ? OR description like ? order by created_at desc', [$str, $str]);
-        return $shops;
-    }
-    
     public function findShopByProduct(int $product_id)
     {
         return $this->product->find($product_id)->shop;
     }
 
+    public function findShopByStr(string $str)
+    {
+        return $this->shop
+            ->where('name', 'like', '%' . $str . '%')
+            ->orWhere('description', 'like', '%' . $str . '%')->get();
+    }
     public function createShop(Request $request)
     {
         $this->shop->create([
@@ -51,6 +50,27 @@ class ShopRepository
             'email' => $request->email,
             'shop_user_id' => $request->shop_user_id
         ]);
+
+        return response()->json(['message' => 'Tienda creada correctamente']);
+    }
+
+    public function uploadShopImage(Request $request)
+    {
+        $this->shop->find($request->shop_id)
+            ->shopImages()->create(['image' => $request->image]);
+        return response()->json(['message' => 'Imagen subida correctamente']);
+    }
+
+    public function deleteShopImage(int $img_id)
+    {
+        ShopImage::find($img_id)->delete();
+        return response()->json(['message' => 'Imagen borrada correctamente']);
+    }
+
+    public function deleteShop(int $id)
+    {
+        $this->shop->destroy($id);
+        return response()->json(['message' => 'Tienda borrada correctamente']);
     }
 
     public function updateShop(Request $request)
@@ -62,23 +82,7 @@ class ShopRepository
             'address' => $request->address,
             'email' => $request->email,
         ]);
-    }
 
-    public function uploadShopImage(Request $request)
-    {
-        $this->shop->find($request->shop_id)
-        ->shopImages()->create(['image' => $request->image]);
+        return response()->json(['message' => 'Los datos se han guardado correctamente']);
     }
-
-    public function deleteShopImage(int $img_id)
-    {
-        ShopImage::find($img_id)->delete();
-    }
-
-    
-    public function deleteShop(int $id)
-    {
-        $this->shop->destroy($id);
-    }
-
 }

@@ -22,16 +22,26 @@ class ClientUserService implements IClientUserService
 
     public function createClientUser(Request $request)
     {
-        $this->clientUserRepository->createClientUser($request);
+       return $this->clientUserRepository->createClientUser($request);
     }
 
+    public function logout(Request $request)
+    {
+        return $this->clientUserRepository->logout($request);
+    }
+    
+    public function login(Request $request)
+    {
+        return $this->clientUserRepository->login($request);
+    }
+    
     public function updateClientUser(Request $request)
     {
-        $this->clientUserRepository->updateClientUser($request);
+       return $this->clientUserRepository->updateClientUser($request);
     }
 
     public function deleteClientUser(int $id)
     {
-        $this->clientUserRepository->deleteClientUser($id);
+       return $this->clientUserRepository->deleteClientUser($id);
     }
 }

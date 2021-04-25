@@ -22,17 +22,27 @@ class ShopUserService implements IShopUserService
 
     public function createShopUser(Request $request)
     {
-        $this->shopUserRepository->createShopUser($request);
+        return $this->shopUserRepository->createShopUser($request);
     }
 
-    public function updateshopUser(Request $request)
+    public function login(Request $request)
     {
-        $this->shopUserRepository->updateshopUser($request);
+        return $this->shopUserRepository->login($request);
+    }
+
+    public function logout(Request $request)
+    {
+        return $this->shopUserRepository->logout($request);
+    }
+
+    public function updateShopUser(Request $request)
+    {
+        return $this->shopUserRepository->updateShopUser($request);
     }
     
     public function deleteShopUser(int $id)
     {
-        $this->shopUserRepository->deleteShopUser($id);
+        return $this->shopUserRepository->deleteShopUser($id);
     }
 
 }

@@ -34,6 +34,12 @@ class ProductController extends Controller
         return response()->json(['products'=> $products],200);
     }
 
+    public function findProductByCategoryAndName(int $category_id, string $name)
+    {
+        $products = $this->productService->findProductByCategoryAndName($category_id,$name);
+        return response()->json(['products'=> $products],200);
+    }
+
     public function findProductById(int $id)
     {
         $product = $this->productService->findProductById($id);
@@ -53,7 +59,12 @@ class ProductController extends Controller
 
     public function createProduct(Request $request)
     {
-        $this->productService->createProduct($request);     
+        if(auth()->user()->tokenCan('shop_user'))
+        {
+            return $this->productService->createProduct($request);  
+        }
+        else return response()->json(['message'=>'Usuario no autorizado']);
+           
     }
 
     public function updateProduct(int $id, Request $request)

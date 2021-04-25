@@ -25,39 +25,39 @@ class ShopService implements IShopService
         return $this->shopRepository->findAllShops();
     }
 
-    public function findShopByString(string $string)
-    {
-        return $this->findShopByString($string);
-    }
-
     public function findShopByProduct(int $product_id)
     {
         return $this->shopRepository->findShopByProduct($product_id);
     }
 
-    public function createShop(Request $request)
+    public function findShopByStr(string $str)
     {
-        $this->shopRepository->createShop($request);
+        return $this->shopRepository->findShopByStr($str);
     }
 
-    public function updateShop(Request $request)
+    public function createShop(Request $request)
     {
-        $this->updateShop($request);
+        return $this->shopRepository->createShop($request);
     }
 
     public function uploadShopImage(Request $request)
     {
-        $this->shopRepository->uploadShopImage($request);
+        return $this->shopRepository->uploadShopImage($request);
     }
 
     public function deleteShopImage($img_id)
     {
-        $this->shopRepository->deleteShopImage($img_id);
+        return $this->shopRepository->deleteShopImage($img_id);
     }
     
     public function deleteShop($id)
     {
-        $this->shopRepository->deleteShop($id);
+        return $this->shopRepository->deleteShop($id);
+    }
+
+    public function updateShop(Request $request)
+    {
+        return $this->shopRepository->updateShop($request);
     }
 
 }

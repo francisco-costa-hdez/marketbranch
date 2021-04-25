@@ -30,6 +30,11 @@ class ProductService implements IProductService
         return $this->productRepository->findProductByCategory($category_id);
     }
 
+    public function findProductByCategoryAndName(int $category_id, string $name)
+    {
+        return $this->productRepository->findProductByCategoryAndName($category_id,$name);
+    }
+
     public function findProductById(int $id)
     {
         return $this->productRepository->findProductById($id);
@@ -47,7 +52,7 @@ class ProductService implements IProductService
 
     public function createProduct(Request $data)
     {
-        $this->productRepository->createProduct($data);
+       return $this->productRepository->createProduct($data);
     }
 
     public function updateProduct(int $id, Request $request)
