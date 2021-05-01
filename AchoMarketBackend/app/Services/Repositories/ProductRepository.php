@@ -42,11 +42,11 @@ class ProductRepository
 
     public function findProductByCategory(int $category_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM (products p LEFT JOIN reviews r 
         ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
         WHERE s.category_id = ?
-        GROUP By p.id, p.name,p.price,p.discount,p.shop_id
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id
         ORDER BY p.created_at DESC',[$category_id]);
         return $products;
 
@@ -55,11 +55,11 @@ class ProductRepository
     public function findProductByCategoryAndName(int $category_id, string $name)
     {
         $str = '%'.$name.'%';
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating
         FROM (products p LEFT JOIN reviews r 
         ON p.id = r.product_id) JOIN subcategories s ON p.subcategory_id = s.id
         WHERE s.category_id = ? and p.name like ?
-        GROUP By p.id, p.name,p.price,p.discount,p.shop_id
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id
         ORDER BY p.created_at DESC',[$category_id,$str]);
         return $products;
 
