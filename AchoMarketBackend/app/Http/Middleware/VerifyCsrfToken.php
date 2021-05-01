@@ -21,5 +21,7 @@ class VerifyCsrfToken extends Middleware
         'clientuser/update',
         'shopuser/create',
         'shopuser/update',
+        'clientuser/login',
+        'shopuser/login',
     ];
 }
