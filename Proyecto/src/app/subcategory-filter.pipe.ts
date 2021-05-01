@@ -7,8 +7,8 @@ export class SubcategoryFilterPipe implements PipeTransform {
 
   transform(array: any[], filter:any[]): any[]{
     if (array && array.length && filter  && filter.length) {
-      // console.table(  array.filter(product => filter.includes(product.subcategory)));
-      return array.filter(product => filter.includes(product.subcategory));
+      //console.table(  array.filter(product => filter.includes(product.subcategory_id)));
+      return array.filter(product => filter.includes(product.subcategory_id));
     }
     return array;
   }

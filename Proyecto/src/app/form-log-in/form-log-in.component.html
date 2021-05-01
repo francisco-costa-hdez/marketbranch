@@ -1,11 +1,11 @@
 <section class="container-fluid d-flex justify-content-center">
     <div class="card col-12 col-md-8 col-lg-6 border-y-0 radius-0">
         <div class="card-body my-3">
-            <form #form="ngForm" [formGroup]="loginForm" class="needs-validation" novalidate>
+            <form (ngSubmit)="onSubmit()" #form="ngForm" [formGroup]="loginForm" class="needs-validation" novalidate>
                 <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input type="text" name="name" id="name" class="form-control" required
-                    formControlName="name">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" required
+                    formControlName="email">
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>

@@ -139,7 +139,17 @@ export class MarketPlaceDBService {
  /**********************************************************************************
   ***** Client User ***************************************************************
  ***********************************************************************************/
- 
+
+  //Logs in an user
+  LogInClientUser(user) {
+    return this.http.post( this.url + "/clientuser/login", user);
+  }
+  
+  //Logs out an user
+  LogOutClientUser(user) {
+    return this.http.post( this.url + "/clientuser/logout", user);
+  }
+  
   //Gets a clientUser with detailed info
   findClientUserById(user_id: string | number) {
     return this.http.get( this.url + "/clientuser/" + user_id);
@@ -159,6 +169,8 @@ export class MarketPlaceDBService {
   deleteClientUser(user_id) {
     return this.http.delete( this.url + "/clientuser/delete/", user_id);
   }
+
+
 
  /**********************************************************************************
   ***** Shop User ******************************************************************

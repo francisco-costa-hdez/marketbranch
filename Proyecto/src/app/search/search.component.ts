@@ -62,7 +62,6 @@ export class SearchComponent {
         });
         
         // console.table(this.search)
-        this.loading = true;
 
         if (this.search.filter == "Producto") {
           this.choseProduct();
@@ -133,8 +132,7 @@ export class SearchComponent {
     }
   }
 
-  filterNumeric(array: Array<object>, min: number, max: number, type: string) {
-    console.log(min, max, type)
+  filterByNumbers(array: Array<object>, min: number, max: number, type: string) {
     const filterPipe =  (type == "price" ? new PriceFilterPipe(): new RateFilterPipe());
     return filterPipe.transform(array,min, max);
   }
@@ -144,11 +142,11 @@ export class SearchComponent {
     // console.log("scrolled down!!");
     const start = this.sum;
     this.sum += 12;
-    this.rersultsAppend(start, this.sum);
+    this.resultsAppend(start, this.sum);
     this.direction = "down";
   }
 
-  rersultsAppend(startIndex, endIndex) {
+  resultsAppend(startIndex, endIndex) {
     for (let i = startIndex; i < endIndex && this.totalResults[i]; ++i) {
       this.results.push(this.totalResults[i]);
     }
@@ -334,7 +332,7 @@ export class SearchComponent {
       this.price.max = Number(price.max);
       this.price.min = Number(price.min);
       this.resultsOrder();
-      this.totalResults = this.filterNumeric(this.totalResults, this.price.min, this.price.max, "price")
+      this.totalResults = this.filterByNumbers(this.totalResults, this.price.min, this.price.max, "price")
       this.resultsInit(this.totalResults)
     }
   }
@@ -344,20 +342,27 @@ export class SearchComponent {
       this.rate.max = Number(rate.max);
       this.rate.min = Number(rate.min);
       this.resultsOrder();
-      this.totalResults = this.filterNumeric(this.totalResults, this.rate.min, this.rate.max, "rate")
+      this.totalResults = this.filterByNumbers(this.totalResults, this.rate.min, this.rate.max, "rate")
       this.resultsInit(this.totalResults)
     }
   }
+
   updateSubcategoryFilter(subcategories) {
-    this.resultsOrder();
     const SubcategoryFilter = new SubcategoryFilterPipe();
     this.subcategories = [];
+
     subcategories.forEach(subcategory => {
       if (subcategory.Value == true) {
         this.subcategories.push(subcategory.id);
       }
     });
-    SubcategoryFilter.transform(this.totalResults, this.subcategories);
+
+    this.resultsOrder();
+    if (this.subcategories.length) {
+      this.totalResults = SubcategoryFilter.transform(this.totalResults, this.subcategories);
+    } else {
+      this.totalResults = [];
+    }
     this.resultsInit(this.totalResults)
   }
 

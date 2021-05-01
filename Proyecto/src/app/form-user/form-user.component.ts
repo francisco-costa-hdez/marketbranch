@@ -1,6 +1,5 @@
-import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { ClientUser } from '../client-user';
@@ -12,9 +11,9 @@ import { validarIguales } from '../app.validator';
 })
 export class FormUserComponent implements OnInit {
 
-  userForm:FormGroup
+  userForm:FormGroup;
 
- client = new ClientUser;
+  client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
     console.log("constructor start")
@@ -71,36 +70,36 @@ export class FormUserComponent implements OnInit {
 
 
   onSubmit() {
-  console.log("constructor submit start")
-  
-  if(this.userForm.valid){
-    this.client.name=this.name.value
-    this.client.email=this.email.value
-    this.client.tlf=this.tlf.value
-    this.client.password=this.password.value
-    this.client.address=this.address.value
-    this.client.profile_img=this.img.value
+    console.log("constructor submit start")
     
+    if(this.userForm.valid){
+      this.client.name=this.name.value
+      this.client.email=this.email.value
+      this.client.tlf=this.tlf.value
+      this.client.password=this.password.value
+      this.client.address=this.address.value
+      this.client.profile_img=this.img.value
+      
+      
+      // console.log(this.client)
+      // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
+      // console.log(arrayClient)
+      // let jsonClient = JSON.stringify(this.client)
+      // console.log(jsonClient)
+      // let jsonArrayClient = JSON.stringify(arrayClient)
+      // console.log(jsonArrayClient)
+      this.db.createClientUser(this.client).subscribe(
+        (response) => {
+          console.log("Todo ha ido bien")
+        },
+        (error) => {
+          console.log("Se ha producido un error:")
+          console.log(error)
+          
+        }); 
+      }
     
-    // console.log(this.client)
-    // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
-    // console.log(arrayClient)
-    // let jsonClient = JSON.stringify(this.client)
-    // console.log(jsonClient)
-    // let jsonArrayClient = JSON.stringify(arrayClient)
-    // console.log(jsonArrayClient)
-    this.db.createClientUser(this.client).subscribe(
-      (response) => {
-        console.log("Todo ha ido bien")
-      },
-      (error) => {
-        console.log("Se ha producido un error:")
-        console.log(error)
-        
-      }); 
-    }
-    
-    console.log("constructor submit stop")
+    console.log("constructor submit stop");
   }
   
 

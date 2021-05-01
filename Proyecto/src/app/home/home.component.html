@@ -1,6 +1,7 @@
 <app-error500 *ngIf="contentLoaded < 0"></app-error500>
 <app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>
 <section *ngIf="contentLoaded == 2" class="container-fluid m-0 p-0">
+    <div *ngIf="user" class="alert alert-success" role="alert">¡Bienvenide {{user}}!</div>
     <!-- Featured Product Start -->
     <article class="featured-product product">
 
@@ -21,7 +22,6 @@
         </div>
     </article>
     <article class="featured-product product">
-
         <div class="section-header pl-5">
             <h1>Nuevas Tiendas</h1>
         </div>

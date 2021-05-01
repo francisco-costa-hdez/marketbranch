@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { LocalStorageService } from '../local-storage.service';
+import { LoginUser } from '../login-user';
+import { Session } from '../session';
 
 @Component({
   selector: 'app-form-log-in',
@@ -8,18 +13,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class FormLogInComponent implements OnInit {
 
- loginForm:FormGroup
+ loginForm:FormGroup;
+ user = new LoginUser;
 
-  constructor(private form:FormBuilder) {
+  constructor(private form:FormBuilder,
+              private db:MarketPlaceDBService,
+              private storageService: LocalStorageService,
+              private router: Router) {
     console.log("constructor start")
     this.loginForm=this.form.group(
       {
-      name:['',Validators.required],
-      password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])]
-    }
-    )
-    console.log("constructor end")
-   }
+        email:['',Validators.required],
+        password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])]
+      }
+    );
+    console.log("constructor end");
+  }
+
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
 
   ngOnInit(): void {
     console.log("constructor init start");
@@ -42,7 +54,35 @@ export class FormLogInComponent implements OnInit {
         });
     })();
     
-    console.log("constructor init end")
   }
 
+  onSubmit() {
+    
+    if(this.loginForm.valid){
+      this.user.email= this.email.value;
+      this.user.password= this.password.value;
+      console.log(this.user);
+      this.db.LogInClientUser(this.user).subscribe(
+        (response) => {
+          if (response["message"]=="credenciales no válidas") {
+            console.log("ta mal")
+          } else {
+            console.log(response);
+
+            let data = new Session;
+            data.email = response["user"].email;
+            data.token = response["token"];
+
+            console.log(data);
+
+            this.storageService.setCurrentSession(data);
+            this.router.navigate(['/home']);
+          }
+        },
+        (error) => {
+          console.log("Se ha producido un error:")
+          console.log(error)
+        }); 
+    }
+  }
 }
