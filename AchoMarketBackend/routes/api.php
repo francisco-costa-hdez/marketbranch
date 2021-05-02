@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientUserController;
 use App\Http\Controllers\ProductController;
@@ -36,7 +37,7 @@ Route::get('products/str/{string}', [ProductController::class, 'findProductsBySt
 Route::get('shops', [ShopController::class, 'findAllShops']);
 Route::get('shops/{id}', [ShopController::class, 'findShopById']);
 Route::get('shops/product/{product_id}', [ShopController::class, 'findShopByProduct']);
-Route::get('shops/str/{str}',[ShopController::class,'findShopByStr']);
+Route::get('shops/str/{str}', [ShopController::class, 'findShopByStr']);
 
 Route::get('categories', [CategoryController::class, 'findAllCategories']);
 Route::get('subcategories/{category_id}', [CategoryController::class, 'findSubcategoryByCategoryId']);
@@ -48,6 +49,7 @@ Route::post('clientuser/login', [ClientUserController::class, 'login']);
 Route::post('shopuser/create', [ShopUserController::class, 'createShopUser']);
 Route::post('shopuser/login', [ShopUserController::class, 'login']);
 
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('products/create', [ProductController::class, 'createProduct']);
     Route::put('products/update/{id}', [ProductController::class, 'updateProduct']);
@@ -57,7 +59,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('shop/create', [ShopController::class, 'createShop']);
     Route::post('shop/uploadImage', [ShopController::class, 'uploadShopImage']);
-    Route::put('shop/update',[ShopController::class, 'updateShop']);
+    Route::put('shop/update', [ShopController::class, 'updateShop']);
     Route::delete('shop/delete/img/{img_id}', [ShopController::class, 'deleteShopImage']);
     Route::delete('shop/delete/{id}', [ShopController::class, 'deleteShop']);
 
@@ -70,4 +72,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('shopuser/update', [ShopUserController::class, 'updateShopUser']);
     Route::delete('shopuser/delete/{id}', [ShopUserController::class, 'deleteShopUser']);
     Route::post('shopuser/logout', [ShopUserController::class, 'logout']);
+
+    Route::get('cart/products/{cart_id}', [CartController::class, 'getProducts']);
+    Route::post('cart/add/{product_id}/{user_id}', [CartController::class, 'addProduct']);
+    Route::delete('cart/delete/{product_id}/{user_id}', [CartController::class, 'deleteProduct']);
+    Route::put('cart/update_quantity/{cart_id}/{quantity}/{product_id}', [CartController::class, 'updateQuantity']);
 });

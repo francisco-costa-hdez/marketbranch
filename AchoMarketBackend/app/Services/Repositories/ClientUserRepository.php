@@ -36,7 +36,7 @@ class ClientUserRepository
             'token' => $token,
             'message' => 'Se ha registrado correctamente'
         ];
-
+        $user->cart()->create();
         return response($response, 201);
     }
 
@@ -51,7 +51,7 @@ class ClientUserRepository
         $token = $user->createToken('client_user')->plainTextToken;
         $response = [
             'message' => 'Sesión iniciada',
-            'user' => $user,
+            'user' => $user->name,
             'token' => $token,
         ];
 
