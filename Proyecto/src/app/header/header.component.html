@@ -16,34 +16,36 @@
     &nbsp;<a routerLink="/un-happymeal-con-fanta-de-naranja-por-favor" routerLinkActive="active">404</a>
 </div>
 <!-- NAV DEVELOPER -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark m-0">
-    <div class="row align-items-center">
-        <div class="col-10 col-md-3 m-0">
-            <a routerLink="home" class="navbar-brand">
-                <img src="/assets/images/LogoAM.png" class="w-100">
-            </a>
-        </div>
-        <div class="col-10 col-md-5 order-2 order-md-1">
-            <app-form-search></app-form-search>
-        </div>
-        <div class="col-2 col-md order-3 order-md-2  w-100">
-            <button class="navbar-toggler form-control" type="button" data-toggle="collapse" data-target="#selectUser" aria-controls="selectUser" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse m-0 p-0 navbar-nav" id="selectUser">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">Lista de deseos <i class="bi bi-heart"></i></a>
-                            <a class="dropdown-item" href="#">Cerrar sesión</a>
-                        </div>
-                    </div>
-            </div>
-        </div>
-        <div class="col-2 col-md-1 order-1 order-md-3 navbar-nav">
-            <div class="nav-item w-100">
-                <a class="nav-link btn btn-cart form-control" href="#"><i class="bi bi-cart text-dark"></i></a>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="home"><span class="h1">Ach<img src="/assets/images/ach-yellow.png" width="35px" alt="Logo Minimalista de Acho Market"> Market</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <form class="form-inline my-2 my-md-0 mx-2">
+        <app-form-search></app-form-search>
+      <!-- <input class="form-control" type="text" placeholder="Search"> -->
+    </form>
+    <div class="collapse navbar-collapse" id="navbarsExample03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/busqueda" [queryParams]="{filter: 'Tienda'}">Tiendas</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown03">
+            <a class="dropdown-item" href="#">Lista de deseos <i class="bi bi-heart"></i></a>
+            <a class="dropdown-item" href="#">Cerrar sesión</a>
+          </div>
+        </li>
+      </ul>
     </div>
-</nav>
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdownCart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-cart text-light"></i></a>
+        <div class="dropdown-menu dropdown-menu-left dropdown-menu-sm-right" aria-labelledby="dropdownCart" style="width: 400px;">
+          <app-cart-list class="dropdown-item" ></app-cart-list>
+          <app-cart-list class="dropdown-item" ></app-cart-list>
+          <app-cart-list class="dropdown-item" ></app-cart-list>
+        </div>
+      </div>
+  </nav>
