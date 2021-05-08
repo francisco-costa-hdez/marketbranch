@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
@@ -9,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class ClientUser extends Authenticatable
+class ClientUser extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
     use HasRoles; 
@@ -48,6 +49,8 @@ class ClientUser extends Authenticatable
         "tlf",
         "profile_img",
         "address",
-        "password"
+        "password",
+        "confirmation_code",
+        "confirmed"
     ];
 }

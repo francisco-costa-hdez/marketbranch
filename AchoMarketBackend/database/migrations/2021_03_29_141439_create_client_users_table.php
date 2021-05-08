@@ -21,6 +21,8 @@ class CreateClientUsersTable extends Migration
             $table->binary('profile_img')->nullable();
             $table->string('address',100);
             $table->string('password');
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->nullable();
             $table->timestamps();
         });
     }

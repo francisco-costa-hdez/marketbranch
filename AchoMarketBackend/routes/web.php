@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientUserController;
 use App\Models\ClientUser;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,4 @@ Route::get('/', function () {
     $user = ClientUser::find(1);
     return view('welcome',['clientUser' => $user]);
 });
+Route::get('/register/verification/{confirmation_code}', [ClientUserController::class, 'verify']);

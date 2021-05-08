@@ -20,11 +20,12 @@ class ClientUserRepository
         return $this->user->find($id);
     }
 
-    public function createClientUser(Request $request)
+    public function createClientUser(Request $request, $confirmation_code)
     {
         $user = $this->user->create([
             "name" => $request->name,
             "email" => $request->email,
+            "confirmation_code" => $confirmation_code,
             "tlf" => $request->tlf,
             "profile_img" => $request->profile_img,
             "address" => $request->address,
@@ -52,6 +53,7 @@ class ClientUserRepository
         $response = [
             'message' => 'Sesión iniciada',
             'user' => $user->name,
+            'user_id' => $user->id,
             'token' => $token,
         ];
 

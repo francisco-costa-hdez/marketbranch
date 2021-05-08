@@ -20,9 +20,9 @@ class ClientUserService implements IClientUserService
         return $this->clientUserRepository->findClientUserById($id);
     }
 
-    public function createClientUser(Request $request)
+    public function createClientUser(Request $data, $confirmation_code)
     {
-       return $this->clientUserRepository->createClientUser($request);
+       return $this->clientUserRepository->createClientUser($data, $confirmation_code);
     }
 
     public function logout(Request $request)
