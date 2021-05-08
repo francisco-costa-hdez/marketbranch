@@ -12,10 +12,7 @@ import { validarIguales } from '../app.validator';
 export class FormUserComponent implements OnInit {
 
   userForm:FormGroup;
-  emailExists=false
-  errorEmail=""
-  tlfExists=false
-  errorTlf=""
+
   client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
@@ -74,8 +71,6 @@ export class FormUserComponent implements OnInit {
 
   onSubmit() {
     console.log("constructor submit start")
-    this.emailExists=false
-    this.tlfExists=false
     
     if(this.userForm.valid){
       this.client.name=this.name.value
@@ -99,21 +94,13 @@ export class FormUserComponent implements OnInit {
         },
         (error) => {
           console.log("Se ha producido un error:")
-          if(error.error.email){
-          this.emailExists=true
-          this.errorEmail=error.error.email[0]
-          }
-          if(error.error.tlf){
-          this.tlfExists=true
-          this.errorTlf=error.error.tlf[0]
-          }
+          console.log(error)
           
         }); 
       }
     
     console.log("constructor submit stop");
   }
-
   
 
 }

@@ -17,17 +17,15 @@
 </div>
 <!-- NAV DEVELOPER -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="home"><span class="h1">Ach<img src="/assets/images/ach-yellow.png" width="35px" alt="Logo Minimalista de Acho Market"> Market</span></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <a class="navbar-brand order-1 order-md-1" routerLink="home"><span class="h1">Ach<img src="/assets/images/ach-yellow.png" width="35px" alt="Logo Minimalista de Acho Market"> Market</span></a>
     
-    <form class="form-inline my-2 my-md-0 mx-2">
+    
+    <form class="form-inline my-2 my-md-0 mx-2 order-3 order-md-2">
         <app-form-search></app-form-search>
       <!-- <input class="form-control" type="text" placeholder="Search"> -->
     </form>
-    <div class="collapse navbar-collapse" id="navbarsExample03">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse order-4 order-md-3 mr-auto" id="navbarsExample03">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link text-light" routerLink="/busqueda" [queryParams]="{filter: 'Tienda'}">Tiendas</a>
         </li>
@@ -40,12 +38,18 @@
         </li>
       </ul>
     </div>
-    <div class="nav-item dropdown">
+    <div class="navbar-nav order-2 order-md-4 d-flex flex-row flex-nowrap">
+        <button class="navbar-toggler mr-1 p-0" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdownCart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-cart text-light"></i></a>
-        <div class="dropdown-menu dropdown-menu-left dropdown-menu-sm-right" aria-labelledby="dropdownCart" style="width: 400px;">
-          <app-cart-list class="dropdown-item" ></app-cart-list>
-          <app-cart-list class="dropdown-item" ></app-cart-list>
-          <app-cart-list class="dropdown-item" ></app-cart-list>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCart" style="width: 400px;">
+          <app-cart-item class="dropdown-item" ></app-cart-item>
+          <app-cart-item class="dropdown-item" ></app-cart-item>
+          <app-cart-item class="dropdown-item" ></app-cart-item>
         </div>
       </div>
+    </div>
+   
   </nav>

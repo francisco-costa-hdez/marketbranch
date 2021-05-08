@@ -31,7 +31,7 @@
     <div class="form-group">
       <label for="tlf">Teléfono</label>
       <input type="tel" name="tlf" id="tlf" class="form-control" required
-        formControlName="tlf" pattern="^[9|8|7|6]\d{8}$" (change)="this.tlfExists=false">
+        formControlName="tlf" pattern="^[9|8|7|6]\d{8}$">
         <div class="invalid-feedback" *ngIf="userForm.get('tlf').hasError('required'); else telBad">
           Error, no has introducido el telefono
         </div>
@@ -45,14 +45,11 @@
             El patrón del teléfono es correcto
           </div>
         </ng-template>
-        <div  *ngIf="this.tlfExists==true">
-          <small style="color:#E05555">{{this.errorTlf}}</small>
-        </div>
     </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="micorreo@mail.com" required
-          formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" (change)="this.emailExists=false">
+          formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
           <div class="invalid-feedback" *ngIf="userForm.get('email').hasError('required'); else emailBad">
             Error, no has introducido el email
           </div>
@@ -66,9 +63,6 @@
               El patrón del email es correcto
             </div>
           </ng-template>
-          <div  *ngIf="this.emailExists==true">
-            <small style="color:#E05555">{{this.errorEmail}}</small>
-          </div>
       </div>
 
       <div class="form-group">
@@ -109,7 +103,7 @@
           </div>
         </ng-template>
         <div  *ngIf="!(this.userForm.get('password2').value==this.userForm.get('password').value)">
-          <small style="color:#E05555">Las contraseñas no coinciden</small>
+          <small style="color:red">Las contraseñas no coinciden</small>
         </div>
         <small class="form-text text-muted">No compartas tu contraseña con terceros.</small>
       </div>
