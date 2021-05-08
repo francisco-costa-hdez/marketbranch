@@ -20,21 +20,18 @@ export class FormLogInComponent implements OnInit {
               private db:MarketPlaceDBService,
               private storageService: LocalStorageService,
               private router: Router) {
-    console.log("constructor start")
     this.loginForm=this.form.group(
       {
         email:['',Validators.required],
         password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])]
       }
     );
-    console.log("constructor end");
   }
 
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
 
   ngOnInit(): void {
-    console.log("constructor init start");
     (function() {
       'use strict';
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -68,13 +65,10 @@ export class FormLogInComponent implements OnInit {
             console.log("ta mal")
           } else {
             console.log(response);
-
             let data = new Session;
-            data.email = response["user"].email;
+            data.email = response["user"];
             data.token = response["token"];
-
             console.log(data);
-
             this.storageService.setCurrentSession(data);
             this.router.navigate(['/home']);
           }

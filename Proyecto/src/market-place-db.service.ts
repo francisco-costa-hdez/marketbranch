@@ -1,14 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from './app/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class MarketPlaceDBService {
 
   private url = "http://127.0.0.1:8000/api";
  
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
   
   /**********************************************************************************
    ***** Products *******************************************************************
@@ -70,7 +73,7 @@ export class MarketPlaceDBService {
   
   /**********************************************************************************
    ***** Shops **********************************************************************
-   ***********************************************************************************/
+  ***********************************************************************************/
 
   //Gets all the shops in the database
   findAllShops() {
@@ -119,7 +122,7 @@ export class MarketPlaceDBService {
 
   /**********************************************************************************
    ***** Categories *****************************************************************
-   ***********************************************************************************/
+  ***********************************************************************************/
   
   //Gets all the categories in the database
   findAllCategories() {
@@ -137,7 +140,7 @@ export class MarketPlaceDBService {
   }
  
  /**********************************************************************************
-  ***** Client User ***************************************************************
+  ***** Client User ****************************************************************
  ***********************************************************************************/
 
   //Logs in an user
@@ -170,8 +173,6 @@ export class MarketPlaceDBService {
     return this.http.delete( this.url + "/clientuser/delete/", user_id);
   }
 
-
-
  /**********************************************************************************
   ***** Shop User ******************************************************************
  ***********************************************************************************/
@@ -196,4 +197,41 @@ export class MarketPlaceDBService {
     return this.http.delete( this.url + "/clientuser/delete/", user_id);
   }
 
+  /**********************************************************************************
+   ***** Cart ***********************************************************************
+  ***********************************************************************************/
+
+    //Gets all the products in user's cart from the database
+    getCart(cart_id: string | number) {
+      return this.http.get( this.url + "/cart/products/" + cart_id);
+    }
+    
+    //Adds a new product to user's cart
+    addToCart(product_id: string | number, user_id: string | number) {
+      if (this.localStorage.isAuthenticated()) {
+
+        return this.http.post( this.url + "/cart/add/"+ product_id + "/" + user_id, {
+          headers: new HttpHeaders({
+            'Authorization': "Bearer " + this.localStorage.getCurrentToken()
+          })
+        });
+
+      }
+    }
+
+    //Adds a new product to user's cart
+    deleteFromCart(product_id: string | number, user_id: string | number) {
+      return this.http.delete( this.url + "/cart/delete/" + product_id + "/" + user_id);
+    }
+    
+    //Adds a new product to user's cart
+    updateQuantityInCartproduct_id(cart_id: string | number, quantity: string | number, product_id: string | number) {
+      let data = 
+      {
+          "cart_id": cart_id,
+          "quantity": quantity,
+          "product_id": product_id
+      };
+      return this.http.put( this.url + "/cart/update_quantity/", data);
+    }
 }
