@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CookieService } from 'ngx-cookie-service';
 
 import { RateFilterPipe } from './rate-filter.pipe';
 import { PriceFilterPipe } from './price-filter.pipe';
+import { SubcategoryFilterPipe } from './subcategory-filter.pipe';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -40,8 +42,8 @@ import { ShopCardComponent } from './shop-card/shop-card.component';
 import { Error500Component } from './error500/error500.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
 import { FormLogInComponent } from './form-log-in/form-log-in.component';
-import { SubcategoryFilterPipe } from './subcategory-filter.pipe';
-import { CartListComponent } from './cart-list/cart-list.component';
+import { CartItemComponent } from './cart-item/cart-item.component';
+import { AuthInterceptor } from './auth-interceptor';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -98,7 +100,7 @@ const rutas=[
     PriceFilterPipe,
     FormLogInComponent,
     SubcategoryFilterPipe,
-    CartListComponent
+    CartItemComponent
   ],
   imports: [
     BrowserModule,
@@ -107,9 +109,13 @@ const rutas=[
     FormsModule,
     ReactiveFormsModule,
     NgxSliderModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
   ],
-  providers: [],
+  providers:[
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    CookieService ,
+  ],
   bootstrap: [AppComponent]
-})
+}
+)
 export class AppModule { }

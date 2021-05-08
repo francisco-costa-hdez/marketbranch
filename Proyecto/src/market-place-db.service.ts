@@ -208,15 +208,7 @@ export class MarketPlaceDBService {
     
     //Adds a new product to user's cart
     addToCart(product_id: string | number, user_id: string | number) {
-      if (this.localStorage.isAuthenticated()) {
-
-        return this.http.post( this.url + "/cart/add/"+ product_id + "/" + user_id, {
-          headers: new HttpHeaders({
-            'Authorization': "Bearer " + this.localStorage.getCurrentToken()
-          })
-        });
-
-      }
+        return this.http.post( this.url + "/cart/add/"+ product_id + "/" + user_id,undefined);
     }
 
     //Adds a new product to user's cart

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { AuthService } from '../auth.service';
+import { Cookie } from '../cookie';
 import { LocalStorageService } from '../local-storage.service';
 import { LoginUser } from '../login-user';
 import { Session } from '../session';
@@ -19,6 +21,7 @@ export class FormLogInComponent implements OnInit {
   constructor(private form:FormBuilder,
               private db:MarketPlaceDBService,
               private storageService: LocalStorageService,
+              private cookieService: AuthService,
               private router: Router) {
     this.loginForm=this.form.group(
       {
@@ -65,11 +68,18 @@ export class FormLogInComponent implements OnInit {
             console.log("ta mal")
           } else {
             console.log(response);
-            let data = new Session;
-            data.email = response["user"];
+            this.cookieService.deleteCurrentUser();
+            let dato = new Session;
+            dato.email = response["user"];
+            dato.token = response["token"];
+            console.log(dato);
+            // this.storageService.setCurrentSession(dato);
+            let data = new Cookie;
+            data.name = response["user"];
+            data.id = response["user_id"];
             data.token = response["token"];
             console.log(data);
-            this.storageService.setCurrentSession(data);
+            this.cookieService.setCurrentUser(data);
             this.router.navigate(['/home']);
           }
         },

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { AuthService } from '../auth.service';
 import { LocalStorageService } from '../local-storage.service';
 
 @Component({
@@ -9,16 +10,23 @@ import { LocalStorageService } from '../local-storage.service';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product;
-  constructor(private db: MarketPlaceDBService, private storageService: LocalStorageService) { }
+  constructor(private db: MarketPlaceDBService, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
 
   addToCart() {
-    console.log(this.product.id);
-    let session = this.storageService.getCurrentToken();
-    console.log(session);
-    this.db.addToCart(this.product.id, 4).subscribe(
+    console.log(this.product.id)
+    console.log(this.auth.getCurrentUserId())
+    if (this.auth.isAuthenticated()) {
+      this.addToDB(this.product.id, this.auth.getCurrentUserId());
+    } else {
+      console.log("inicia sesión");
+    }
+  }
+
+  addToDB(productId: number, userId: number) {
+    this.db.addToCart(productId, userId).subscribe(
       (response) => {
         if (response) {
           console.log(response)
@@ -32,5 +40,4 @@ export class ProductCardComponent implements OnInit {
       }
     );
   }
-
 }
