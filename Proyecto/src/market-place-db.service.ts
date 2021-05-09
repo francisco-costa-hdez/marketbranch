@@ -55,6 +55,11 @@ export class MarketPlaceDBService {
   createProduct(product) {
     return this.http.post( this.url + "/products/create/", product);
   }
+
+  //Updates a product
+  updateProduct(product_id: string | number) {
+    return this.http.put( this.url + "/products/update/", product_id);
+  }
   
   //Delete a product
   deleteProduct(product_id: string | number) {
@@ -179,22 +184,22 @@ export class MarketPlaceDBService {
  
   //Gets a shop user with detailed info
   findShopUserById(user_id: string | number) {
-    return this.http.get( this.url + "/clientuser/" + user_id);
+    return this.http.get( this.url + "/shopuser/" + user_id);
   }
 
   //Creates a shop user
   createShopUser(user) {
-    return this.http.post( this.url + "/clientuser/create", user);
+    return this.http.post( this.url + "/shopuser/create", user);
   }
   
   //Updates the data of an existent shop user
   updateShoptUser(user) {
-    return this.http.put( this.url + "/clientuser/update", user);
+    return this.http.put( this.url + "/shopuser/update", user);
   }
   
   //Deletes a shop user
   deleteShopUser(user_id) {
-    return this.http.delete( this.url + "/clientuser/delete/", user_id);
+    return this.http.delete( this.url + "/shopuser/delete/", user_id);
   }
 
   /**********************************************************************************

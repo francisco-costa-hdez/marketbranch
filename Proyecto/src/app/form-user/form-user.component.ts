@@ -95,18 +95,26 @@ export class FormUserComponent implements OnInit {
       // console.log(jsonArrayClient)
       this.db.createClientUser(this.client).subscribe(
         (response) => {
-          console.log("Todo ha ido bien")
+          console.log(response)
+          if(response["email"]){
+          this.emailExists=true
+          response["email"].forEach((item) =>{
+            this.errorEmail=item
+          });
+        }
+        if(response["tlf"]){
+          this.tlfExists=true
+          response["tlf"].forEach((item) =>{
+            this.errorTlf=item
+          });
+        }
+        if(!(response["nif"] || response["tlf"])){
+          console.log("todo ha ido bien")
+        }
         },
         (error) => {
           console.log("Se ha producido un error:")
-          if(error.error.email){
-          this.emailExists=true
-          this.errorEmail=error.error.email[0]
-          }
-          if(error.error.tlf){
-          this.tlfExists=true
-          this.errorTlf=error.error.tlf[0]
-          }
+          console.log(error)
           
         }); 
       }

@@ -38,7 +38,7 @@ class ShopUserController extends Controller
         ]);
         if ($validator->fails()) 
         {
-            return response()->json($validator->errors(), 404);
+            return response()->json($validator->errors());
         }
         return $this->user->createShopUser($request);
     }
