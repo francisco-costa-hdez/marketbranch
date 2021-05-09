@@ -150,7 +150,8 @@ return [
         'name' => 'nombre',
         'password' => 'contraseña',
         'tlf' => 'teléfono',
-        'address' => 'dirección'
+        'address' => 'dirección',
+        'profile_img' => 'imagen de perfil'
     ],
 
 ];
