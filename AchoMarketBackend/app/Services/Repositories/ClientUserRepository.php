@@ -48,6 +48,10 @@ class ClientUserRepository
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response(['message' => 'credenciales no válidas'], 401);
         }
+        else if(!$user->confirmed)
+        {
+            return response(['message' => 'Verifica tu cuenta de correo electrónico para iniciar sesión'], 401);
+        }
 
         $token = $user->createToken('client_user')->plainTextToken;
         $response = [

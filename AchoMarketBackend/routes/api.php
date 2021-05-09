@@ -35,7 +35,7 @@ Route::post('shopuser/create', [ShopUserController::class, 'createShopUser']);
 Route::post('shopuser/login', [ShopUserController::class, 'login']);
 
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('products/create', [ProductController::class, 'createProduct']);
     Route::put('products/update/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('products/delete/{id}', [ProductController::class, 'deleteProduct']);
