@@ -22,7 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 }
 
-
 // import { AuthService } from '../auth.service';
 
 // @Injectable()

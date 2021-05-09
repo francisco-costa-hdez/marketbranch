@@ -1,8 +1,21 @@
-
+<!-- 
     <div class="d-flex w-100 py-0 my-0">
         <img class="w-25 img-thumbnail" src="/assets/images/limon-eco.jpg">
         <h6 class="">Limones ElPaco</h6>
         <input class="form-control" type="number" value=1>
-        <i class="bi bi-x text-dark"></i>
-    </div>
+        
+    </div> -->
+<div *ngIf="product" class="row m-0 p-0 pr-1">
+    <img class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
+    <h6 class="col-4 col-lg-6 my-auto mx-0 pl-1"><a routerLink="/product/{{product.id}}">{{product.name}}</a></h6>
+    <h6 class="col-3 my-auto mx-0 pl-1">{{product.price * product.quantity | currency:" "}} €</h6>
+    <form class="col-3 col-lg-2 form-group w-100 my-auto mx-0 p-0">
+        <div class="input-group mx-0 p-0">
+            <input type="number" class="form-control radius-0 col-6 m-0 p-0 pl-2" min="1" max="250" value="{{product.quantity}}">
+            <button class="input-group-append col-6  btn-danger form-control p-1" type="button">
+                <div class="mx-auto"><i class="bi bi-x text-dark"></i></div>
+            </button>
+        </div>
+    </form>
+</div>
 

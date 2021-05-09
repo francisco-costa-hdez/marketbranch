@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { AuthService } from '../auth.service';
-import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-product-card',
