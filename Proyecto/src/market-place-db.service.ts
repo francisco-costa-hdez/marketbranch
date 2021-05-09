@@ -222,13 +222,8 @@ export class MarketPlaceDBService {
     }
     
     //Adds a new product to user's cart
-    updateQuantityInCartproduct_id(cart_id: string | number, quantity: string | number, product_id: string | number) {
-      let data = 
-      {
-          "cart_id": cart_id,
-          "quantity": quantity,
-          "product_id": product_id
-      };
-      return this.http.put( this.url + "/cart/update_quantity/", data);
+    updateQuantityInCartproduct_id(user_id: string | number, quantity: string | number, product_id: string | number) {
+
+      return this.http.put( this.url + "/cart/update_quantity/" + user_id + "/" + quantity + "/" + product_id, undefined);
     }
 }

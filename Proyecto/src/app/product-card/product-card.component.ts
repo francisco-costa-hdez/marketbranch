@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { AuthService } from '../auth.service';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -9,34 +10,16 @@ import { AuthService } from '../auth.service';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product;
-  constructor(private db: MarketPlaceDBService, private auth: AuthService) { }
+  constructor(private db: MarketPlaceDBService, private auth: AuthService, private cart: CartService) { }
 
   ngOnInit(): void {
   }
 
   addToCart() {
-    console.log(this.product.id)
-    console.log(this.auth.getCurrentUserId())
     if (this.auth.isAuthenticated()) {
-      this.addToDB(this.product.id, this.auth.getCurrentUserId());
+      this.cart.addToCartList(this.product.id)
     } else {
-      console.log("inicia sesión");
+      alert("Inicia sesión");
     }
-  }
-
-  addToDB(productId: number, userId: number) {
-    this.db.addToCart(productId, userId).subscribe(
-      (response) => {
-        if (response) {
-          console.log(response)
-        } else {
-          console.log("no response")
-        }
-      },
-      (error) => {
-        console.error('Request failed with error');
-        console.error(error);
-      }
-    );
   }
 }
