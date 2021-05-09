@@ -24,13 +24,13 @@ class CartController extends Controller
         return $this->cartService->deleteProduct($product_id,$user_id);
     }
 
-    public function getProducts(int $cart_id)
+    public function getProducts(int $user_id)
     {
-        return $this->cartService->getProducts($cart_id);
+        return $this->cartService->getProducts($user_id);
     }
 
-    public function updateQuantity( int $cart_id, int $quantity, int $product_id)
+        public function updateQuantity( int $user_id, int $quantity, int $product_id)
     {
-        return $this->cartService->updateQuantity($quantity, $cart_id, $product_id);
+        return $this->cartService->updateQuantity($quantity, $user_id, $product_id);
     }
 }

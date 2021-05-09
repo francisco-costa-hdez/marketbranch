@@ -45,9 +45,9 @@ class CartRepository
 
     }
 
-    public function getProducts(int $cart_id)
+    public function getProducts(int $user_id)
     {
-        $user_id = $this->cart->find($cart_id)->client_user_id;
+        $cart_id = ClientUser::find($user_id)->cart->id;
         if(auth()->user())
         {
             if(auth()->user()->id == $user_id && auth()->user()->tokenCan('client_user'))
@@ -62,9 +62,9 @@ class CartRepository
 
     }
 
-    public function updateQuantity(int $quantity, int $cart_id, int $product_id)
+    public function updateQuantity(int $quantity, int $user_id, int $product_id)
     {
-        $user_id = $this->cart->find($cart_id)->client_user_id;
+        $cart_id = ClientUser::find($user_id)->cart->id;
         if(auth()->user())
         {
             if(auth()->user()->id == $user_id && auth()->user()->tokenCan('client_user'))

@@ -10,7 +10,7 @@ interface ICartService
 
     public function deleteProduct(int $product_id, int $user_id);
 
-    public function getProducts(int $cart_id);
+    public function getProducts(int $user_id);
 
-    public function updateQuantity(int $quantity, int $cart_id, int $product_id);
+    public function updateQuantity(int $quantity, int $user_id, int $product_id);
 }
