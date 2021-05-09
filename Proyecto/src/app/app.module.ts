@@ -44,6 +44,7 @@ import { SearchSidebarComponent } from './search-sidebar/search-sidebar.componen
 import { FormLogInComponent } from './form-log-in/form-log-in.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { CartComponent } from './cart/cart.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -100,7 +101,8 @@ const rutas=[
     PriceFilterPipe,
     FormLogInComponent,
     SubcategoryFilterPipe,
-    CartItemComponent
+    CartItemComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

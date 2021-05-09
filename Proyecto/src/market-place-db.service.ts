@@ -202,8 +202,8 @@ export class MarketPlaceDBService {
   ***********************************************************************************/
 
     //Gets all the products in user's cart from the database
-    getCart(cart_id: string | number) {
-      return this.http.get( this.url + "/cart/products/" + cart_id);
+    getCart(user_id: string | number) {
+      return this.http.get( this.url + "/cart/products/" + user_id);
     }
     
     //Adds a new product to user's cart
