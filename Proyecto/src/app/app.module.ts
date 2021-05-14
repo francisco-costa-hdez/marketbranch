@@ -45,6 +45,7 @@ import { FormLogInComponent } from './form-log-in/form-log-in.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { CartComponent } from './cart/cart.component';
+import { FormShopValidComponent } from './form-shop-valid/form-shop-valid.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -62,6 +63,7 @@ const rutas=[
   { path: 'registroprod', component: FormProductComponent},
   { path: 'registroshop', component: FormShopComponent},
   { path: 'manageshop', component: ShopManagementComponent},
+  { path: 'validshopuser', component: FormShopValidComponent},
   { path: 'faq', component: FAQComponent},
   { path: '**', component: Error404Component}
 ] 
@@ -102,7 +104,8 @@ const rutas=[
     FormLogInComponent,
     SubcategoryFilterPipe,
     CartItemComponent,
-    CartComponent
+    CartComponent,
+    FormShopValidComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { ClientUser } from '../client-user';
 import { validarIguales } from '../app.validator';
@@ -16,6 +16,7 @@ export class FormUserComponent implements OnInit {
   errorEmail=""
   tlfExists=false
   errorTlf=""
+  userFormValid=false
   client = new ClientUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
@@ -47,7 +48,12 @@ export class FormUserComponent implements OnInit {
   get password2() { return this.userForm.get('password2'); }
   
   ngOnInit(): void {
+    
     console.log("constructor init start");
+    console.log(this.userFormValid);
+    this.userFormValid=false;
+    this.emailExists=false;
+    this.tlfExists=false;
     (function() {
       'use strict';
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -67,6 +73,7 @@ export class FormUserComponent implements OnInit {
         });
     })();
     
+    
     console.log("constructor init end")
   }
   
@@ -76,6 +83,7 @@ export class FormUserComponent implements OnInit {
     console.log("constructor submit start")
     this.emailExists=false
     this.tlfExists=false
+    this.userFormValid==false
     
     if(this.userForm.valid){
       this.client.name=this.name.value
@@ -96,7 +104,9 @@ export class FormUserComponent implements OnInit {
       this.db.createClientUser(this.client).subscribe(
         (response) => {
           console.log(response)
+
           if(response["email"]){
+          console.log(this.userFormValid)
           this.emailExists=true
           response["email"].forEach((item) =>{
             this.errorEmail=item
@@ -104,12 +114,17 @@ export class FormUserComponent implements OnInit {
         }
         if(response["tlf"]){
           this.tlfExists=true
+          console.log(this.userFormValid)
           response["tlf"].forEach((item) =>{
             this.errorTlf=item
           });
         }
-        if(!(response["nif"] || response["tlf"])){
-          console.log("todo ha ido bien")
+        if(!(response["email"] || response["tlf"])){
+          // console.log("todo ha ido bien")
+          this.userFormValid=true
+          // console.log(this.userForm)
+          this.router.navigate(['/validshopuser']);
+          
         }
         },
         (error) => {

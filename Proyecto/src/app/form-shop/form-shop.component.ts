@@ -20,6 +20,7 @@ export class FormShopComponent implements OnInit {
   errorNif=""
   imgExists=false
   errorImg=""
+  shopUserFormValid=false
   shopUser = new ShopUser;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) {
@@ -111,7 +112,9 @@ export class FormShopComponent implements OnInit {
           });
         }
         if(!(response["nif"] || response["email"] || response["profile_img"])){
-          console.log("todo ha ido bien")
+          // console.log("todo ha ido bien")
+          this.shopUserFormValid=true
+          this.router.navigate(['/validshopuser']);
         }
 
         },
