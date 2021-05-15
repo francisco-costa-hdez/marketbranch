@@ -48,12 +48,9 @@ export class FormUserComponent implements OnInit {
   get password2() { return this.userForm.get('password2'); }
   
   ngOnInit(): void {
-    
-    console.log("constructor init start");
-    console.log(this.userFormValid);
-    this.userFormValid=false;
-    this.emailExists=false;
-    this.tlfExists=false;
+    this.userFormValid = false;
+    this.emailExists = false;
+    this.tlfExists = false;
     (function() {
       'use strict';
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -72,15 +69,9 @@ export class FormUserComponent implements OnInit {
           }, false);
         });
     })();
-    
-    
-    console.log("constructor init end")
-  }
+    }
   
-
-
   onSubmit() {
-    console.log("constructor submit start")
     this.emailExists=false
     this.tlfExists=false
     this.userFormValid==false
@@ -106,7 +97,7 @@ export class FormUserComponent implements OnInit {
           console.log(response)
 
           if(response["email"]){
-          console.log(this.userFormValid)
+          // console.log(this.userFormValid)
           this.emailExists=true
           response["email"].forEach((item) =>{
             this.errorEmail=item
@@ -114,7 +105,7 @@ export class FormUserComponent implements OnInit {
         }
         if(response["tlf"]){
           this.tlfExists=true
-          console.log(this.userFormValid)
+          // console.log(this.userFormValid)
           response["tlf"].forEach((item) =>{
             this.errorTlf=item
           });
@@ -133,9 +124,7 @@ export class FormUserComponent implements OnInit {
           
         }); 
       }
-    
-    console.log("constructor submit stop");
-  }
+    }
 
   
 

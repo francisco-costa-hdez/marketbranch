@@ -3,7 +3,7 @@
     &nbsp;<a routerLink="/home" routerLinkActive="active">Home</a>
     &nbsp;<a routerLink="/busqueda" routerLinkActive="active">Búsqueda</a>
     &nbsp;<a routerLink="/cliente" routerLinkActive="active">Mi usuario</a>
-    &nbsp;<a routerLink="/registro" routerLinkActive="active">Registrarse</a>
+    &nbsp;<a routerLink="/manageshop" routerLinkActive="active">Mi Tienda</a>
     &nbsp;<a routerLink="/producto/1" routerLinkActive="active">Producto</a>
     &nbsp;<a routerLink="/tienda/1" routerLinkActive="active">Tienda</a>
     &nbsp;<a routerLink="/informar" routerLinkActive="active">Informar</a>
@@ -11,10 +11,10 @@
     &nbsp;<a routerLink="/faq" routerLinkActive="active">FAQ</a>
     &nbsp;<a routerLink="/terminos" routerLinkActive="active">Terminos</a>
     &nbsp;<a routerLink="/contacto" routerLinkActive="active">Contacto</a>
-    &nbsp;<a routerLink="/registroprod" routerLinkActive="active">Registrar-producto</a>
     &nbsp;<a routerLink="/login" routerLinkActive="active">LOG IN</a>
-    &nbsp;<a routerLink="/registroshop" routerLinkActive="active">Registro usershop</a>
-    &nbsp;<a routerLink="/manageshop" routerLinkActive="active">Cuenta usershop</a>
+    &nbsp;<a routerLink="/registrouser" routerLinkActive="active">RegistroClient</a>
+    &nbsp;<a routerLink="/registroprod" routerLinkActive="active">RegistroProd</a>
+    &nbsp;<a routerLink="/registroshop" routerLinkActive="active">RegistroShop</a>
     &nbsp;<a routerLink="/un-happymeal-con-fanta-de-naranja-por-favor" routerLinkActive="active">404</a>
 </div>
 <!-- NAV DEVELOPER -->
@@ -31,11 +31,17 @@
         <li class="nav-item">
           <a class="nav-link text-light" routerLink="/busqueda" [queryParams]="{filter: 'Tienda'}">Tiendas</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown03">
+        <ng-template #loggedOut>
+          <li class="nav-item">
+            <a class="nav-link text-light" class="btn" routerLink="/login">Iniciar sesión</a>
+          </li>
+        </ng-template>
+        <li class="nav-item dropdown" *ngIf="authorized; else loggedOut">
+          <a class="nav-link dropdown-toggle text-light clickable" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
+          <div class="dropdown-menu" aria-labelledby="userDropdown">
+            <a class="dropdown-item" routerLink="/cliente">Mi Usuario</a>
             <a class="dropdown-item" href="#">Lista de deseos <i class="bi bi-heart"></i></a>
-            <a class="dropdown-item" href="#">Cerrar sesión</a>
+            <button class="dropdown-item clickable" routerLink="/logout" (click)="logout()">Cerrar sesión</button>
           </div>
         </li>
       </ul>

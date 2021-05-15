@@ -120,21 +120,23 @@ export class CartService {
 
   private initializeCartList() {
     this.cartList = [];
-    this.db.getCart(this.auth.getCurrentUserId()).subscribe(
-      (response) => {
-        if (response["products"]) {
-          response["products"].forEach((item) =>{
-            this.cartList.push(item);
-          });
-          console.table(this.cartList)
-          this.cartUpdated.emit(this.cartList);
-        } 
-        console.log(this.cartList)
-      },
-      (error) => {
-        // console.error('Request failed with error');
-        // console.error(error);
-      }
-    );
+    if (this.auth.isAuthenticated()){
+      this.db.getCart(this.auth.getCurrentUserId()).subscribe(
+        (response) => {
+          if (response["products"]) {
+            response["products"].forEach((item) =>{
+              this.cartList.push(item);
+            });
+            // console.table(this.cartList)
+            this.cartUpdated.emit(this.cartList);
+          } 
+          // console.log(this.cartList)
+        },
+        (error) => {
+          // console.error('Request failed with error');
+          // console.error(error);
+        }
+      );
+    }
   }
 }

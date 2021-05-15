@@ -154,8 +154,8 @@ export class MarketPlaceDBService {
   }
   
   //Logs out an user
-  LogOutClientUser(user) {
-    return this.http.post( this.url + "/clientuser/logout", user);
+  LogOutClientUser(user_id: number) {
+    return this.http.post( this.url + "/clientuser/logout", { "id" : user_id });
   }
   
   //Gets a clientUser with detailed info
@@ -181,7 +181,18 @@ export class MarketPlaceDBService {
  /**********************************************************************************
   ***** Shop User ******************************************************************
  ***********************************************************************************/
- 
+
+  //Logs in an user
+  LogInShopUser(user) {
+    return this.http.post( this.url + "/shopuser/login", user);
+  }
+
+  //Logs out an user
+  LogOutShopUser(user_id: number) {
+    return this.http.post( this.url + "/shopuser/logout", { "id" : user_id });
+  }
+    
+  
   //Gets a shop user with detailed info
   findShopUserById(user_id: string | number) {
     return this.http.get( this.url + "/shopuser/" + user_id);

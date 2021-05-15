@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { Cookie } from '../cookie';
-import { LocalStorageService } from '../local-storage.service';
 import { LoginUser } from '../login-user';
-import { Session } from '../session';
 
 @Component({
   selector: 'app-form-log-in',
@@ -15,13 +13,13 @@ import { Session } from '../session';
 })
 export class FormLogInComponent implements OnInit {
 
- loginForm:FormGroup;
- user = new LoginUser;
+  client: boolean =  true;
+  loginForm:FormGroup;
+  user = new LoginUser;
 
   constructor(private form:FormBuilder,
               private db:MarketPlaceDBService,
-              private storageService: LocalStorageService,
-              private cookieService: AuthService,
+              private auth: AuthService,
               private router: Router) {
     this.loginForm=this.form.group(
       {
@@ -62,31 +60,73 @@ export class FormLogInComponent implements OnInit {
       this.user.email= this.email.value;
       this.user.password= this.password.value;
       console.log(this.user);
-      this.db.LogInClientUser(this.user).subscribe(
-        (response) => {
-          if (response["message"]=="credenciales no válidas") {
-            console.log("ta mal")
-          } else {
-            console.log(response);
-            this.cookieService.deleteCurrentUser();
-            let dato = new Session;
-            dato.email = response["user"];
-            dato.token = response["token"];
-            console.log(dato);
-            // this.storageService.setCurrentSession(dato);
-            let data = new Cookie;
-            data.name = response["user"];
-            data.id = response["user_id"];
-            data.token = response["token"];
-            console.log(data);
-            this.cookieService.setCurrentUser(data);
-            this.router.navigate(['/home']);
-          }
-        },
-        (error) => {
-          console.log("Se ha producido un error:")
-          console.log(error)
-        }); 
+      (this.client) ? this.loginAsClient() : this.loginAsShop();
     }
   }
+
+  loginAsClient() {
+    console.log("Log as Client")
+    this.db.LogInClientUser(this.user).subscribe(
+      (response) => {
+        if (response["message"]=="credenciales no válidas") {
+          console.log("error")
+        } else {
+          console.log(response);
+          // this.auth.deleteCurrentUser();
+          let data = new Cookie;
+          data.name = response["user"];
+          data.id = response["user_id"];
+          data.token = response["token"];
+          console.log(data);
+          this.auth.setCurrentUser(data);
+          console.log(this.auth.getCurrentUser());
+          this.router.navigate(['/home']);
+        }
+      },
+      (error) => {
+        console.log("Se ha producido un error:")
+        console.log(error)
+      }
+    ); 
+  }
+
+  loginAsShop() {
+    console.log("Log as Shop")
+    this.db.LogInShopUser(this.user).subscribe(
+      (response) => {
+        if (response["message"]=="credenciales no válidas") {
+          console.log("error")
+        } else {
+          console.log(response);
+          // this.auth.deleteCurrentUser();
+          let data = new Cookie;
+          data.name = response["user"];
+          data.id = response["user_id"];
+          data.token = response["token"];
+          data.shop = response["shop"];
+          console.log(data);
+          this.auth.setCurrentUser(data);
+          console.log(this.auth.getCurrentUser());
+          this.router.navigate(['/home']);
+        }
+      },
+      (error) => {
+        console.log("Se ha producido un error:")
+        console.log(error)
+      }
+    ); 
+  }
+
+  setClient() {
+    if (!this.client) {
+      this.client = true;
+    }
+  }
+
+  setShop() {
+    if (this.client) {
+      this.client = false;
+    }
+  }
+
 }

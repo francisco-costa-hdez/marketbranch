@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { CartService } from '../cart.service';
 
@@ -10,7 +9,8 @@ import { CartService } from '../cart.service';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product;
-  constructor(private db: MarketPlaceDBService, private auth: AuthService, private cart: CartService) { }
+
+  constructor(private auth: AuthService, private cart: CartService) { }
 
   ngOnInit(): void {
   }

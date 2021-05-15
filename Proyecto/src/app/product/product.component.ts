@@ -1,7 +1,8 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { AuthService } from '../auth.service';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product',
@@ -16,10 +17,18 @@ export class ProductComponent implements OnInit {
   loading: boolean = true;
   show: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) { }
+  constructor(private auth: AuthService, private cart: CartService, private route: ActivatedRoute, private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
     this.getProduct(this.route.snapshot.paramMap.get('id'));
+  }
+
+  addToCart() {
+    if (this.auth.isAuthenticated()) {
+      this.cart.addToCartList(this.product.id)
+    } else {
+      alert("Inicia sesión");
+    }
   }
 
   chosePrincipal() {
