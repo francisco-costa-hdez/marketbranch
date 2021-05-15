@@ -148,6 +148,7 @@ return [
 
     'attributes' => [
         'name' => 'nombre',
+        'admin_name' => 'nombre',
         'password' => 'contraseña',
         'tlf' => 'teléfono',
         'address' => 'dirección',

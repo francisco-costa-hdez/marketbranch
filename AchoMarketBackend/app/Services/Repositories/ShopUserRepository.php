@@ -2,6 +2,7 @@
 
 namespace App\Services\Repositories;
 
+use App\Models\Shop;
 use App\Models\ShopUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,13 +24,16 @@ class ShopUserRepository
     public function createShopUser(Request $request)
     {
         $user = $this->user->create([
-            "admin_name" => $request->name,
+            "admin_name" => $request->admin_name,
             "email" => $request->email,
             "nif" => $request->nif,
             "profile_img" => $request->profile_img,
             "password" => bcrypt($request->password)
         ])->assignRole('shop_user');
 
+        Shop::create([
+            'shop_user_id' => $user->id
+        ]);
         $token = $user->createToken('shop_user',['shop_user','user'])->plainTextToken;
         $response = [
             'user' => $user,
@@ -65,6 +69,7 @@ class ShopUserRepository
        $response = [
            'message' => 'Sesión iniciada',
            'user' => $user,
+           'shop_id' => $this->user->find($user->id)->shop->id,
            'token' => $token,
        ];
 

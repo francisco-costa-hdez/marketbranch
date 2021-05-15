@@ -35,7 +35,7 @@ class ClientUserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:client_users,email',
+            'email' => 'required|email|unique:client_users,email|unique:shop_users,email',
             "tlf" => 'required|unique:client_users,tlf',
             "address" => 'required',
             "password" => 'required|min:8|max:16'

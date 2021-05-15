@@ -15,11 +15,11 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
-            $table->text('description');
-            $table->string('address',100);
-            $table->string('tlf',9)->unique();
-            $table->string('email',100)->unique();    
+            $table->string('name',50)->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
+            $table->string('address',100)->nullable()->default(null);
+            $table->string('tlf',9)->unique()->nullable()->default(null);
+            $table->string('email',100)->unique()->nullable()->default(null);   
             $table->foreignId('shop_user_id')->unique()->constrained()
             ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
