@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Options} from '@angular-slider/ngx-slider';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 
 @Component({
   selector: 'app-product-search',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { LocalStorageService } from '../local-storage.service';
 
 @Component({

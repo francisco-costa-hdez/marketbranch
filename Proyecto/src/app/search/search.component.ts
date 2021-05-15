@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { CategoryListService } from '../category-list.service';
 import { PriceFilterPipe } from '../price-filter.pipe';
 import { RateFilterPipe } from '../rate-filter.pipe';
