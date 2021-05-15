@@ -6,15 +6,15 @@ import { AuthService } from "./auth.service";
 export class AuthInterceptor implements HttpInterceptor {
     constructor (private auth:AuthService) {}
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        console.log("intercepted")
+        // console.log("intercepted")
         // const authToken = this.auth.getAuthorizationToken();
         if (this.auth.isAuthenticated()) {
             const authToken = this.auth.getCurrentUserToken();
             const authReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + authToken)
             });
-            console.log(authToken)
-            console.log(authReq)
+            // console.log(authToken)
+            // console.log(authReq)
             return next.handle(authReq);
         } else {
             return next.handle(req);

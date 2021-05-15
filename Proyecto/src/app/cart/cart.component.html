@@ -1,5 +1,5 @@
 <div *ngIf="authorized; else unauthorized" class="list-group container-md mx-auto p-0">
-    <ng-container *ngIf="loading == false; else loaded">
+    <ng-container *ngIf="cart.length; else emptyCart">
         <div class="list-group-item m-0 p-1">
             <div class="row m-0 p-0">
                 <h5 class="col-9 my-auto">Productos</h5>
@@ -10,17 +10,19 @@
         <div class="list-group-item m-0 p-0">
             <div class="row m-0 p-1">
                 <h5 class="col-6 col-lg-7 my-auto">Total</h5>
-                <h6 class="col-3 my-auto mx-0 pl-1">1,111.11 €</h6>
+                <h6 class="col-3 my-auto mx-0 pl-1">{{price| number:'1.2-2'}} €</h6>
                 <input class="col-3 col-lg-2 form-control btn btn-primary my-auto" type="submit" value="Comprar ahora">
             </div>
         </div>
     </ng-container>
-    <ng-template #loaded>
-        <app-loading-screen></app-loading-screen>
+    <ng-template #emptyCart>
+        <div class="alert alert-primary" role="alert">
+            Añade un producto al carrito para empezar a comprar. 
+        </div>
     </ng-template>
 </div>
 <ng-template #unauthorized>
     <div class="alert alert-warning" role="alert">
-        Para comprar en la web debes <a routerLink="login">iniciar sesión</a>. También puedes <a routerLink="/registro">registrarte</a> para disfrutar de la experiencia Acho Market" 
+        Para comprar en la web debes <a routerLink="login">iniciar sesión</a>. También puedes <a routerLink="/registro">registrarte</a> para disfrutar de la experiencia Acho Market 
     </div>
 </ng-template>

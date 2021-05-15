@@ -19,6 +19,8 @@ export class FormSearchComponent implements OnInit {
   ngOnInit(): void {
     if (!this.categoryList.getCategories().length) {
       this.setCategories();
+    } else {
+      this.getCategories();
     }
   }
 

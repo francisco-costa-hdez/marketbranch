@@ -10,9 +10,9 @@
             <h1 class="row ">{{product.name}}</h1>
             <div class="row align-items-end">
                 <div class="col-2 col-lg-1  m-0 p-0">
-                    <a href="{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
+                    <a href="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
                 </div>
-                <div class="col-10 col-lg-11 h3"><a href="{{shop.id}}">{{shop.name}}</a></div>
+                <div class="col-10 col-lg-11 h3"><a href="/tienda/{{shop.id}}">{{shop.name}}</a></div>
             </div>
         </div>
         </div>
@@ -50,7 +50,7 @@
                                 <span class="h3">{{product.price | currency: " "}}€</span>
                             </div>
                             <h2 class="col-6">
-                                <button type="button" class="btn w-100">
+                                <button type="button" class="btn w-100" (click)="addToCart()">
                                     Añadir al carrito <i class="bi bi-cart-plus"></i>
                                 </button>
                             </h2>

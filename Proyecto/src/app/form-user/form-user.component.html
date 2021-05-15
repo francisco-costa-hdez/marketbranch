@@ -6,11 +6,19 @@
       
   </div>
   </div>
+  <!-- <div  class="container-lg d-flex flex-column justify-content-center" *ngIf="this.userFormValid==true">
+    <h3 class="mx-auto">¡Su usuario ha sido registrado correctamente! </h3>
+    <p>Para poder acceder a su cuenta, le hemos enviado un correo de verificación a {{this.userForm.get('email').value}}, verifique su cuenta y podrá comenzar sus compras en AchoMarket.</p>
+    <a class="mx-auto" routerLink="/home"><h3>Volver al inicio </h3></a>
+    <img class="w-25 mx-auto" src="/assets/images/ach.png">
+</div> -->
+<!-- *ngIf="this.userFormValid==false && (this.emailExists==false || this.tlfExists==false)" -->
 <div class="container-fluid d-flex justify-content-center">
 <div class="card col-12 col-md-8 col-lg-6 ">
   <div class="card-body my-3">
+
 <form (ngSubmit)="onSubmit()"
-#clientForm="ngForm" class=" needs-validation" [formGroup]="userForm" novalidate>
+#clientForm="ngForm" class="needs-validation" [formGroup]="userForm" novalidate >
   
   <div class="form-group">
       <label for="name">Nombre</label>

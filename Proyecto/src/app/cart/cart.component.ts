@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/market-place-db.service';
 import { AuthService } from '../auth.service';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,10 +12,10 @@ import { AuthService } from '../auth.service';
 export class CartComponent implements OnInit {
 
   authorized: boolean = false;
-  cart = [];
-  loading: boolean;
+  cart: Array<any> = [];
+  price: number = 0;
 
-  constructor(private auth: AuthService, private db: MarketPlaceDBService, private router:Router) {
+  constructor(private auth: AuthService, private db: MarketPlaceDBService, private router:Router, private cartList: CartService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.authorized = false;
@@ -27,28 +28,23 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.cartList.cartUpdated.subscribe(
+      (cartList) => {
+        this.getCart();
+      }
+    )
   }
 
   getCart() {
-    this.loading = true;
-    this.cart = [];
-    this.db.getCart(this.auth.getCurrentUserId()).subscribe(
-      (response) => {
-        if (response["products"]) {
-          response["products"].forEach((item) =>{
-            this.cart.push(item);
-          });
-          this.loading = false;
-          console.table(this.cart)
-        } 
-        console.log(this.cart)
-      },
-      (error) => {
-        // console.error('Request failed with error');
-        // console.error(error);
-      }
-    );
+    this.cart = this.cartList.getCartList();
+    this.updatePrice();
+  }
+
+  updatePrice() {
+    this.price = 0;
+    this.cart.forEach( (item) => {
+      this.price = this.price +(item.price * item.quantity);
+    })
   }
 
 }
