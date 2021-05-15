@@ -14,7 +14,7 @@ import { LoginUser } from '../login-user';
 export class FormLogInComponent implements OnInit {
 
   client: boolean =  true;
-  loginForm:FormGroup;
+  loginForm: FormGroup;
   user = new LoginUser;
 
   constructor(private form:FormBuilder,

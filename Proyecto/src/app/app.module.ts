@@ -54,7 +54,7 @@ import { Error500Component } from './error500/error500.component';
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
-  { path: 'cliente', component: CustomerComponent},
+  { path: 'user', component: CustomerComponent},
   { path: 'login', component: FormLogInComponent, canActivate: [LoginGuard]},
   { path: 'logout', redirectTo: '/home', pathMatch: 'full'},
   { path: 'registrouser', component: FormUserComponent},

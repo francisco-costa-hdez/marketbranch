@@ -2,7 +2,7 @@
 <div class="text-white bg-dark">
     &nbsp;<a routerLink="/home" routerLinkActive="active">Home</a>
     &nbsp;<a routerLink="/busqueda" routerLinkActive="active">Búsqueda</a>
-    &nbsp;<a routerLink="/cliente" routerLinkActive="active">Mi usuario</a>
+    &nbsp;<a routerLink="/user" routerLinkActive="active">Mi usuario</a>
     &nbsp;<a routerLink="/manageshop" routerLinkActive="active">Mi Tienda</a>
     &nbsp;<a routerLink="/producto/1" routerLinkActive="active">Producto</a>
     &nbsp;<a routerLink="/tienda/1" routerLinkActive="active">Tienda</a>
@@ -33,15 +33,15 @@
         </li>
         <ng-template #loggedOut>
           <li class="nav-item">
-            <a class="nav-link text-light" class="btn" routerLink="/login">Iniciar sesión</a>
+            <a class="nav-link text-light" class="btn btn-secondary" routerLink="/login">Iniciar sesión</a>
           </li>
         </ng-template>
         <li class="nav-item dropdown" *ngIf="authorized; else loggedOut">
           <a class="nav-link dropdown-toggle text-light clickable" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
           <div class="dropdown-menu" aria-labelledby="userDropdown">
-            <a class="dropdown-item" routerLink="/cliente">Mi Usuario</a>
-            <a class="dropdown-item" href="#">Lista de deseos <i class="bi bi-heart"></i></a>
-            <button class="dropdown-item clickable" routerLink="/logout" (click)="logout()">Cerrar sesión</button>
+            <a class="dropdown-item" routerLink="/user">Mi Usuario</a>
+            <a class="dropdown-item" href="#">Lista de deseos <i class="bi bi-bookmark-heart"></i></a>
+            <button class="dropdown-item clickable" routerLink="/logout" (click)="logout()">Cerrar sesión <i class="bi bi-box-arrow-right"></i></button>
           </div>
         </li>
       </ul>

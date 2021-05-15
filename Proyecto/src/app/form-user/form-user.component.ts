@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
-import { Router, RouterEvent } from '@angular/router';
+import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ClientUser } from '../client-user';
 import { validarIguales } from '../app.validator';
