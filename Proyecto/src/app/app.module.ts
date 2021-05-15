@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 
-
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 import { CookieService } from 'ngx-cookie-service';
+import { LoginGuard } from './login-guard.service';
 
 import { RateFilterPipe } from './rate-filter.pipe';
 import { PriceFilterPipe } from './price-filter.pipe';
@@ -45,7 +46,6 @@ import { FormLogInComponent } from './form-log-in/form-log-in.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { CartComponent } from './cart/cart.component';
 import { FormShopValidComponent } from './form-shop-valid/form-shop-valid.component';
-import { LoginGuard } from './login-guard.service';
 import { Error401Component } from './error401/error401.component';
 import { Error403Component } from './error403/error403.component';
 import { Error404Component } from './error404/error404.component';
@@ -114,7 +114,8 @@ const rutas=[
     CartComponent,
     FormShopValidComponent,
     Error401Component,
-    Error403Component
+    Error403Component,
+    FormShopValidComponent
   ],
   imports: [
     BrowserModule,

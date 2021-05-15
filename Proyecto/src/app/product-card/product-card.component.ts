@@ -9,6 +9,7 @@ import { CartService } from '../cart.service';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product;
+
   constructor(private auth: AuthService, private cart: CartService) { }
 
   ngOnInit(): void {

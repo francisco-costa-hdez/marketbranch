@@ -35,7 +35,7 @@ Route::post('shopuser/create', [ShopUserController::class, 'createShopUser']);
 Route::post('shopuser/login', [ShopUserController::class, 'login']);
 
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('products/create', [ProductController::class, 'createProduct']);
     Route::put('products/update/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('products/delete/{id}', [ProductController::class, 'deleteProduct']);
@@ -58,9 +58,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::delete('shopuser/delete/{id}', [ShopUserController::class, 'deleteShopUser']);
     Route::post('shopuser/logout', [ShopUserController::class, 'logout']);
 
-    Route::get('cart/products/{cart_id}', [CartController::class, 'getProducts']);
+    Route::get('cart/products/{user_id}', [CartController::class, 'getProducts']);
     Route::post('cart/add/{product_id}/{user_id}', [CartController::class, 'addProduct']);
     Route::delete('cart/delete/{product_id}/{user_id}', [CartController::class, 'deleteProduct']);
-    Route::put('cart/update_quantity/{cart_id}/{quantity}/{product_id}', [CartController::class, 'updateQuantity']);
+    Route::put('cart/update_quantity/{user_id}/{quantity}/{product_id}', [CartController::class, 'updateQuantity']);
 });
 

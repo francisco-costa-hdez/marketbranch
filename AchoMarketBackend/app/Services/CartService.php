@@ -25,13 +25,13 @@ class CartService implements ICartService
         return $this->cartRepository->deleteProduct($product_id,$user_id);
     }
 
-    public function getProducts(int $cart_id)
+    public function getProducts(int $user_id)
     {
-        return $this->cartRepository->getProducts($cart_id);
+        return $this->cartRepository->getProducts($user_id);
     }
 
-    public function updateQuantity(int $quantity, int $cart_id, int $product_id)
+    public function updateQuantity(int $quantity, int $user_id, int $product_id)
     {
-        return $this->cartRepository->updateQuantity($quantity, $cart_id, $product_id);
+        return $this->cartRepository->updateQuantity($quantity, $user_id, $product_id);
     }
 }

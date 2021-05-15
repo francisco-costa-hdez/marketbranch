@@ -41,7 +41,7 @@ class ClientUserController extends Controller
             "password" => 'required|min:8|max:16'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 404);
+            return response()->json($validator->errors());
         }
         Mail::send('emails.confirmation_code', $data, function ($message) use ($data) {
             $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');

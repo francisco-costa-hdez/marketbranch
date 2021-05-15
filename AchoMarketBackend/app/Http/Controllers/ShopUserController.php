@@ -33,12 +33,12 @@ class ShopUserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:shop_users,email',
             "nif" => 'required|unique:shop_users,nif|max:9',
-            "address" => 'required',
+            "profile_img" => 'required',
             "password" => 'required|min:8|max:16'
         ]);
         if ($validator->fails()) 
         {
-            return response()->json($validator->errors(), 404);
+            return response()->json($validator->errors());
         }
         return $this->user->createShopUser($request);
     }

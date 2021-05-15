@@ -51,7 +51,6 @@ export class FormUserComponent implements OnInit {
     this.userFormValid = false;
     this.emailExists = false;
     this.tlfExists = false;
-
     (function() {
       'use strict';
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -72,8 +71,6 @@ export class FormUserComponent implements OnInit {
     })();
     }
   
-
-
   onSubmit() {
     this.emailExists=false
     this.tlfExists=false
