@@ -30,32 +30,34 @@
         <label for="nombre">Disponibilidad *</label>
         <input type="text" name="availability" id="availability" formControlName="availability" class="form-control" required>
       </div>
-        <div class="form-group">
-            <label for="description">Descripción *</label>
-            <textarea class="form-control" id="description" name="description" formControlName="description" rows="3" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="images">Seleccione imagen de producto</label>
-            <input type="file" class="form-control-file" id="images" required multiple>
-          </div>
-          <div class="form-group">
-          <label for="categorias">Categoría y subcategoría  </label>
-            <select  name="categorias" id="categorias" style="margin-left:5px;display:block;" required>
-              <optgroup *ngFor="let category of categories" label="{{category.name}}">
-               <!-- <option *ngFor="let subcategory of subCategories" value="{{subcategory}}">{{subcategory}}</option>  -->
-              </optgroup>
-            <!-- <optgroup label="Zapatillas">
-            <option value="deportivas">Deportivas</option>
-            <option value="casual">Casual</option>
-            </optgroup>
-            <optgroup label="Ordenadores">
-            <option value="portatiles">Portátiles</option>
-            <option value="sobremesa">Sobremesa</option>
-            </optgroup> -->
-            </select>
-        </div>
+      <div class="form-group">
+        <label for="description">Descripción *</label>
+        <textarea class="form-control" id="description" name="description" formControlName="description" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="images">Seleccione imagen de producto</label>
+        <input type="file" class="form-control-file" id="images" required multiple>
+      </div>
+      <div class="form-group">
+        <label for="categorias">Categoría y subcategoría  </label>
+        <select  name="categorias" id="categorias" style="margin-left:5px;display:block;" required>
+        <optgroup *ngFor="let category of categories" label="{{category.name}}">
+        <option *ngFor="let subcategory of subCategories" value="{{subcategory}}">{{subcategory}}</option> 
+        </optgroup>
 
-        <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
+        <!-- <optgroup label="Zapatillas">
+        <option value="deportivas">Deportivas</option>
+        <option value="casual">Casual</option>
+        </optgroup>
+        <optgroup label="Ordenadores">
+        <option value="portatiles">Portátiles</option>
+        <option value="sobremesa">Sobremesa</option>
+        </optgroup> -->
+        </select>
+      </div>
+<div *ngFor="let subcategory of subCategories">subcategory {{subcategor}}</div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
     </form>
 
     </div>

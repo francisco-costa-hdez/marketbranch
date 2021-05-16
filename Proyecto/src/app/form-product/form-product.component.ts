@@ -77,7 +77,7 @@ export class FormProductComponent implements OnInit {
   setCategories() {
     this.db.findAllCategories().subscribe(
       (response) => {
-        this.categories = [];
+        this.categories = []
         if (response["categories"]) {
           response["categories"].forEach((item) =>{
             this.categories.push(item);
@@ -86,10 +86,15 @@ export class FormProductComponent implements OnInit {
               (response) => {
                 console.log("sub")
                 console.log(response)
-                // this.subCategories2.push(response)
+                this.subCategories = [];
+                this.subCategories.push(response)
+                console.log("array")
+                console.log(this.subCategories)
                 // console.log(this.subCategories2)
                 // response["subcategories"].forEach((item) =>{
-                // this.subCategories.push(item.name);
+                // this.subCategories = [];  
+                // this.subCategories.push(item);
+                // console.log(this.subCategories)
                 // })
               }
             )

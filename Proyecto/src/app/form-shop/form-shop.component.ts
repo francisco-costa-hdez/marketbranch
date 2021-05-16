@@ -12,7 +12,6 @@ import { validarIguales } from '../app.validator';
   styleUrls: ['./form-shop.component.css']
 })
 export class FormShopComponent implements OnInit {
-
   shopUserForm:FormGroup;
   emailExists=false
   errorEmail=""
@@ -26,10 +25,10 @@ export class FormShopComponent implements OnInit {
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) {
     this.shopUserForm=this.form.group(
       {
-      name:['',Validators.required],
+      admin_name:['',Validators.required],
       nif:['',Validators.required],
       email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
-      profile_img:[''],
+      profile_img:['',Validators.required],
       password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])],
       password2:['',Validators.required],
       check1:[false,Validators.required]
@@ -40,7 +39,7 @@ export class FormShopComponent implements OnInit {
     )
    }
 
-   get name() { return this.shopUserForm.get('name'); }
+   get admin_name() { return this.shopUserForm.get('admin_name'); }
    get email() { return this.shopUserForm.get('email'); }
    get nif() { return this.shopUserForm.get('nif'); }
    get img() { return this.shopUserForm.get('profile_img'); }
@@ -76,7 +75,7 @@ export class FormShopComponent implements OnInit {
    
     
     if(this.shopUserForm.valid){
-      this.shopUser.name=this.name.value
+      this.shopUser.admin_name=this.admin_name.value
       this.shopUser.email=this.email.value
       this.shopUser.nif=this.nif.value
       this.shopUser.password=this.password.value
@@ -112,9 +111,9 @@ export class FormShopComponent implements OnInit {
           });
         }
         if(!(response["nif"] || response["email"] || response["profile_img"])){
-          // console.log("todo ha ido bien")
+          console.log("todo ha ido bien")
           this.shopUserFormValid=true
-          this.router.navigate(['/validshopuser']);
+          // this.router.navigate(['/validshopuser']);
         }
 
         },
