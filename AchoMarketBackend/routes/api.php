@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopUserController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,8 @@ Route::post('clientuser/login', [ClientUserController::class, 'login']);
 Route::post('shopuser/create', [ShopUserController::class, 'createShopUser']);
 Route::post('shopuser/login', [ShopUserController::class, 'login']);
 
+Route::get('review/product/{product_id}', [ReviewController::class, 'getAllProductReviews']);
+Route::get('review/user/{user_id}', [ReviewController::class, 'getAlluserReviews']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('products/create', [ProductController::class, 'createProduct']);
@@ -62,5 +65,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('cart/add/{product_id}/{user_id}', [CartController::class, 'addProduct']);
     Route::delete('cart/delete/{product_id}/{user_id}', [CartController::class, 'deleteProduct']);
     Route::put('cart/update_quantity/{user_id}/{quantity}/{product_id}', [CartController::class, 'updateQuantity']);
+
+    Route::post('review/create',[ReviewController::class, 'createReview']);
+    Route::put('review/update/{review_id}',[ReviewController::class, 'updateReview']);
+    Route::delete('review/delete/{review_id}',[ReviewController::class, 'deleteReview']);
 });
 

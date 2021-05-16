@@ -30,8 +30,8 @@ class ShopUserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:shop_users,email',
+            'admin_name' => 'required',
+            'email' => 'required|email|unique:shop_users,email|unique:client_users,email',
             "nif" => 'required|unique:shop_users,nif|max:9',
             "profile_img" => 'required',
             "password" => 'required|min:8|max:16'

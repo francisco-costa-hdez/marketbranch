@@ -1,5 +1,5 @@
 export class ShopUser {
-    name: string;
+    admin_name: string;
     nif:string;
     email: string;
     profile_img: Blob;

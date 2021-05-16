@@ -53,6 +53,7 @@ import { Error500Component } from './error500/error500.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { RatingComponent } from './rating/rating.component';
 
+
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},

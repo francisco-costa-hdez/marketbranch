@@ -16,4 +16,6 @@ class Review extends Model
     public function user(){
         return $this->belongsTo(ClientUser::class);
     }
+
+    protected $fillable = ['rating','comment','client_user_id','product_id'];
 }

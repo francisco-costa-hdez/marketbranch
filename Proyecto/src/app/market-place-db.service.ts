@@ -266,4 +266,5 @@ export class MarketPlaceDBService {
   deleteReview(review_id: string | number) {
     return this.http.delete( this.url + "review/delete" + review_id);
   }
+  
 }
