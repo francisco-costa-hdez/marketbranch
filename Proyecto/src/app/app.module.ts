@@ -50,25 +50,26 @@ import { Error401Component } from './error401/error401.component';
 import { Error403Component } from './error403/error403.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
-  { path: 'user', component: CustomerComponent},
-  { path: 'login', component: FormLogInComponent, canActivate: [LoginGuard]},
-  { path: 'logout', redirectTo: '/home', pathMatch: 'full'},
-  { path: 'registrouser', component: FormUserComponent},
   { path: 'busqueda', component: SearchComponent},
   { path: 'producto/:id', component: ProductComponent},
   { path: 'tienda/:id', component: ShopComponent},
-  { path: 'informar', component: ReportABugComponent},
-  { path: 'about-us', component: AboutUsComponent},
-  { path: 'terminos', component: TermsComponent},
-  { path: 'contacto', component: ContactComponent},
+  { path: 'login', component: FormLogInComponent, canActivate: [LoginGuard]},
+  { path: 'logout', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'user', component: CustomerComponent},
+  { path: 'registrouser', component: FormUserComponent},
   { path: 'registroprod', component: FormProductComponent},
   { path: 'registroshop', component: FormShopComponent},
   { path: 'manageshop', component: ShopManagementComponent},
   { path: 'validshopuser', component: FormShopValidComponent},
+  { path: 'informar', component: ReportABugComponent},
+  { path: 'about-us', component: AboutUsComponent},
+  { path: 'terminos', component: TermsComponent},
+  { path: 'contacto', component: ContactComponent},
   { path: 'faq', component: FAQComponent},
   { path: '401', component: Error401Component},
   { path: '403', component: Error403Component},
@@ -115,7 +116,8 @@ const rutas=[
     FormShopValidComponent,
     Error401Component,
     Error403Component,
-    FormShopValidComponent
+    FormShopValidComponent,
+    PurchaseComponent
   ],
   imports: [
     BrowserModule,

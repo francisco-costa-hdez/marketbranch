@@ -112,7 +112,7 @@ export class FormUserComponent implements OnInit {
           // console.log("todo ha ido bien")
           this.userFormValid=true
           // console.log(this.userForm)
-          this.router.navigate(['/validshopuser']);
+          // this.router.navigate(['/validshopuser']);
           
         }
         },
