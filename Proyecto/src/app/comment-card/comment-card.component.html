@@ -2,21 +2,15 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-1 m-0 p-0">
-                <a href="PAGINA DE TIENDA FERNANDO"><img class=" shop-icon rounded-circle img-thumbnail w-100" src="/assets/images/AchoM2.png" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
+                <a routerLink="/user"><img class=" shop-icon rounded-circle img-thumbnail w-100" src="/assets/images/AchoM2.png" title="{{review.client_user_id}}" alt="imagen de perfil de {{review.client_user_id}}"></a>
             </div>
-            <div class="col-7">Fernando Dios del Pichipí</div>
+            <div class="col-7">{{review.client_user_id}}</div>
             <div class="col-4">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
+                <app-rating [rating]="review.rating"></app-rating>
             </div>
         </div>
     </div>
     <div class="card-body">
-      <blockquote class="blockquote mb-0">
-        <p>Lo vi, lo hice y lo entendí.</p>
-      </blockquote>
+        <p>{{review.comment}}</p>
     </div>
 </div>

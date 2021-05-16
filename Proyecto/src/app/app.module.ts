@@ -6,8 +6,8 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
 import { CookieService } from 'ngx-cookie-service';
+
 import { LoginGuard } from './login-guard.service';
 
 import { RateFilterPipe } from './rate-filter.pipe';
@@ -51,6 +51,8 @@ import { Error403Component } from './error403/error403.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import { RatingComponent } from './rating/rating.component';
+
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -117,7 +119,8 @@ const rutas=[
     Error401Component,
     Error403Component,
     FormShopValidComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
