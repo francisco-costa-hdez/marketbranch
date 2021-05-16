@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { CartService } from '../cart.service';
 
@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
   product;
   shop;
   categorization;
+  reviews;
   loading: boolean = true;
   show: boolean = false;
 
@@ -44,10 +45,12 @@ export class ProductComponent implements OnInit {
       (response) => {
         if (response["product"]) {
           this.product = response["product"][0];
-          console.log(this.product)
-          this.getCategorization(this.product.subcategory_id)
-          this.getShop(this.product.shop_id) 
-      }},
+          // console.log(this.product);
+          this.getCategorization(this.product.subcategory_id);
+          this.getShop(this.product.shop_id);
+          this.getReviews(id);
+        }
+      },
       (error) =>  {});
   }
 
@@ -57,22 +60,35 @@ export class ProductComponent implements OnInit {
         if (response["category"]) {
           this.categorization = response["category"][0];
           this.loading = false;
-          console.log(this.categorization)
-         
-      }},
+          // console.log(this.categorization);  
+        }
+      },
       (error) =>  {});
   }
 
   getShop(shop_id: string | number) {
-    console.log("here");
     this.db.findShopByProduct(shop_id).subscribe(
       (response) => {
         if (response) {
           this.shop = response["shop"];
           this.loading = false;
-          console.log(this.shop)
-         
-      }},
+          // console.log(this.shop);    
+        }
+      },
+      (error) =>  {});
+  }
+
+  getReviews(product_id) {
+    this.reviews = [];
+    this.db.getAllProductReviews(product_id).subscribe(
+      (response) => {
+        if (response) {
+          response["reviews"].forEach((item) => {
+            this.reviews.push(item);
+          });
+          console.table(this.reviews);    
+        }
+      },
       (error) =>  {});
   }
 

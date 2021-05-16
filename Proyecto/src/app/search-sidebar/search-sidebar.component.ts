@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { Options} from '@angular-slider/ngx-slider';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 
 @Component({
   selector: 'app-search-sidebar',

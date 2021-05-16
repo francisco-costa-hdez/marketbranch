@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 
 @Injectable({
   providedIn: 'root'

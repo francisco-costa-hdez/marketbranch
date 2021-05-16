@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 
 @Component({
   selector: 'app-shop',

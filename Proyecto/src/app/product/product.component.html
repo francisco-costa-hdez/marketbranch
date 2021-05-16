@@ -50,19 +50,16 @@
                                 <span class="h3">{{product.price | currency: " "}}€</span>
                             </div>
                             <h2 class="col-6">
-                                <button type="button" class="btn w-100" (click)="addToCart()">
+                                <button type="button" class="btn btn-primary w-100" (click)="addToCart()">
                                     Añadir al carrito <i class="bi bi-cart-plus"></i>
                                 </button>
                             </h2>
                         </div>
                         <h3>{{product.media_rating}}
                             <span>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                                <i class="bi bi-star"></i>
+                                <app-rating *ngIf="product.media_rating" [rating]="product.media_rating"></app-rating>
                             </span>
+                            
                         </h3>
                         <h3>Descripción del producto</h3>
                         <p>{{product.description}}</p>
@@ -95,13 +92,12 @@
                                     </div>
                                     </div>
                                 </form>
-
                         </div>
                     </div>
+                    <div class="card-body m-0 p-0">
+                        <app-comment-card *ngFor="let review of reviews" [review]="review"></app-comment-card>
+                    </div>
                 </div>
-                <app-comment-card></app-comment-card>
-                <app-comment-card></app-comment-card>
-                <app-comment-card></app-comment-card>
             </div>
         </div>
         <br>

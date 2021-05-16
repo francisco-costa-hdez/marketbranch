@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MarketPlaceDBService } from 'src/market-place-db.service';
+import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ShopUser } from '../shop-user';
 import { validarIguales } from '../app.validator';
 

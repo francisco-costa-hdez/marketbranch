@@ -112,15 +112,15 @@
         box-shadow: none;
     }
     
-    .btn {
+    .btn-tem {
         color: #407EC9;
         background: #ffffff;
         border: 1px solid #407EC9;;
     }
     
-    .btn:hover,
-    .btn:active,
-    .btn:focus {
+    .btn-tem:hover,
+    .btn-tem:active,
+    .btn-tem:focus {
         color: #ffffff;
         background: #407EC9;;
         box-shadow: none;
@@ -483,11 +483,11 @@
         font-weight: 700;
     }
     
-    .header-slider .header-slider-caption .btn {
+    .header-slider .header-slider-caption .btn-tem {
         border-color: #ffffff;
     }
     
-    .header-slider .header-slider-caption .btn i {
+    .header-slider .header-slider-caption .btn-tem i {
         margin-right: 5px;
     }
     
@@ -809,26 +809,26 @@
         font-size: 16px;
     }
     
-    .product-item .product-price .btn {
+    .product-item .product-price .btn-tem {
         float: right;
         border: none;
         color: #000000;
         background: #407EC9;
     }
-    .product-item .product-price .btn {
+    .product-item .product-price .btn-tem {
         float: right;
         border: none;
         color: #000000;
         background: #407EC9;
     }
     
-    .product-item:hover .product-price .btn,
-    .product-item .product-price .btn:hover {
+    .product-item:hover .product-price .btn-tem,
+    .product-item .product-price .btn-tem:hover {
         color: #407EC9;
         background: #ffffff;
     }
     
-    .product-item .product-price .btn i {
+    .product-item .product-price .btn-tem i {
         margin-right: 5px;
     }
     /**********************************/
@@ -1151,11 +1151,11 @@
         border: none;
     }
     
-    .product-detail .product-content .quantity button.btn-minus {
+    .product-detail .product-content .quantity button.btn-tem-minus {
         border-radius: 4px 0 0 4px;
     }
     
-    .product-detail .product-content .quantity button.btn-plus {
+    .product-detail .product-content .quantity button.btn-tem-plus {
         border-radius: 0 4px 4px 0;
     }
     
@@ -1496,15 +1496,15 @@
         border-radius: 4px;
     }
     
-    .cart-page .table button.btn-minus {
+    .cart-page .table button.btn-tem-minus {
         border-radius: 4px 0 0 4px;
     }
     
-    .cart-page .table button.btn-plus {
+    .cart-page .table button.btn-tem-plus {
         border-radius: 0 4px 4px 0;
     }
     
-    .cart-page .table button.btn-cart {
+    .cart-page .table button.btn-tem-cart {
         width: auto;
     }
     
@@ -1587,7 +1587,7 @@
         margin: 0;
     }
     
-    .cart-page .cart-summary .cart-btn button {
+    .cart-page .cart-summary .cart-btn-tem button {
         margin-top: 15px;
         width: calc(50% - 15px);
         height: 50px;
@@ -1599,19 +1599,19 @@
         border-radius: 4px;
     }
     
-    .cart-page .cart-summary .cart-btn button:hover {
+    .cart-page .cart-summary .cart-btn-tem button:hover {
         color: #407EC9;;
         background: #000000;
     }
     
-    .cart-page .cart-summary .cart-btn button:first-child {
+    .cart-page .cart-summary .cart-btn-tem button:first-child {
         margin-right: 25px;
         color: #407EC9;;
         background: #ffffff;
         border: 1px solid #407EC9;;
     }
     
-    .cart-page .cart-summary .cart-btn button:first-child:hover {
+    .cart-page .cart-summary .cart-btn-tem button:first-child:hover {
         color: #ffffff;
         background: #407EC9;;
     }
@@ -1686,15 +1686,15 @@
         border-radius: 4px;
     }
     
-    .wishlist-page .table button.btn-minus {
+    .wishlist-page .table button.btn-tem-minus {
         border-radius: 4px 0 0 4px;
     }
     
-    .wishlist-page .table button.btn-plus {
+    .wishlist-page .table button.btn-tem-plus {
         border-radius: 0 4px 4px 0;
     }
     
-    .wishlist-page .table button.btn-cart {
+    .wishlist-page .table button.btn-tem-cart {
         width: auto;
     }
     
@@ -1780,7 +1780,7 @@
         display: none;
     }
     
-    .checkout .checkout-payment .checkout-btn button {
+    .checkout .checkout-payment .checkout-btn-tem button {
         width: 100%;
         height: 50px;
         padding: 2px 10px;
@@ -1795,18 +1795,18 @@
         transition: all .3s;
     }
     
-    .checkout .checkout-payment .checkout-btn button:hover {
+    .checkout .checkout-payment .checkout-btn-tem button:hover {
         color: #407EC9;;
         background: #000000;
     }
     /**********************************/
     /********* My Account CSS *********/
     /**********************************/
-    
+/*     
     .my-account {
         position: relative;
         padding: 30px 0;
-    }
+    } */
     
     .my-account .nav.nav-pills .nav-link {
         padding: 10px 15px;

@@ -1,6 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './app/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,7 @@ export class MarketPlaceDBService {
 
   private url = "http://127.0.0.1:8000/api";
  
-  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
+  constructor(private http: HttpClient) { }
   
   /**********************************************************************************
    ***** Products *******************************************************************
@@ -217,24 +216,54 @@ export class MarketPlaceDBService {
    ***** Cart ***********************************************************************
   ***********************************************************************************/
 
-    //Gets all the products in user's cart from the database
-    getCart(user_id: string | number) {
-      return this.http.get( this.url + "/cart/products/" + user_id);
-    }
-    
-    //Adds a new product to user's cart
-    addToCart(product_id: string | number, user_id: string | number) {
-        return this.http.post( this.url + "/cart/add/"+ product_id + "/" + user_id,undefined);
-    }
+  //Gets all the products in user's cart from the database
+  getCart(user_id: string | number) {
+    return this.http.get( this.url + "/cart/products/" + user_id);
+  }
+  
+  //Adds a new product to user's cart
+  addToCart(product_id: string | number, user_id: string | number) {
+      return this.http.post( this.url + "/cart/add/"+ product_id + "/" + user_id,undefined);
+  }
 
-    //Adds a new product to user's cart
-    deleteFromCart(product_id: string | number, user_id: string | number) {
-      return this.http.delete( this.url + "/cart/delete/" + product_id + "/" + user_id);
-    }
-    
-    //Adds a new product to user's cart
-    updateQuantityInCartproduct_id(user_id: string | number, quantity: string | number, product_id: string | number) {
+  //Adds a new product to user's cart
+  deleteFromCart(product_id: string | number, user_id: string | number) {
+    return this.http.delete( this.url + "/cart/delete/" + product_id + "/" + user_id);
+  }
+  
+  //Adds a new product to user's cart
+  updateQuantityInCartproduct_id(user_id: string | number, quantity: string | number, product_id: string | number) {
 
-      return this.http.put( this.url + "/cart/update_quantity/" + user_id + "/" + quantity + "/" + product_id, undefined);
-    }
+    return this.http.put( this.url + "/cart/update_quantity/" + user_id + "/" + quantity + "/" + product_id, undefined);
+  }
+
+  /**********************************************************************************
+   ***** Review *********************************************************************¡
+  ***********************************************************************************/
+
+  //Gets all the reviews from a product
+  getAllProductReviews(product_id: string | number) {
+    return this.http.get( this.url + "/review/product/" + product_id);
+  }
+  
+  //Gets all the reviews from an user
+  getAllUserReviews(user_id: string | number) {
+      return this.http.get( this.url + "/review/user/"+ user_id);
+  }
+
+  //User adds a new review to a product
+  createReview(review) {
+      return this.http.post( this.url + "/review/create", review);
+  }
+
+  //User updates a review from a product
+  updateReview(review_id: string | number, review) {
+
+    return this.http.put( this.url + "/review/update/" + review_id, review);
+  }
+  
+  //User deletes a review from a product
+  deleteReview(review_id: string | number) {
+    return this.http.delete( this.url + "review/delete" + review_id);
+  }
 }
