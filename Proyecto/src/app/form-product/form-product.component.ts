@@ -13,7 +13,7 @@ import { CategoryListService } from '../category-list.service';
 export class FormProductComponent implements OnInit {
   categories = [];
   subCategories = [];
-  subCategories2 = [];
+  subCategories2;
 
   productForm:FormGroup;
   product = new Product;
@@ -41,20 +41,19 @@ export class FormProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.getCategories();
+    for(let i=1;i<=13;i++){
+      this.getSubca(i)
+    }
     if (!this.categoryList.getCategories().length) {
       this.setCategories();
     } else {
       this.getCategories();
     }
-    // console.log(this.categories);
 
     (function() {
       'use strict';
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
-        // var pass1 = document.getElementById('password');
-        // var pass2 = document.getElementById('password2');
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
           form.addEventListener('submit', function(event) {
@@ -77,36 +76,37 @@ export class FormProductComponent implements OnInit {
   setCategories() {
     this.db.findAllCategories().subscribe(
       (response) => {
-        this.categories = []
-        if (response["categories"]) {
-          response["categories"].forEach((item) =>{
-            this.categories.push(item);
-            // console.table(item)
-            this.db.findSubcategoryByCategoryId(item.id).subscribe(
-              (response) => {
-                console.log("sub")
-                console.log(response)
-                this.subCategories = [];
-                this.subCategories.push(response)
-                console.log("array")
-                console.log(this.subCategories)
-                // console.log(this.subCategories2)
-                // response["subcategories"].forEach((item) =>{
-                // this.subCategories = [];  
-                // this.subCategories.push(item);
-                // console.log(this.subCategories)
-                // })
-              }
-            )
-          });
-          this.categoryList.setCategoriesFromArray(this.categories);
-        }
+      if (response["categories"]) {
+      response["categories"].forEach((item) =>{
+      this.categories.push(item);
+      // console.table(item)    
+      });
+      this.categoryList.setCategoriesFromArray(this.categories);
+      }
       },
       (error) => {
-        console.error('Request failed with error');
-        console.error(error);
-    });
+      console.error('Request failed with error');
+      console.error(error);
+      });
   }
+
+getSubca(i){
+  
+  this.db.findSubcategoryByCategoryId(i).subscribe(
+  (response) => {
+  this.subCategories.push(response["subcategories"]);
+  }     
+  ,
+   (error) => {
+   console.error('Request failed with error');
+   console.error(error);
+   });
+   return this.subCategories
+
+}
+
+
+
 
   onSubmit() {
    
@@ -118,14 +118,6 @@ export class FormProductComponent implements OnInit {
        this.product.stock=this.stock.value
        this.product.availability=this.availability.value
       
-      
-      // console.log(this.client)
-      // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
-      // console.log(arrayClient)
-      // let jsonClient = JSON.stringify(this.client)
-      // console.log(jsonClient)
-      // let jsonArrayClient = JSON.stringify(arrayClient)
-      // console.log(jsonArrayClient)
       this.db.createProduct(this.product).subscribe(
         (response) => {
           console.log(response)

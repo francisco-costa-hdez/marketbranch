@@ -1,14 +1,11 @@
-<div class="my-account featured-product product">
-    <div class="section-header container-fluid pl-5">
-        <div class="row align-items-end">
-            <div class="col-12"><h1 class="row ">&nbsp;Registrar producto</h1></div>
-        </div>
+<section class="container-fluid d-flex justify-content-center">
+  <!-- [ngClass]="{ 'collapse' : userFormValid }" -->
+  <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5" >
+    <div class="card-header text-center w-100 mx-0 px-0">
+        <h3 class="my-2">Registro Producto</h3>
+        <p>Conocer más sobre <a routerLink="/about-us">Acho Market</a>.</p>
     </div>
-</div>
-
-<div class="container-fluid d-flex justify-content-center">
-  <div class="card col-12 col-md-8 col-lg-6 ">
-  <div class="card-body my-3">
+    <div class="card-body">
   <form  (ngSubmit)="onSubmit()" class="needs-validation" [formGroup]="productForm" novalidate>
     <div class="form-group">
         <label for="nombre">Nombre *</label>
@@ -41,25 +38,25 @@
       <div class="form-group">
         <label for="categorias">Categoría y subcategoría  </label>
         <select  name="categorias" id="categorias" style="margin-left:5px;display:block;" required>
-        <optgroup *ngFor="let category of categories" label="{{category.name}}">
-        <option *ngFor="let subcategory of subCategories" value="{{subcategory}}">{{subcategory}}</option> 
+        <optgroup *ngFor="let category of categories;let i = index" label="{{category.name}}">
+        <option *ngFor="let sub of this.subCategories[i]"  value="{{sub.name}}">{{sub.name}}</option> 
         </optgroup>
-
-        <!-- <optgroup label="Zapatillas">
-        <option value="deportivas">Deportivas</option>
-        <option value="casual">Casual</option>
-        </optgroup>
-        <optgroup label="Ordenadores">
-        <option value="portatiles">Portátiles</option>
-        <option value="sobremesa">Sobremesa</option>
-        </optgroup> -->
         </select>
       </div>
-<div *ngFor="let subcategory of subCategories">subcategory {{subcategor}}</div>
-
     <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
     </form>
-
+  </div>
+</div>
+<!-- <div *ngIf="userFormValid" class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">
+  <div class="card-header text-center">
+    <h3 class="my-2">Formulario enviado con éxito</h3>
+  </div>
+  <div class="card-body">
+    <h4>Producto registrado correctamente</h4>
+    <a routerLink="/home">Volver a mi cuenta</a>
+    <div class="w-100 d-flex flex-column">
+      <img class="w-25 mx-auto" src="/assets/images/ach.png">
     </div>
-    </div>
-    </div>
+  </div>
+</div> -->
+</section>
