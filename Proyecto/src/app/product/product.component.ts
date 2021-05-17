@@ -27,6 +27,8 @@ export class ProductComponent implements OnInit {
   loading: boolean = true;
   show: boolean = false;
 
+  vote: Array<number> = [0,0,0,0,0];
+
   constructor(private auth: AuthService, private cart: CartService, private route: ActivatedRoute, private db: MarketPlaceDBService) { }
 
   ngOnInit(): void {
@@ -160,6 +162,10 @@ export class ProductComponent implements OnInit {
       }
     }
     this.initReviews(this.totalReviews);
+  }
+
+  Ping() {
+    console.log("pong")
   }
 
 }

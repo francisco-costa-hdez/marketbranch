@@ -27,7 +27,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { CarouselOfItemsComponent } from './carousel-of-items/carousel-of-items.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ProductComponent } from './product/product.component';
-import { CommentCardComponent } from './comment-card/comment-card.component';
+import { ReviewCardComponent } from './review-card/review-card.component';
 import { ShopComponent } from './shop/shop.component';
 import { FAQComponent } from './faq/faq.component';
 import { ReportABugComponent } from './report-abug/report-abug.component';
@@ -52,6 +52,7 @@ import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { RatingComponent } from './rating/rating.component';
+import { FormReviewComponent } from './form-review/form-review.component';
 
 
 const rutas=[
@@ -92,7 +93,7 @@ const rutas=[
     CarouselOfItemsComponent,
     ScrollToTopComponent,
     ProductComponent,
-    CommentCardComponent,
+    ReviewCardComponent,
     ShopComponent,
     FAQComponent,
     ReportABugComponent,
@@ -120,7 +121,8 @@ const rutas=[
     Error403Component,
     FormShopValidComponent,
     PurchaseComponent,
-    RatingComponent
+    RatingComponent,
+    FormReviewComponent
   ],
   imports: [
     BrowserModule,

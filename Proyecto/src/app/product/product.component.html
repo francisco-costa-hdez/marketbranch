@@ -70,14 +70,20 @@
             </div>
         </div>
         <br>
-        <div class="container row" style="margin:0 auto;">
-            <div class="col-12 col-md-8 align-items-center justify-content-center" style="margin: 0 auto">
+        <div class="container row my-0 mx-auto">
+            <div class="col-12 col-md-8 my-0 mx-auto">
                 <h2>Añadir un comentario</h2>
                 <p>Se verá</p>
-                <div class="card" style="border-radius: 0;">
+                <div class="card border-radius-0">
                     <div class="card-header">
+                        <h2>Comentarios</h2>
+                    </div>
+                    <div class="card-body">
+                        <app-form-review></app-form-review>
+                    </div>
+                    <div class="card-header border-top">
                         <div class="row">
-                                <h2 class="col-12 col-md-6">Comentarios</h2>
+                                <h5 class="col-12 col-md-6">Otros usuarios opinan:</h5>
                                 <form class="col-12 col-md-6">
                                     <div class="form-group row m-0 p-0">
                                         <label for="orderByComment" class="col-form-label mx-2">Ordenar</label>
@@ -102,7 +108,7 @@
                         [infiniteScrollDistance]="scrollDistance"
                         [infiniteScrollThrottle]="throttle"
                         (scrolled)="onScrollDown()">
-                        <app-comment-card *ngFor="let review of reviews" [review]="review"></app-comment-card>
+                        <app-review-card *ngFor="let review of reviews" [review]="review"></app-review-card>
                     </div>
                 </div>
             </div>
