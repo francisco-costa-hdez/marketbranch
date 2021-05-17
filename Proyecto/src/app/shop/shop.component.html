@@ -48,13 +48,7 @@
                             <div >
                                 <div class="row">
                                     <h4 class="col"> 3.76
-                                        <span>
-                                            <img src="assets/icons/star-fill.svg">
-                                            <img src="assets/icons/star-fill.svg">
-                                            <img src="assets/icons/star-fill.svg">
-                                            <img src="assets/icons/star-half.svg">
-                                            <img src="assets/icons/star.svg">
-                                        </span>
+                                        <app-rating [rating]="3.76"></app-rating>
                                     </h4>
                                 </div>
                             </div>
@@ -92,7 +86,7 @@
                 </div>
             </form>
         </div>
-                <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
+            <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
                 infinite-scroll
                 [infiniteScrollDistance]="scrollDistance"
                 [infiniteScrollThrottle]="throttle"

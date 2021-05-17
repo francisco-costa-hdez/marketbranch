@@ -58,8 +58,7 @@
                         <h3>{{product.media_rating}}
                             <span>
                                 <app-rating *ngIf="product.media_rating" [rating]="product.media_rating"></app-rating>
-                            </span>
-                            
+                            </span>  
                         </h3>
                         <h3>Descripción del producto</h3>
                         <p>{{product.description}}</p>
@@ -71,31 +70,45 @@
             </div>
         </div>
         <br>
-        <div class="container row" style="margin:0 auto;">
-            <div class="col-12 col-md-8 align-items-center justify-content-center" style="margin: 0 auto">
+        <div class="container row my-0 mx-auto">
+            <div class="col-12 col-md-8 my-0 mx-auto">
                 <h2>Añadir un comentario</h2>
                 <p>Se verá</p>
-                <div class="card" style="border-radius: 0;">
+                <div class="card border-radius-0">
                     <div class="card-header">
-                        <div class="row ">
-                                <h2 class="col-12 col-md">Comentarios</h2>
-                                <form>
-                                    <div class="form-group row">
-                                    <label for="orderByComment" class="col-sm-3 col-form-label">Ordenar</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control"id="orderByComment">
-                                            <option value="reciente">Más recientes primero</option>
-                                            <option value="antiguo">Más antiguo primero</option>
-                                            <option value="mejor">Mejores valoraciones primero</option>
-                                            <option value="peor">Peores valoraciones primero</option>
-                                        </select>
-                                    </div>
+                        <h2>Comentarios</h2>
+                    </div>
+                    <div class="card-body">
+                        <app-form-review></app-form-review>
+                    </div>
+                    <div class="card-header border-top">
+                        <div class="row">
+                                <h5 class="col-12 col-md-6">Otros usuarios opinan:</h5>
+                                <form class="col-12 col-md-6">
+                                    <div class="form-group row m-0 p-0">
+                                        <label for="orderByComment" class="col-form-label mx-2">Ordenar</label>
+                                        <div class="col w-100 p-0 m-0">
+                                            <select  #order class="form-control" 
+                                                id="orderReviews" (change)="orderReviews(order)">
+                                                <option value="reciente">Más recientes</option>
+                                                <option value="antiguo">Más antiguos</option>
+                                                <option value="mejor">Mejor valorados</option>
+                                                <option value="peor">Peor valorados</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </form>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-0">
+                    <!-- <div class="card-body m-0 p-0">
                         <app-comment-card *ngFor="let review of reviews" [review]="review"></app-comment-card>
+                    </div> -->
+                    <div class="card-body m-0 p-0"
+                        infinite-scroll
+                        [infiniteScrollDistance]="scrollDistance"
+                        [infiniteScrollThrottle]="throttle"
+                        (scrolled)="onScrollDown()">
+                        <app-review-card *ngFor="let review of reviews" [review]="review"></app-review-card>
                     </div>
                 </div>
             </div>
