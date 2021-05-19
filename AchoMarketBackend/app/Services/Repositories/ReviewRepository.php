@@ -20,7 +20,8 @@ class ReviewRepository
 
     public function getAllProductReviews(int $product_id)
     {
-        return Product::find($product_id)->reviews;
+        return DB::select('SELECT reviews.*,client_users.name as user_name, client_users.profile_img as user_profile_img
+        FROM reviews JOIN client_users ON reviews.client_user_id = client_users.id WHERE reviews.product_id = ?', [$product_id]);
     }
 
     public function getAllUserReviews(int $user_id)
