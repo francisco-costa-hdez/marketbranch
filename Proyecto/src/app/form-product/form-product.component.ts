@@ -13,7 +13,6 @@ import { CategoryListService } from '../category-list.service';
 export class FormProductComponent implements OnInit {
   categories = [];
   subCategories = [];
-  subCategories2;
 
   productForm:FormGroup;
   product = new Product;
@@ -27,6 +26,7 @@ export class FormProductComponent implements OnInit {
       stock:['',Validators.required],
       availability:['',Validators.required],
       description:['',Validators.required],
+      subcategory_id:['',Validators.required]
       // image:['',Validators.required]
     }
     )
@@ -38,6 +38,7 @@ export class FormProductComponent implements OnInit {
    get stock() { return this.productForm.get('stock'); }
    get availability() { return this.productForm.get('availability'); }
    get description() { return this.productForm.get('description'); }
+   get subcategory_id() { return this.productForm.get('subcategory_id'); }
 
 
   ngOnInit(): void {
@@ -117,6 +118,8 @@ getSubca(i){
        this.product.description=this.description.value
        this.product.stock=this.stock.value
        this.product.availability=this.availability.value
+       this.product.subcategory_id=this.subcategory_id.value
+       this.product.shop_id="1"
       
       this.db.createProduct(this.product).subscribe(
         (response) => {

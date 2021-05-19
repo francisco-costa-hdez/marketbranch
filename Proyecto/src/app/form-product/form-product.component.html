@@ -33,13 +33,13 @@
       </div>
       <div class="form-group">
         <label for="images">Seleccione imagen de producto</label>
-        <input type="file" class="form-control-file" id="images" required multiple>
+        <input type="file" class="form-control-file" id="images" multiple>
       </div>
       <div class="form-group">
         <label for="categorias">Categoría y subcategoría  </label>
-        <select  name="categorias" id="categorias" style="margin-left:5px;display:block;" required>
+        <select  class="custom-select col-md-7 d-block" name="subcategory_id" id="subcategory_id" required formControlName="subcategory_id">
         <optgroup *ngFor="let category of categories;let i = index" label="{{category.name}}">
-        <option *ngFor="let sub of this.subCategories[i]"  value="{{sub.name}}">{{sub.name}}</option> 
+        <option *ngFor="let sub of this.subCategories[i]"  value="{{sub.id}}">{{sub.name}}</option> 
         </optgroup>
         </select>
       </div>

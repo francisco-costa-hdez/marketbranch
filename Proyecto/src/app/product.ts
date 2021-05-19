@@ -6,5 +6,7 @@ export class Product {
     stock: string;
     availability:string;
     description:string;
+    subcategory_id:string;
+    shop_id:string;
 }
 
