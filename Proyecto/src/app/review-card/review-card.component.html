@@ -4,7 +4,7 @@
             <div class="col-1 m-0 p-0">
                 <a routerLink="/user"><img class=" shop-icon rounded-circle img-thumbnail w-100" src="/assets/images/AchoM2.png" title="{{review.client_user_id}}" alt="imagen de perfil de {{review.client_user_id}}"></a>
             </div>
-            <div class="col-7">{{review.client_user_id}}</div>
+            <div class="col-7">{{review.user_name}}</div>
             <div class="col-4">
                 <app-rating [rating]="review.rating"></app-rating>
             </div>

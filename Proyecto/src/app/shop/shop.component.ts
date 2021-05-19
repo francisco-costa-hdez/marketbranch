@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit {
   totalResults;
   aux;
   best = [];
+  shop_rating: number = 3.76;
 
   order = "reciente";
   sum = 6;

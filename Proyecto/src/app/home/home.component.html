@@ -2,24 +2,10 @@
 <app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>
 <section *ngIf="contentLoaded == 2" class="container-fluid m-0 p-0">
     <div *ngIf="user" class="alert alert-success" role="alert">¡Bienvenide {{user}}!</div>
-    <!-- Featured Product Start -->
-    <article class="featured-product product">
-
-        <div class="section-header pl-5">
-            <h1>Nuestra Selección de productos</h1>
-        </div>
-        <div class="container-fluid">
-            <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
-        </div>  
-    </article>
-    <article class="featured-product product">
-
-        <div class="section-header pl-5">
-            <h1>Nuevos Productos</h1>
-        </div>
-        <div class="container-fluid">
-            <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
-        </div>
+    <article class="text-center my-5">
+        <h1 class="display-1">Ach<img src="/assets/images/ach-yellow.png" width="70em"> Market</h1>
+        <h2>Explora el Marketplace de la Región de Murcia.</h2>
+        <h5>Descubre las tiendas de la región y sus productos en un click.</h5>
     </article>
     <article class="featured-product product">
         <div class="section-header pl-5">
@@ -42,10 +28,10 @@
                                     <div class="col-12 col-md-8">
                                         <h2>{{shop.name}}</h2>
                                         <p>{{shop.description}}</p>
-                                        <button class="btn btn-primary mb-4" style="margin: 0 auto;">Visitar</button>
+                                        <a class="btn btn-primary mb-4 my-0" routerLink="/tienda/{{shop.id}}">Visitar</a>
                                     </div>
                                     <div class="col-12 col-md-4">
-                                        <img class="d-block img-fluid img-thumbnail" src="/assets/images/limon-eco.jpg" alt="2nd slide">
+                                        <a routerLink="/tienda/{{shop.id}}"><img class="d-block img-fluid img-thumbnail" src="/assets/images/limon-eco.jpg" alt="2nd slide"></a>
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +46,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </article>
+    <article class="featured-product product">
+
+        <div class="section-header pl-5">
+            <h1>Nuestra Selección de productos</h1>
+        </div>
+        <div class="container-fluid">
+            <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
+        </div>  
+    </article>
+    <article class="featured-product product">
+
+        <div class="section-header pl-5">
+            <h1>Nuevos Productos</h1>
+        </div>
+        <div class="container-fluid">
+            <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
         </div>
     </article>
     <article class="featured-product product">

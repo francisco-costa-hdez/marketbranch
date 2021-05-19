@@ -16,9 +16,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let hola =  Math.floor( Math.random() * 2);
-    console.log(hola);
-    this.img = (hola) ? "/assets/images/limon-eco.jpg" : "/assets/images/limon-eco2.jpg";
+    this.img = (Math.floor( Math.random() * 2)) ? "/assets/images/limon-eco.jpg" : "/assets/images/limon-eco2.jpg";
   }
 
   addToCart() {

@@ -100,10 +100,10 @@ export class FormLogInComponent implements OnInit {
           console.log(response);
           // this.auth.deleteCurrentUser();
           let data = new Cookie;
-          data.name = response["user"];
-          data.id = response["user_id"];
+          data.name = response["user"].admin_name;
+          data.id = response["user"].id;
           data.token = response["token"];
-          data.shop = response["shop"];
+          data.shop = response["shop_id"];
           console.log(data);
           this.auth.setCurrentUser(data);
           console.log(this.auth.getCurrentUser());

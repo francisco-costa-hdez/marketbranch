@@ -112,22 +112,22 @@ getSubca(i){
   onSubmit() {
    
     if(this.productForm.valid){
-       this.product.name=this.name.value
-       this.product.price=this.price.value
-       this.product.discount=this.discount.value
-       this.product.description=this.description.value
-       this.product.stock=this.stock.value
-       this.product.availability=this.availability.value
-       this.product.subcategory_id=this.subcategory_id.value
-       this.product.shop_id="1"
+       this.product.name=this.name.value;
+       this.product.price=this.price.value;
+       this.product.discount=this.discount.value;
+       this.product.description=this.description.value;
+       this.product.stock=this.stock.value;
+       this.product.availability=this.availability.value;
+       this.product.subcategory_id=this.subcategory_id.value;
+       this.product.shop_id="6";
       
       this.db.createProduct(this.product).subscribe(
         (response) => {
-          console.log(response)
+          console.log(response);
         },
         (error) => {
-          console.log("Se ha producido un error:")
-          console.log(error)
+          console.log("Se ha producido un error:");
+          console.log(error);
           
           
         }); 

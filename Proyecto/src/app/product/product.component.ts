@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { CartService } from '../cart.service';
@@ -29,7 +29,13 @@ export class ProductComponent implements OnInit {
 
   vote: Array<number> = [0,0,0,0,0];
 
-  constructor(private auth: AuthService, private cart: CartService, private route: ActivatedRoute, private db: MarketPlaceDBService) { }
+  constructor(private auth: AuthService, private cart: CartService, private router: Router, private route: ActivatedRoute, private db: MarketPlaceDBService) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.getProduct(this.route.snapshot.paramMap.get('id'));
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getProduct(this.route.snapshot.paramMap.get('id'));
@@ -78,7 +84,7 @@ export class ProductComponent implements OnInit {
   }
 
   getShop(shop_id: string | number) {
-    this.db.findShopByProduct(shop_id).subscribe(
+    this.db.findShopById(shop_id).subscribe(
       (response) => {
         if (response) {
           this.shop = response["shop"];
