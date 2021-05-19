@@ -9,31 +9,94 @@
   <form  (ngSubmit)="onSubmit()" class="needs-validation" [formGroup]="productForm" novalidate>
     <div class="form-group">
         <label for="nombre">Nombre *</label>
-        <input type="text" name="name" id="name" formControlName="name" class="form-control" required>
+        <input type="text" pattern=".{3,50}" name="name" id="name" formControlName="name" class="form-control" required>
+        <div class="invalid-feedback" *ngIf="productForm.get('name').hasError('required');else nameBad">
+          Error, no has introducido el nombre
+       </div>
+       <ng-template #nameBad>
+        <div class="invalid-feedback" *ngIf="productForm.get('name').hasError('pattern'); else nameGood">
+          Error, no has introducido el patrón correctamente (Mínimo tres caracteres)
+        </div>
+        </ng-template>
+        <ng-template #nameGood>
+          <div class="valid-feedback">
+            El patrón del nombre es correcto
+          </div>
+        </ng-template>
       </div>
       <div class="form-group">
         <label for="nombre">Precio *</label>
-        <input type="text" name="price" id="price" formControlName="price" class="form-control" required>
+        <input type="text" name="price" pattern="[0-9]{3,50}" id="price" formControlName="price" class="form-control" required>
+        <div class="invalid-feedback" *ngIf="productForm.get('price').hasError('required');else priceBad">
+          Error, no has introducido el precio
+       </div>
+       <ng-template #priceBad>
+        <div class="invalid-feedback" *ngIf="productForm.get('price').hasError('pattern'); else priceGood">
+          Error, no has introducido el patrón correctamente (Mínimo tres caracteres, solo números)
+        </div>
+        </ng-template>
+        <ng-template #priceGood>
+          <div class="valid-feedback">
+            El patrón del precio es correcto
+          </div>
+        </ng-template>
       </div>
       <div class="form-group">
         <label for="nombre">Descuento </label>
-        <input type="text" name="discount" id="discount" formControlName="discount" class="form-control">
+        <input type="text" name="discount" pattern="[0-9]{3,50}" id="discount" formControlName="discount" class="form-control">
+        <div class="invalid-feedback" *ngIf="productForm.get('discount').hasError('pattern'); else discountGood">
+          Error, no has introducido el patrón correctamente (Vacío o mínimo tres caracteres, solo números)
+        </div>
+        <ng-template #discountGood>
+          <div class="valid-feedback">
+            El patrón del descuento es correcto
+          </div>
+        </ng-template>
       </div>
       <div class="form-group">
         <label for="nombre">Stock *</label>
-        <input type="text" name="stock" id="stock" class="form-control" formControlName="stock" required>
+        <input type="text" name="stock" id="stock" pattern="[0-9]{1,999}" class="form-control" formControlName="stock" required>
+        <div class="invalid-feedback" *ngIf="productForm.get('stock').hasError('required');else stockBad">
+          Error, no has introducido el stock
+       </div>
+       <ng-template #stockBad>
+        <div class="invalid-feedback" *ngIf="productForm.get('stock').hasError('pattern'); else stockGood">
+          Error, no has introducido el patrón correctamente (Mínimo 1 caracter, solo números enteros positivos)
+        </div>
+        </ng-template>
+        <ng-template #stockGood>
+          <div class="valid-feedback">
+            El patrón del stock es correcto
+          </div>
+        </ng-template>
       </div>
       <div class="form-group">
         <label for="nombre">Disponibilidad *</label>
-        <input type="text" name="availability" id="availability" formControlName="availability" class="form-control" required>
+        <input type="text" name="availability" id="availability" pattern="[0-9]{1,999}" formControlName="availability" class="form-control" required>
+        <div class="invalid-feedback" *ngIf="productForm.get('availability').hasError('required');else avBad">
+          Error, no has introducido la disponibilidad
+       </div>
+       <ng-template #avBad>
+        <div class="invalid-feedback" *ngIf="productForm.get('availability').hasError('pattern'); else avGood">
+          Error, no has introducido el patrón correctamente (Mínimo 1 caracter, solo números enteros positivos)
+        </div>
+        </ng-template>
+        <ng-template #avGood>
+          <div class="valid-feedback">
+            El patrón de disponibilidad es correcto
+          </div>
+        </ng-template>
       </div>
       <div class="form-group">
         <label for="description">Descripción *</label>
-        <textarea class="form-control" id="description" name="description" formControlName="description" rows="3" required></textarea>
+        <textarea class="form-control" id="description" name="description" pattern="[0-9a-zA-Z]{1,999}" formControlName="description" rows="3" required></textarea>
+        <div class="invalid-feedback" *ngIf="productForm.get('description').hasError('required')">
+          Error, no has introducido la descripción
+       </div>
       </div>
       <div class="form-group">
         <label for="images">Seleccione imagen de producto</label>
-        <input type="file" class="form-control-file" id="images" multiple>
+        <input type="file" class="form-control-file" id="images" multiple >
       </div>
       <div class="form-group">
         <label for="categorias">Categoría y subcategoría  </label>
@@ -42,21 +105,12 @@
         <option *ngFor="let sub of this.subCategories[i]"  value="{{sub.id}}">{{sub.name}}</option> 
         </optgroup>
         </select>
+        <div class="invalid-feedback" *ngIf="productForm.get('subcategory_id').hasError('required')">
+          Error, no has introducido la subcategoría
+       </div>
       </div>
     <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
     </form>
   </div>
 </div>
-<!-- <div *ngIf="userFormValid" class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">
-  <div class="card-header text-center">
-    <h3 class="my-2">Formulario enviado con éxito</h3>
-  </div>
-  <div class="card-body">
-    <h4>Producto registrado correctamente</h4>
-    <a routerLink="/home">Volver a mi cuenta</a>
-    <div class="w-100 d-flex flex-column">
-      <img class="w-25 mx-auto" src="/assets/images/ach.png">
-    </div>
-  </div>
-</div> -->
 </section>
