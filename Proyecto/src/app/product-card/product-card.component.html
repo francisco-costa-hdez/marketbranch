@@ -1,7 +1,7 @@
 <div class="card bg-light my-1 mx-1 p-0 h-100">
     <div class="card border-0 m-0 p-0">
         <a routerLink="/producto/{{product.id}}">
-            <img class="card-img" src="/assets/images/limon-eco.jpg" alt="Card image cap">
+            <img class="card-img" src="{{img}}" alt="Card image cap">
             <div class="card-img-overlay">
                 <div class="float-right rounded rating" *ngIf="product.media_rating != 0">{{product.media_rating | number:'1.2-2'}} <i class="bi bi-star-fill"></i></div>
                 <div class="col-3  m-0 p-0" *ngIf="product.shop_id">

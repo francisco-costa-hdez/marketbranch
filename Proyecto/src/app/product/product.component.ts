@@ -164,8 +164,4 @@ export class ProductComponent implements OnInit {
     this.initReviews(this.totalReviews);
   }
 
-  Ping() {
-    console.log("pong")
-  }
-
 }

@@ -9,10 +9,16 @@ import { CartService } from '../cart.service';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product;
+  img: string;
 
-  constructor(private auth: AuthService, private cart: CartService) { }
+  constructor(private auth: AuthService, private cart: CartService) {
+    
+  }
 
   ngOnInit(): void {
+    let hola =  Math.floor( Math.random() * 2);
+    console.log(hola);
+    this.img = (hola) ? "/assets/images/limon-eco.jpg" : "/assets/images/limon-eco2.jpg";
   }
 
   addToCart() {
