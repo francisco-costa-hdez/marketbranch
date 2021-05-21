@@ -1,16 +1,19 @@
 <h5>Tu opinión importa</h5>
 <p class="float-left mr-2">Valora este producto:</p>
-<div class="form-check">
-    <label for="star_1" class="form-check-label bi bi-star"></label>
-    <input type="radio" id="star_1" name="vote" value="1" class="form-check-input d-none">
-    <label for="star_2" class="form-check-label bi bi-star"></label>
-    <input type="radio" id="star_2" name="vote" value="2" class="form-check-input d-none">
-    <label for="star_3" class="form-check-label bi bi-star"></label>
-    <input type="radio" id="star_3" name="vote" value="3" class="form-check-input d-none">
-    <label for="star_4" class="form-check-label bi bi-star"></label>
-    <input type="radio" id="star_4" name="vote" value="4" class="form-check-input d-none">
-    <label for="star_5" class="form-check-label bi bi-star"></label>
-    <input type="radio" id="star_5" name="vote" value="5" class="form-check-input d-none">
-</div>
-<textarea class="form-control"></textarea>
-<input type="submit" value="Enviar" class="btn btn-primary w-25">
+<form (ngSubmit)="onSubmit()" #revwForm="ngForm" 
+            class="needs-validation" [formGroup]="reviewForm" novalidate>
+    <div class="form-check">
+        <label for="star_1" class="form-check-label bi" [ngClass]="[rating.value >= 1 ? 'bi-star-fill' : '',  rating.value == 0 ? 'bi-star' : '']"></label>
+        <input type="radio" id="star_1" name="rating" value="1" formControlName="rating" class="form-control  d-none" required>
+        <label for="star_2" class="form-check-label bi" [ngClass]="[rating.value >= 2 ? 'bi-star-fill' : '',  rating.value < 2 ? 'bi-star' : '']"></label>
+        <input type="radio" id="star_2" name="rating" value="2" formControlName="rating" class="form-control  d-none">
+        <label for="star_3" class="form-check-label bi" [ngClass]="[rating.value >= 3 ? 'bi-star-fill' : '',  rating.value < 3 ? 'bi-star' : '']"></label>
+        <input type="radio" id="star_3" name="rating" value="3" formControlName="rating" class="form-control  d-none">
+        <label for="star_4" class="form-check-label bi" [ngClass]="[rating.value >= 4 ? 'bi-star-fill' : '',  rating.value < 4 ? 'bi-star' : '']"></label>
+        <input type="radio" id="star_4" name="rating" value="4" formControlName="rating" class="form-control  d-none">
+        <label for="star_5" class="form-check-label bi" [ngClass]="[rating.value == 5 ? 'bi-star-fill' : '',  rating.value < 5 ? 'bi-star' : '']"></label>
+        <input type="radio" id="star_5" name="rating" value="5" formControlName="rating" class="form-control  d-none">
+    </div>
+    <textarea class="form-control" id="comment" name="comment" formControlName="comment"></textarea>
+    <input type="submit" value="Enviar" class="btn btn-primary w-25" required>
+</form>

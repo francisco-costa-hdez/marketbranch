@@ -32,13 +32,22 @@ export class ProductComponent implements OnInit {
   constructor(private auth: AuthService, private cart: CartService, private router: Router, private route: ActivatedRoute, private db: MarketPlaceDBService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        this.product = null;
+        this.shop = null;
+        this.categorization = null;
+        this.reviews = [];
+        this.auxReviews = [];
+        this.totalReviews = [];
+        this.sum = 3;
+
+        this.loading = true;
+        this.show = false;
         this.getProduct(this.route.snapshot.paramMap.get('id'));
       }
     });
   }
 
   ngOnInit(): void {
-    this.getProduct(this.route.snapshot.paramMap.get('id'));
   }
 
   addToCart() {
@@ -63,9 +72,13 @@ export class ProductComponent implements OnInit {
         if (response["product"]) {
           this.product = response["product"][0];
           // console.log(this.product);
-          this.getCategorization(this.product.subcategory_id);
-          this.getShop(this.product.shop_id);
-          this.getReviews(id);
+          if (this.product) {
+            this.getCategorization(this.product.subcategory_id);
+            this.getShop(this.product.shop_id);
+            this.getReviews(id);
+          } else {
+            this.loading = false;
+          }
         }
       },
       (error) =>  {});
@@ -100,9 +113,11 @@ export class ProductComponent implements OnInit {
     this.db.getAllProductReviews(product_id).subscribe(
       (response) => {
         if (response) {
+          // console.log(response);
           response["reviews"].forEach((item) => {
             this.totalReviews.push(item);
-          });
+          }
+        );
           this.auxReviews = [...this.totalReviews];
           this.initReviews(this.totalReviews);
         }
