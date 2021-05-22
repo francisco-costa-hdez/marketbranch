@@ -72,14 +72,12 @@
         <br>
         <div class="container row my-0 mx-auto">
             <div class="col-12 col-md-8 my-0 mx-auto">
-                <h2>Añadir un comentario</h2>
-                <p>Se verá</p>
                 <div class="card border-radius-0">
                     <div class="card-header">
                         <h2>Comentarios</h2>
                     </div>
                     <div class="card-body">
-                        <app-form-review [product_id]="product.id"></app-form-review>
+                        <app-form-review [product_id]="product.id" (newReview)="addReview($event)"></app-form-review>
                     </div>
                     <div class="card-header border-top">
                         <div class="row">

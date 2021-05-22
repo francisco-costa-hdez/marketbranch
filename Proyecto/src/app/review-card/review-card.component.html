@@ -6,12 +6,33 @@
             </div>
             <div class="col-7">{{review.user_name}}</div>
             <div class="col-4">
-                <app-rating [rating]="review.rating"></app-rating>
+                <app-rating *ngIf="!edit" [rating]="review.rating"></app-rating>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <button *ngIf="owner" class="btn btn-primary float-right m-2">Editar</button>
-        <p>{{review.comment}}</p>
+        <button #editBtn *ngIf="owner" class="btn float-right m-2" [ngClass]="[edit ? 'btn-secondary' : 'btn-primary']" (click)="formEdit(editBtn)">
+            <span *ngIf="edit">Cancelar</span>
+            <span *ngIf="!edit">Editar</span>
+        </button>
+        <p *ngIf="!edit">{{review.comment}}</p>
+        <form *ngIf="owner && edit" (ngSubmit)="onSubmit()" #revwEditForm="ngForm" [formGroup]="reviewEditForm" novalidate>
+            <p class="float-left mr-2">Valora este producto:</p>
+            <div class="form-check">
+                <label for="star_1Edit" class="form-check-label bi" [ngClass]="[ratingEdit.value >= 1 ? 'bi-star-fill' : '',  ratingEdit.value == 0 ? 'bi-star' : '']"></label>
+                <input type="radio" id="star_1Edit" name="ratingEdit" value="1" formControlName="ratingEdit" class="form-control  d-none" required>
+                <label for="star_2Edit" class="form-check-label bi" [ngClass]="[ratingEdit.value >= 2 ? 'bi-star-fill' : '',  ratingEdit.value < 2 ? 'bi-star' : '']"></label>
+                <input type="radio" id="star_2Edit" name="ratingEdit" value="2" formControlName="ratingEdit" class="form-control  d-none">
+                <label for="star_3Edit" class="form-check-label bi" [ngClass]="[ratingEdit.value >= 3 ? 'bi-star-fill' : '',  ratingEdit.value < 3 ? 'bi-star' : '']"></label>
+                <input type="radio" id="star_3Edit" name="ratingEdit" value="3" formControlName="ratingEdit" class="form-control  d-none">
+                <label for="star_4Edit" class="form-check-label bi" [ngClass]="[ratingEdit.value >= 4 ? 'bi-star-fill' : '',  ratingEdit.value < 4 ? 'bi-star' : '']"></label>
+                <input type="radio" id="star_4Edit" name="ratingEdit" value="4" formControlName="ratingEdit" class="form-control  d-none">
+                <label for="star_5Edit" class="form-check-label bi" [ngClass]="[ratingEdit.value == 5 ? 'bi-star-fill' : '',  ratingEdit.value < 5 ? 'bi-star' : '']"></label>
+                <input type="radio" id="star_5Edit" name="ratingEdit" value="5" formControlName="ratingEdit" class="form-control  d-none">
+            </div>
+            <textarea class="form-control" id="commentEdit" name="commentEdit" formControlName="commentEdit"></textarea>
+            <input type="button" value="Eliminar" class="btn btn-danger w-25 float-left" (click)="deleteReview()">
+            <input type="submit" value="Enviar" class="btn btn-primary w-25 mx-2" required>
+        </form>
     </div>
 </div>

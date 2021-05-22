@@ -58,6 +58,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  addReview(review) {
+    this.auxReviews.push(review);
+    this.orderReviews();
+  }
+
   chosePrincipal() {
     alert("esto quiero hacerlo con los datos devueltos de la api pa no trabajar doble:)");
   }
