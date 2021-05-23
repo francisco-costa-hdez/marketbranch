@@ -3,7 +3,9 @@ import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { Product } from '../product';
+import { Image } from '../image';
 import { CategoryListService } from '../category-list.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-form-product',
@@ -17,7 +19,9 @@ export class FormProductComponent implements OnInit {
   productForm:FormGroup;
   product = new Product;
 
-  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService) {
+  imageProduct = new Image;
+
+  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService, private auth: AuthService) {
     this.productForm=this.form.group(
       {
       name:['',Validators.required],
@@ -26,8 +30,8 @@ export class FormProductComponent implements OnInit {
       stock:['',Validators.required],
       availability:['',Validators.required],
       description:['',Validators.required],
-      subcategory_id:['',Validators.required]
-      // image:['',Validators.required]
+      subcategory_id:['',Validators.required],
+      image:['',Validators.required]
     }
     )
    }
@@ -39,6 +43,7 @@ export class FormProductComponent implements OnInit {
    get availability() { return this.productForm.get('availability'); }
    get description() { return this.productForm.get('description'); }
    get subcategory_id() { return this.productForm.get('subcategory_id'); }
+   get image() { return this.productForm.get('image'); }
 
 
   ngOnInit(): void {
@@ -67,6 +72,7 @@ export class FormProductComponent implements OnInit {
           }, false);
         });
     })();
+    console.log(this.productForm.get('discount'))
   }
 
 
@@ -119,18 +125,28 @@ getSubca(i){
        this.product.stock=this.stock.value;
        this.product.availability=this.availability.value;
        this.product.subcategory_id=this.subcategory_id.value;
-       this.product.shop_id="6";
+       this.product.shop_id=this.auth.getCurrentUserShop();
+       this.imageProduct.image=this.image.value;
+       this.imageProduct.product_id=101;
       
       this.db.createProduct(this.product).subscribe(
         (response) => {
           console.log(response);
+          this.db.uploadProductImage(this.imageProduct).subscribe(
+            (response) => {
+              console.log(response);
+            },
+            (error) => {
+              console.log("Se ha producido un error:");
+              console.log(error);
+            }
+          )
         },
         (error) => {
           console.log("Se ha producido un error:");
           console.log(error);
-          
-          
         }); 
+
       }
     
    
