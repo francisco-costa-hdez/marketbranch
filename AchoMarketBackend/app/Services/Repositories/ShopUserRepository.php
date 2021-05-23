@@ -5,6 +5,7 @@ namespace App\Services\Repositories;
 use App\Models\Shop;
 use App\Models\ShopUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ShopUserRepository
@@ -18,7 +19,8 @@ class ShopUserRepository
 
     public function findShopUserById(int $id)
     {
-        return $this->user->find($id);
+        return DB::select('select shop_users.*,shops.id as shop_id from shop_users join shops on shop_users.id = 
+        shops.shop_user_id where shop_users.id = ?', [$id]);
     }
 
     public function createShopUser(Request $request)

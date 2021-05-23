@@ -50,19 +50,19 @@ class ProductService implements IProductService
         return $this->productRepository->findProductsByString($string);
     }
 
-    public function createProduct(Request $data)
+    public function createProduct(Request $data, int $shop_id)
     {
-       return $this->productRepository->createProduct($data);
+       return $this->productRepository->createProduct($data, $shop_id);
     }
 
     public function updateProduct(int $id, Request $request)
     {
-        $this->productRepository->updateProduct($id, $request);
+        return $this->productRepository->updateProduct($id, $request);
     }
 
     public function deleteProduct(int $id)
     {
-        $this->productRepository->deleteProduct($id);
+       return $this->productRepository->deleteProduct($id);
     }
 
     public function uploadProductImage(Request $request)

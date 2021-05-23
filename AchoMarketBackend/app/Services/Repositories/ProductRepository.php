@@ -101,41 +101,56 @@ class ProductRepository
         return $products;
     }
 
-    public function createProduct(Request $request)
+    public function createProduct(Request $request, int $shop_id)
     {
-         $this->product->create([
+         $product = $this->product->create([
             'name' => $request->name,
             'price' => $request->price,
             'description'=> $request->description,
-            'discount' => $request->discount,
+            'discount' => ($request->discount != 0)?$request->discount : 0,
             'stock'=> $request->stock,
             'availability' =>  $request->availability,
             'subcategory_id' => $request->subcategory_id,
             'trademark_id' => $request->trademark_id,
-            'shop_id' => $request->shop_id
+            'shop_id' => $shop_id
          ]);
 
-         return response()->json(['message' => 'Producto creado correctamente']);
+         return response()->json(['product' => $product]);
     }
 
     public function updateProduct(int $id, Request $request)
     {
-        $this->product->find($id)->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'discount' => $request->discount,
-            'stock'=> $request->stock,
-            'availability' =>  $request->availability,
-            'subcategory_id' => $request->subcategory_id,
-            'trademark_id' =>  $request->trademark_i,
-        ]);
+        $product = $this->product->find($id);
+
+        if(auth()->user()->shop->id == $product->shop_id)
+        {
+            $product->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'discount' => $request->discount,
+                'stock'=> $request->stock,
+                'availability' =>  $request->availability,
+                'subcategory_id' => $request->subcategory_id,
+                'trademark_id' =>  $request->trademark_id,
+            ]);
+            return response()->json(['product' => $product]);
+        }
+        return response()->json(['message' => 'Usuario no autorizado']);
 
     }
 
     public function deleteProduct(int $id)
     {
-        $this->product->destroy($id);
+        $product = $this->product->find($id);
+
+        if(auth()->user()->shop->id == $product->shop_id)
+        {
+            $this->product->destroy($id);
+            return response()->json(['message' => 'Producto eliminado']);
+        }
+        return response()->json(['message' => 'Usuario no autorizado']);
+        
     }
 
     public function uploadProductImage(Request $request)

@@ -61,7 +61,8 @@ class ProductController extends Controller
     {
         if(auth()->user()->tokenCan('shop_user'))
         {
-            return $this->productService->createProduct($request);  
+            $shop_id = auth()->user()->shop->id;
+            return $this->productService->createProduct($request, $shop_id);  
         }
         else return response()->json(['message'=>'Usuario no autorizado']);
            
@@ -69,12 +70,22 @@ class ProductController extends Controller
 
     public function updateProduct(int $id, Request $request)
     {
-        $this->productService->updateProduct($id, $request);
+        if(auth()->user()->tokenCan('shop_user'))
+        {
+            return $this->productService->updateProduct($id, $request);
+        }
+        else return response()->json(['message'=>'Usuario no autorizado']);
+        
     }
 
     public function deleteProduct(int $id)
     {
-        $this->productService->deleteProduct($id);
+        if(auth()->user()->tokenCan('shop_user'))
+        {
+            return $this->productService->deleteProduct($id);
+        }
+        else return response()->json(['message'=>'Usuario no autorizado']);
+        
     }
 
     public function uploadProductImage(Request $request)

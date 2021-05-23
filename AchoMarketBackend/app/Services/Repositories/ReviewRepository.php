@@ -33,13 +33,13 @@ class ReviewRepository
     {
         if (auth()->user()) {
             if (auth()->user()->tokenCan('client_user')) {
-                $this->review->create([
+                $review = $this->review->create([
                     'rating' => $data->rating,
                     'comment' => $data->comment,
                     'client_user_id' => auth()->user()->id,
                     'product_id' => $data->product_id
                 ]);
-                return response()->json(['message' => 'Review creada correctamente']);
+                return response()->json(['review' => $review]);
             }
         }
         return response()->json(['message' => 'Inicia sesión para poder dejar una review']);

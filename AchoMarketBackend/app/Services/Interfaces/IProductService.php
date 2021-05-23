@@ -18,7 +18,7 @@ interface IProductService
 
     public function findProductsByString(string $string);    
 
-    public function createProduct(Request $data);
+    public function createProduct(Request $data, int $user_id);
 
     public function updateProduct(int $id, Request $data);
 
