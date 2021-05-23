@@ -55,7 +55,6 @@ export class FormLogInComponent implements OnInit {
   }
 
   onSubmit() {
-    
     if(this.loginForm.valid){
       this.user.email= this.email.value;
       this.user.password= this.password.value;
@@ -104,7 +103,6 @@ export class FormLogInComponent implements OnInit {
           data.id = response["user"].id;
           data.token = response["token"];
           data.shop = response["shop_id"];
-          console.log(data);
           this.auth.setCurrentUser(data);
           console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);

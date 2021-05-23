@@ -28,21 +28,23 @@ export class CustomerComponent implements OnInit {
     //     validators: validarIguales
     //   }
     // )
+    this.detailsForm = new FormGroup({
+      name: new FormControl({value: "", disabled: true}, Validators.required),
+      tlf: new FormControl({value: "", disabled: true}, Validators.required),
+      email: new FormControl({value: "", disabled: true}, Validators.required),
+      address: new FormControl({value:"", disabled: true}, Validators.required)
+    });
     this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
       (response) => {
         if (response) {
           (response["user"]) ? this.user = response["user"] : console.log("Ha ocurrido un problema");
-          console.log(this.user.name)
-          console.log(this.user["name"])
+          this.name.setValue(this.user.name);
+          this.tlf.setValue(this.user.tlf);
+          this.email.setValue(this.user.email);
+          this.address.setValue(this.user.address);
         };
-      }, (error) =>  {});
-      
-    this.detailsForm = new FormGroup({
-      name: new FormControl({value: this.user["name"], disabled: true}, Validators.required),
-      tlf: new FormControl({value: this.user["tlf"], disabled: true}, Validators.required),
-      email: new FormControl({value: this.user["email"], disabled: true}, Validators.required),
-      address: new FormControl({value: this.user["address"], disabled: true}, Validators.required)
-    });
+      }, (error) =>  {}
+    );
   }
 
   ngOnInit(): void {
@@ -54,13 +56,12 @@ export class CustomerComponent implements OnInit {
   get address() { return this.detailsForm.get('address'); }
 
   edit() {
-    if (this.editDetails) {
-      
-    } else {
-      
-    }
     this.editDetails = (this.editDetails) ? false : true;
     (this.editDetails) ? this.detailsForm.enable() : this.detailsForm.disable();
+    this.name.setValue(this.user.name);
+    this.tlf.setValue(this.user.tlf);
+    this.email.setValue(this.user.email);
+    this.address.setValue(this.user.address);
   }
 
   onSubmit() {

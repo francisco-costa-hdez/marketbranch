@@ -58,13 +58,32 @@ export class AuthService {
   //   console.log(this.getCurrentUser());
   }
 
+  // isAuthenticated(): boolean {
+  //   return (this.getCurrentUserToken() != null && this.cookieService.check('currentUser')["token"] != this.getCurrentUserToken()) ? true : false;
+  // };
+  
+  // isAuthenticatedShop(): boolean {
+  //   return  (((this.getCurrentUserToken() != null && this.cookieService.check('currentUser')["token"] != this.getCurrentUserToken()) ? true : false)
+  //            && ((this.getCurrentUserShop() != null && this.cookieService.check('currentUser')["shop"] != this.getCurrentUserShop()) ? true : false));
+  // };
+
+  // isAuthenticatedClient(): boolean {
+  //   return  (((this.getCurrentUserToken() != null && this.cookieService.check('currentUser')["token"] != this.getCurrentUserToken()) ? true : false)
+  //            && ((this.getCurrentUserShop() == null && this.cookieService.check('currentUser')["shop"] == this.getCurrentUserShop()) ? true : false));
+  // };
+
   isAuthenticated(): boolean {
-    return (this.getCurrentUserToken() != null && this.cookieService.check('currentUser')["token"] != this.getCurrentUserToken()) ? true : false;
+    return (this.getCurrentUserToken() != null && this.loadCurrentUser().token == this.getCurrentUserToken()) ? true : false;
   };
   
   isAuthenticatedShop(): boolean {
+    return  (((this.getCurrentUserToken() != null && this.loadCurrentUser().token == this.getCurrentUserToken()) ? true : false)
+             && ((this.getCurrentUserShop() != null && this.loadCurrentUser().shop == this.getCurrentUserShop()) ? true : false));
+  };
+
+  isAuthenticatedClient(): boolean {
     return  (((this.getCurrentUserToken() != null && this.cookieService.check('currentUser')["token"] != this.getCurrentUserToken()) ? true : false)
-             && ((this.getCurrentUserShop() != null && this.cookieService.check('currentUser')["shop"] != this.getCurrentUserShop()) ? true : false));
+             && ((this.getCurrentUserShop() == null && this.loadCurrentUser().shop == this.getCurrentUserShop()) ? true : false));
   };
 
   logout():void{

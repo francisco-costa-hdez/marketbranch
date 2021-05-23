@@ -20,7 +20,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   addToCart() {
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticatedClient()) {
       this.cart.addToCartList(this.product.id)
     } else {
       alert("Inicia sesión");
