@@ -23,7 +23,7 @@ export class CartService {
   }
 
   addToCartList(productId: number) {
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticatedClient()) {
       if (!this.isInCart(productId)){
         this.db.addToCart(productId, this.auth.getCurrentUserId()).subscribe(
           (response) => {
@@ -48,7 +48,7 @@ export class CartService {
   }
 
  deleteFromCartList(productId: number) {
-  if (this.auth.isAuthenticated()) {
+  if (this.auth.isAuthenticatedClient()) {
     if (this.isInCart(productId)){
       this.db.deleteFromCart(productId, this.auth.getCurrentUserId()).subscribe(
         (response) => {
@@ -94,7 +94,7 @@ export class CartService {
 
   updateQuantity(quantity: number, productId: number) {
     console.log(productId, quantity)
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticatedClient()) {
       if (this.isInCart(productId)){
         this.db.updateQuantityInCartproduct_id(this.auth.getCurrentUserId(), quantity, productId).subscribe(
           (response) => {
@@ -120,7 +120,7 @@ export class CartService {
 
   private initializeCartList() {
     this.cartList = [];
-    if (this.auth.isAuthenticated()){
+    if (this.auth.isAuthenticatedClient()){
       this.db.getCart(this.auth.getCurrentUserId()).subscribe(
         (response) => {
           if (response["products"]) {

@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.authorized = false;
-        if (this.auth.isAuthenticated()) {
+        if (this.auth.isAuthenticatedClient()) {
           this.authorized = true;
           this.getCart();
         }

@@ -39,7 +39,11 @@
                                 <input class="form-control" name="address" id="address" formControlName="address" type="text" placeholder="Dirección">
                             </div>
                             <div class="col-md-12">
-                                <input type="button" class="btn btn-primary mr-2" (click)="edit()" value="Editar">
+                                <!-- <input type="button" class="btn btn-primary mr-2" (click)="edit()" value="Editar"> -->
+                                <button class="btn mr-2" [ngClass]="[editDetails ? 'btn-danger' : 'btn-primary']" (click)="edit()">
+                                    <span *ngIf="editDetails">Cancelar</span>
+                                    <span *ngIf="!editDetails">Editar</span>
+                                </button>
                                 <input *ngIf="editDetails" type="submit" class="btn btn-success" value="Actualizar">
                             </div>
                             

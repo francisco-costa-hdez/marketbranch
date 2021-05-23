@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="card-body">
-        <button #editBtn *ngIf="owner" class="btn float-right m-2" [ngClass]="[edit ? 'btn-secondary' : 'btn-primary']" (click)="formEdit(editBtn)">
+        <button *ngIf="owner" class="btn float-right m-2" [ngClass]="[edit ? 'btn-secondary' : 'btn-primary']" (click)="formEdit(editBtn)">
             <span *ngIf="edit">Cancelar</span>
             <span *ngIf="!edit">Editar</span>
         </button>
@@ -32,7 +32,7 @@
             </div>
             <textarea class="form-control" id="commentEdit" name="commentEdit" formControlName="commentEdit"></textarea>
             <input type="button" value="Eliminar" class="btn btn-danger w-25 float-left" (click)="deleteReview()">
-            <input type="submit" value="Enviar" class="btn btn-primary w-25 mx-2" required>
+            <input type="submit" value="Actualizar" class="btn btn-primary w-25 mx-2" required>
         </form>
     </div>
 </div>
