@@ -127,11 +127,11 @@ getSubca(i){
        this.product.subcategory_id=this.subcategory_id.value;
        this.product.shop_id=this.auth.getCurrentUserShop();
        this.imageProduct.image=this.image.value;
-       this.imageProduct.product_id=101;
       
       this.db.createProduct(this.product).subscribe(
         (response) => {
           console.log(response);
+          this.imageProduct.product_id=response["product"].id
           this.db.uploadProductImage(this.imageProduct).subscribe(
             (response) => {
               console.log(response);
