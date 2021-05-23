@@ -26,7 +26,7 @@
       </div>
       <div class="form-group">
         <label for="nombre">Precio (€)*</label>
-        <input type="number" name="price" id="price" formControlName="price" class="form-control" step="0.01" required>
+        <input type="number" name="price" min="0" id="price" formControlName="price" class="form-control" step="0.01" required>
         <div class="invalid-feedback" *ngIf="productForm.get('price').hasError('required');else priceGood">
           Error, no has introducido el precio
        </div>
@@ -38,7 +38,7 @@
       </div>
       <div class="form-group">
         <label for="nombre">Descuento (%)</label>
-        <input type="number" name="discount" id="discount" formControlName="discount" class="form-control">
+        <input type="number" name="discount" id="discount" min="0" formControlName="discount" class="form-control">
         <ng-template #discountGood>
           <div class="valid-feedback">
             El patrón del descuento es correcto
@@ -47,7 +47,7 @@
       </div>
       <div class="form-group">
         <label for="nombre">Stock *</label>
-        <input type="number" name="stock" step="any" id="stock" class="form-control" formControlName="stock" required>
+        <input type="number" name="stock" step="any" min="0" id="stock" class="form-control" formControlName="stock" required>
         <div class="invalid-feedback" *ngIf="productForm.get('stock').hasError('required');else stockGood">
           Error, no has introducido el stock
        </div>
@@ -59,7 +59,7 @@
       </div>
       <div class="form-group">
         <label for="nombre">Disponibilidad *</label>
-        <input type="number" name="availability" id="availability" formControlName="availability" class="form-control" required>
+        <input type="number" name="availability" step="any" min="0" id="availability" formControlName="availability" class="form-control" required>
         <div class="invalid-feedback" *ngIf="productForm.get('availability').hasError('required');else avGood">
           Error, no has introducido la disponibilidad
        </div>
