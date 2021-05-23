@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { validarIguales } from '../app.validator';
+import { AuthService } from '../auth.service';
+import { ClientUser } from '../client-user';
+import { MarketPlaceDBService } from '../market-place-db.service';
 
 @Component({
   selector: 'app-customer',
@@ -11,13 +14,9 @@ export class CustomerComponent implements OnInit {
 
   editDetails: boolean = false;
   detailsForm: FormGroup;
-  user = { "name" : "felipo",
-           "tlf" : "123412341",
-           "email" : "tusganas",
-           "address": "minecraft"
-  };
+  user: ClientUser;
 
-  constructor(private form: FormBuilder) {
+  constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService) {
     // this.detailsForm = this.form.group(
     //   {
     //     name:['',Validators.required],
@@ -29,7 +28,15 @@ export class CustomerComponent implements OnInit {
     //     validators: validarIguales
     //   }
     // )
-
+    this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
+      (response) => {
+        if (response) {
+          (response["user"]) ? this.user = response["user"] : console.log("Ha ocurrido un problema");
+          console.log(this.user.name)
+          console.log(this.user["name"])
+        };
+      }, (error) =>  {});
+      
     this.detailsForm = new FormGroup({
       name: new FormControl({value: this.user["name"], disabled: true}, Validators.required),
       tlf: new FormControl({value: this.user["tlf"], disabled: true}, Validators.required),

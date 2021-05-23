@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
           }
           //console.table(this.latest)
           products.sort(function(a, b){
-            return b.price - a.price;
+            return b.media_rating - a.media_rating;
           });
           for(let i=0;i<=11;i++){
             this.best[i]=products[i];

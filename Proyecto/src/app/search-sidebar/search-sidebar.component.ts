@@ -29,11 +29,15 @@ export class SearchSidebarComponent implements AfterViewInit {
   rate = {min: 0,
            max: 5};
   
-  sliderOptions: Options = {
+  priceOptions: Options = {
     floor: 0,
     ceil: 10000
   };
-
+  
+  rateOptions: Options = {
+    floor: 0,
+    ceil: 5
+  };
   all = false;
 
   subcategories = [];
@@ -121,12 +125,18 @@ export class SearchSidebarComponent implements AfterViewInit {
     maxInput.value = this.price.max;
     this.priceChange();
   }
-  
+
   updateRate(minInput, maxInput) {
-    minInput.value = Number(this.rate["min"]);
-    maxInput.value = Number(this.rate["max"]);
+    minInput.value = this.rate.min;
+    maxInput.value = this.rate.max;
     this.rateChange();
   }
+  
+  // updateRate(minInput, maxInput) {
+  //   minInput.value = Number(this.rate["min"]);
+  //   maxInput.value = Number(this.rate["max"]);
+  //   this.rateChange();
+  // }
   
   updateMinPrice(newValue) {
     this.price.min = newValue;
@@ -134,12 +144,13 @@ export class SearchSidebarComponent implements AfterViewInit {
   }
   
   updateMinRate(newValue) {
-    if (this.rate.max <= newValue) {
-      this.rate.min = this.rate.max;
-      this.rate.max = newValue;
-    } else {
-      this.rate.min = newValue;
-    }
+    // if (this.rate.max <= newValue) {
+    //   this.rate.min = this.rate.max;
+    //   this.rate.max = newValue;
+    // } else {
+    //   this.rate.min = newValue;
+    // }
+    this.rate.min = newValue;
     this.rateChange();
   }
   
