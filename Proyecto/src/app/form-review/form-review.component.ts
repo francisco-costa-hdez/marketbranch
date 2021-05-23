@@ -43,19 +43,21 @@ export class FormReviewComponent implements OnInit {
           console.log("submitting")
           this.db.createReview(this.review).subscribe(
             (response) => {
-              console.log(response);
-              this.rating.setValue("");
-              this.comment.setValue("");
-              console.log("podrías devolver la review en la response??");
-              this.newReview.emit(
-                {
-                  rating: this.review.rating,
-                  comment: this.review.comment,
-                  user_name: this.auth.getCurrentUserName(),
-                  client_user_id: this.review.client_user_id,
-                  product_id: this.review.product_id
-                }
-              );
+              if (response["review"]) {
+                console.log(response["review"]);
+                this.rating.setValue("");
+                this.comment.setValue("");
+                this.newReview.emit(
+                  {
+                    rating: response["review"].rating,
+                    comment: response["review"].comment,
+                    user_name: this.auth.getCurrentUserName(),
+                    client_user_id: response["review"].client_user_id,
+                    product_id: response["review"].product_id,
+                    id: response["review"].id
+                  }
+                );
+              }
             }
           );
         }

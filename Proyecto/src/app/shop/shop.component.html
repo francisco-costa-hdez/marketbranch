@@ -70,21 +70,21 @@
                 </div>
             </article>
             <article class="featured-product product">
-            <div class="section-header pl-5 row">
-            <h1 class="col-12 col-lg-9">Todos nuestros productos</h1>
-            <form class="col-12 col-lg-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
-                    <select  #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
-                    id="orderAllProducts" (change)="orderResults(order)">
-                        <option value="reciente">Más recientes</option>
-                        <option value="antiguo">Más antiguos</option>
-                        <option value="mejor">Mejor valorados</option>
-                        <option value="peor">Peor valorados</option>
-                    </select>
-                </div>
-            </form>
-        </div>
+            <div class="section-header pl-5 row w-100 mx-0">
+                <h1 class="col-12 col-lg-9">Todos nuestros productos</h1>
+                <form class="col-12 col-lg-3">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
+                        <select  #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
+                        id="orderAllProducts" (change)="orderResults(order)">
+                            <option value="reciente">Más recientes</option>
+                            <option value="antiguo">Más antiguos</option>
+                            <option value="mejor">Mejor valorados</option>
+                            <option value="peor">Peor valorados</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
             <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
                 infinite-scroll
                 [infiniteScrollDistance]="scrollDistance"
