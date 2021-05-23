@@ -180,13 +180,14 @@ export class SearchComponent {
       };
       case "mejor": {
         this.totalResults.sort(function(a, b){
-          return b.price - a.price;
+          console.log(a)
+          return b.media_rating - a.media_rating;
         });
         break;
       };
       case "peor": {
         this.totalResults.sort(function(a, b){
-          return a.price - b.price;
+          return a.media_rating - b.media_rating;
         });
         break;
       };

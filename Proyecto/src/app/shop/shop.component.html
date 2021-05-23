@@ -6,8 +6,107 @@
     </ng-container>
     <section class="container-fluid m-0 p-0">
         <div class="product">
+            <div class="section-header container-fluid pl-5 d-flex justify-content-between align-items-center">
+                <h1>{{shop.name}}</h1>
+                <h4>{{shop_rating}} <app-rating [rating]="shop_rating"></app-rating></h4>
+            </div>
+        </div>
+        <div class="row container-xl mx-auto">
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-lg-11  m-0 p-0">
+                        <div class="row" style="margin:0; padding:10px;">
+                            <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                        </div>
+                        <div class="row m-0 p-0" >
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                    <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                            <div class="col-4" style="margin:0; padding:10px;" >
+                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-1  m-0 p-0">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12 col-1-lg  m-0 p-0">
+                    </div>
+                    <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
+                        <div class="product">
+                            <div>
+                                <h3>Nuestra tienda</h3>
+                            </div
+                        ></div>
+                        <p>{{shop.description}}</p>
+                        <h4>En nuestra tienda encontrarás productos de:</h4>
+                        <ul>
+                            <li>Moda</li>
+                            <li>Categoría</li>
+                            <li>Categoría</li>
+                            <li>Categoría</li>
+                        </ul>
+                        <h3>Contacta con nosotros:</h3>
+                        <p><i class="bi bi-telephone"></i> Teléfono: {{shop.tlf}}</p>
+                        <p><i class="bi bi-envelope"></i> Correo electrónico: {{shop.email}}</p>
+                        <p><i class="bi bi-shop"></i> Visita en nuestra tienda en:{{shop.address}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+            <article class="featured-product product">
+                <div class="section-header pl-5">
+                    <h1>Nuestros productos mejor valorados</h1>
+                </div>
+                <div class="container-fluid">
+                    <app-carousel-of-items [group]="best" [carouselId]="'best'"></app-carousel-of-items>
+                </div>
+            </article>
+            <article class="featured-product product">
+            <div class="section-header pl-5 row">
+            <h1 class="col-12 col-lg-9">Todos nuestros productos</h1>
+            <form class="col-12 col-lg-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
+                    <select  #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
+                    id="orderAllProducts" (change)="orderResults(order)">
+                        <option value="reciente">Más recientes</option>
+                        <option value="antiguo">Más antiguos</option>
+                        <option value="mejor">Mejor valorados</option>
+                        <option value="peor">Peor valorados</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+            <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
+                infinite-scroll
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
+                <app-product-card *ngFor="let result of results " [product]="result" class="my-1"></app-product-card>
+            </div>
+
+            </article>
+        <br>
+    </section>
+</ng-container>
+<!-- <app-loading-screen *ngIf="loading"></app-loading-screen>
+<app-error404 *ngIf="!loading && !shop"></app-error404>
+<ng-container *ngIf="shop">
+    <ng-container *ngIf="show">
+        <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+    </ng-container>
+    <section class="container-fluid m-0 p-0">
+        <div class="product">
             <div class="section-header container-fluid pl-5">
-                <h1 class="row ">{{shop.name}}</h1>
+                <h1 class="row">{{shop.name}}</h1>
             </div>
         </div>
         <div class="row container-xl mx-auto">
@@ -97,4 +196,4 @@
             </article>
         <br>
     </section>
-</ng-container>
+</ng-container> -->

@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit {
   totalResults;
   aux;
   best = [];
+  shop_rating: number = 3.76;
 
   order = "reciente";
   sum = 6;
@@ -32,12 +33,12 @@ export class ShopComponent implements OnInit {
 
   initResults(array: Array<object>) {
     this.results = [];
-    console.log(this.sum);
+    // console.log(this.sum);
 
     for (let i = 0; i < array.length && i < this.sum; i++) {
       this.results.push(array[i]);
     }
-    console.table(this.results);
+    // console.table(this.results);
     // this.totalResults = this.filter(this.totalResults, this.price.min, this.price.max)
     // this.initResults(this.totalResults)
   }
@@ -93,7 +94,7 @@ export class ShopComponent implements OnInit {
           //console.table(this.totalResults);
           //console.table(this.aux);
           this.aux.sort(function(a, b){
-            return b.price - a.price;
+            return b.media_rating - a.media_rating;
           });
           for(let i = 0; i <= 11; i++) {
             if (i < this.aux.length) {
@@ -131,13 +132,13 @@ export class ShopComponent implements OnInit {
       };
       case "mejor": {
         this.totalResults.sort(function(a, b){
-          return b.price - a.price;
+          return b.media_rating - a.media_rating;
         });
         break;
       };
       case "peor": {
         this.totalResults.sort(function(a, b){
-          return a.price - b.price;
+          return a.media_rating - b.media_rating;
         });
         break;
       };

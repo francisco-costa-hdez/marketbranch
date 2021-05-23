@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 export class HeaderComponent implements OnInit {
 
   authorized: boolean = false;
+  random: number;
 
   constructor(private auth: AuthService, private router: Router) {
     this.router.events.subscribe((event: Event) => {
@@ -29,6 +30,11 @@ export class HeaderComponent implements OnInit {
     if (this.auth.isAuthenticated()) {
       this.auth.logout();
     }
+  }
+  
+  randomize() {
+    this.random = Math.floor(Math.random()*101);
+    this.router.navigate(["/producto/" + this.random]);
   }
 
 }

@@ -24,7 +24,7 @@
     </li>
     <li *ngIf="type == 'Producto'" class="list-group-item">
         <h5>Rango de precios</h5>
-        <div class="form-row pl-3">
+        <div class="form-row pl-3 custom-slider">
             <div class="col-6">
             <label for="minPrice">Desde: </label>
             <input #minPricing [(ngModel)]="price.min" type="number" class="form-control" id="minPrice" name="minPrice" min="0" max="10000" step="5" (change)="updateMinPrice(minPricing.value)">
@@ -33,21 +33,23 @@
                 <label for="maxPrice">Hasta: </label>
                 <input #maxPricing [(ngModel)]="price.max" type="number" class="form-control"  id="maxPrice" name="maxPrice" min="0" max="10000" step="5" (change)="updateMaxPrice(maxPricing.value)">
             </div>
-            <ngx-slider #rangeInput [(value)]="price.min" [(highValue)]="price.max" [options]="sliderOptions" (valueChange)="updatePrice(minPricing, maxPricing)"
+            <ngx-slider #rangeInput [(value)]="price.min" [(highValue)]="price.max" [options]="priceOptions" (valueChange)="updatePrice(minPricing, maxPricing)"
                 (highValueChange)="updatePrice(minPricing, maxPricing)"></ngx-slider>
         </div>
         </li>
     <li class="list-group-item">
         <h5>Rango de valoraciones</h5>
-        <div class="form-row pl-3">
+        <div class="form-row pl-3 custom-slider">
             <div class="col-6">
             <label for="minRating">Desde: </label>
-            <input #minRating [(ngModel)]="rate.min" name="minRating" type="number" class="form-control" id="minRating"  min="0" max="5" step="0.5" (change)="updateMinRate(minRating.value)">
+            <input #minRating [(ngModel)]="rate.min" name="minRating" type="number" class="form-control" id="minRating"  min="0" max="5" step="1" (change)="updateMinRate(minRating.value)">
             </div>
             <div class="col-6">
                 <label for="maxRating">Hasta: </label>
-                <input #maxRating [(ngModel)]="rate.max" name="maxRating" type="number" class="form-control"  id="maxRating" min="0" max="5" step="0.5" (change)="updateMaxRate(maxRating.value)">
+                <input #maxRating [(ngModel)]="rate.max" name="maxRating" type="number" class="form-control"  id="maxRating" min="0" max="5" step="1" (change)="updateMaxRate(maxRating.value)">
             </div>
+            <ngx-slider #rangeInput [(value)]="rate.min" [(highValue)]="rate.max" [options]="rateOptions" (valueChange)="updateRate(minRating, maxRating)"
+                (highValueChange)="updateRate(minRating, maxRating)"></ngx-slider>
         </div>                    
     </li>
 </ul>

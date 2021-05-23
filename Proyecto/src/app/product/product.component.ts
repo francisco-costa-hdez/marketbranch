@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { CartService } from '../cart.service';
@@ -29,18 +29,38 @@ export class ProductComponent implements OnInit {
 
   vote: Array<number> = [0,0,0,0,0];
 
-  constructor(private auth: AuthService, private cart: CartService, private route: ActivatedRoute, private db: MarketPlaceDBService) { }
+  constructor(private auth: AuthService, private cart: CartService, private router: Router, private route: ActivatedRoute, private db: MarketPlaceDBService) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.product = null;
+        this.shop = null;
+        this.categorization = null;
+        this.reviews = [];
+        this.auxReviews = [];
+        this.totalReviews = [];
+        this.sum = 3;
+
+        this.loading = true;
+        this.show = false;
+        this.getProduct(this.route.snapshot.paramMap.get('id'));
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.getProduct(this.route.snapshot.paramMap.get('id'));
   }
 
   addToCart() {
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticatedClient()) {
       this.cart.addToCartList(this.product.id)
     } else {
       alert("Inicia sesión");
     }
+  }
+
+  addReview(review) {
+    this.auxReviews.push(review);
+    this.orderReviews();
   }
 
   chosePrincipal() {
@@ -57,9 +77,13 @@ export class ProductComponent implements OnInit {
         if (response["product"]) {
           this.product = response["product"][0];
           // console.log(this.product);
-          this.getCategorization(this.product.subcategory_id);
-          this.getShop(this.product.shop_id);
-          this.getReviews(id);
+          if (this.product) {
+            this.getCategorization(this.product.subcategory_id);
+            this.getShop(this.product.shop_id);
+            this.getReviews(id);
+          } else {
+            this.loading = false;
+          }
         }
       },
       (error) =>  {});
@@ -78,7 +102,7 @@ export class ProductComponent implements OnInit {
   }
 
   getShop(shop_id: string | number) {
-    this.db.findShopByProduct(shop_id).subscribe(
+    this.db.findShopById(shop_id).subscribe(
       (response) => {
         if (response) {
           this.shop = response["shop"];
@@ -94,9 +118,11 @@ export class ProductComponent implements OnInit {
     this.db.getAllProductReviews(product_id).subscribe(
       (response) => {
         if (response) {
+          // console.log(response);
           response["reviews"].forEach((item) => {
             this.totalReviews.push(item);
-          });
+          }
+        );
           this.auxReviews = [...this.totalReviews];
           this.initReviews(this.totalReviews);
         }
