@@ -28,15 +28,15 @@ export class UpdateFormProductComponent implements OnInit {
     private route: ActivatedRoute) {
     this.productForm=this.form.group(
       {
-      name:['',Validators.required],
-      price:['',Validators.required],
-      discount:[''],
-      stock:['',Validators.required],
-      availability:['',Validators.required],
-      description:['',Validators.required],
-      subcategory_id:['',Validators.required],
-      // image:['',Validators.required]
-    }
+        name:['',Validators.required],
+        price:['',Validators.required],
+        discount:[''],
+        stock:['',Validators.required],
+        availability:['',Validators.required],
+        description:['',Validators.required],
+        subcategory_id:['',Validators.required]
+        // image:['',Validators.required]
+      }
     )
 
     this.productForm.disable()
@@ -58,7 +58,7 @@ export class UpdateFormProductComponent implements OnInit {
    get availability() { return this.productForm.get('availability'); }
    get description() { return this.productForm.get('description'); }
    get subcategory_id() { return this.productForm.get('subcategory_id'); }
-   get image() { return this.productForm.get('image'); }
+  //  get image() { return this.productForm.get('image'); }
 
    ngOnInit(): void {
 
@@ -86,6 +86,7 @@ export class UpdateFormProductComponent implements OnInit {
       (response) => {
         if (response["product"]) {
           this.productOld = response["product"][0];
+          this.productForm.enable()
           this.name.setValue(this.productOld.name);
           this.price.setValue(this.productOld.price);
           this.discount.setValue(this.productOld.discount);
@@ -93,7 +94,6 @@ export class UpdateFormProductComponent implements OnInit {
           this.stock.setValue(this.productOld.stock);
           this.availability.setValue(this.productOld.availability);
           this.subcategory_id.setValue(this.productOld.subcategory_id);
-          this.productForm.enable()
           // this.shop_id.setValue(this.auth.getCurrentUserShop());
           // this.imageProduct.image=this.image.value;
           // console.log(this.product);
@@ -148,7 +148,6 @@ getSubca(i){
 
 
   onSubmit() {
-   
     if(this.productForm.valid){
        this.product.name=this.name.value;
        this.product.price=this.price.value;

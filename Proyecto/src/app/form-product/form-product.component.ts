@@ -47,9 +47,9 @@ export class FormProductComponent implements OnInit {
 
 
   ngOnInit(): void {
-    for(let i=1;i<=13;i++){
-      this.getSubca(i)
-    }
+    // for(let i=1;i<=13;i++){
+    //   this.getSubca(i)
+    // }
     if (!this.categoryList.getCategories().length) {
       this.setCategories();
     } else {
@@ -78,6 +78,9 @@ export class FormProductComponent implements OnInit {
 
   getCategories() {
     this.categories = this.categoryList.getCategories();
+    this.categories.forEach((category) => {
+      this.getSubca(category.id);  
+    })
   }
 
   setCategories() {
@@ -89,6 +92,9 @@ export class FormProductComponent implements OnInit {
       // console.table(item)    
       });
       this.categoryList.setCategoriesFromArray(this.categories);
+      this.categories.forEach((category) => {
+        this.getSubca(category.id);  
+      })
       }
       },
       (error) => {

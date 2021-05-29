@@ -71,7 +71,7 @@
         </div>
         <div class="form-group">
           <label for="description">Descripción *</label>
-          <textarea class="form-control" id="description" name="description" pattern="[0-9a-zA-Z]{1,999}" formControlName="description" rows="3" required></textarea>
+          <textarea class="form-control" id="description" name="description" pattern="[\s\S]*" formControlName="description" rows="3" required></textarea>
           <div class="invalid-feedback" *ngIf="productForm.get('description').hasError('required')">
             Error, no has introducido la descripción
          </div>
