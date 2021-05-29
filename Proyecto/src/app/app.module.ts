@@ -54,6 +54,7 @@ import { ShopCardComponent } from './shop-card/shop-card.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
+import { UpdateFormProductComponent } from './update-form-product/update-form-product.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -68,6 +69,7 @@ const rutas=[
   { path: 'registroprod', component: FormProductComponent, canActivate: [ShopGuard]},
   { path: 'registroshop', component: FormShopComponent, canActivate: [NotLoggedGuard]},
   { path: 'manageshop', component: ShopManagementComponent, canActivate: [ShopGuard]},
+  { path: 'manageshop/edit/product/:id', component: UpdateFormProductComponent, canActivate: [ShopGuard]},
   { path: 'informar', component: ReportABugComponent},
   { path: 'about-us', component: AboutUsComponent},
   { path: 'terminos', component: TermsComponent},
@@ -118,7 +120,8 @@ const rutas=[
     TermsComponent,
     PriceFilterPipe,
     RateFilterPipe,
-    SubcategoryFilterPipe
+    SubcategoryFilterPipe,
+    UpdateFormProductComponent
   ],
   imports: [
     BrowserModule,

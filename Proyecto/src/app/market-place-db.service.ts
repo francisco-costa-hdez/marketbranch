@@ -56,8 +56,8 @@ export class MarketPlaceDBService {
   }
 
   //Updates a product
-  updateProduct(product_id: string | number) {
-    return this.http.put( this.url + "/products/update/", product_id);
+  updateProduct(product_id: string | number, product) {
+    return this.http.put( this.url + "/products/update/" + product_id , product);
   }
   
   //Delete a product
