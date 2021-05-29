@@ -9,15 +9,24 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  authorized: boolean = false;
+  authorized = {
+    customer: false,
+    shop: false
+  }
+  authClient: boolean = false;
   random: number;
 
   constructor(private auth: AuthService, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.authorized = false;
+        this.authorized.customer = false;
+        this.authorized.shop = false;
         if (this.auth.isAuthenticated()) {
-          this.authorized = true;
+          if (this.auth.isAuthenticatedClient()) {
+            this.authorized.customer = true;
+          } else if (this.auth.isAuthenticatedShop()){
+            this.authorized.shop = true;
+          }
         }
       }
     });

@@ -15,7 +15,7 @@
         <p class=" card-link flex-fill"><a routerLink="/producto/{{product.id}}">{{product.name}}</a></p>
         <p >{{product.price | currency:" "}} €</p>
         <p title="Añadir al carrito">
-            <button type="button" class="btn btn-primary w-100" (click)="addToCart()">
+            <button type="button" class="btn w-100" [ngClass]="[customer ? 'btn-primary' : 'btn-secondary']" (click)="addToCart()">
                 <i class="bi bi-cart-plus"></i>
             </button>
         </p>

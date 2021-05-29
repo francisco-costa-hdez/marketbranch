@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit {
 
   loading: boolean = true;
   show: boolean = false;
+  customer: boolean = false;
 
   vote: Array<number> = [0,0,0,0,0];
 
@@ -48,6 +49,10 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.customer = false;
+    if (this.auth.isAuthenticatedClient()) {
+      this.customer = true;
+    }
   }
 
   addToCart() {

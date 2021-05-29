@@ -106,6 +106,7 @@ export class FormLogInComponent implements OnInit {
           this.auth.setCurrentUser(data);
           console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
+          console.log("first log should redirect to manageshop");
         }
       },
       (error) => {

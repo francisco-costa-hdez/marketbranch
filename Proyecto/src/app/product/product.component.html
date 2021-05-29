@@ -50,7 +50,7 @@
                                 <span class="h3">{{product.price | currency: " "}}€</span>
                             </div>
                             <h2 class="col-6">
-                                <button type="button" class="btn btn-primary w-100" (click)="addToCart()">
+                                <button type="button" class="btn w-100" [ngClass]="[customer ? 'btn-primary' : 'btn-secondary']" (click)="addToCart()">
                                     Añadir al carrito <i class="bi bi-cart-plus"></i>
                                 </button>
                             </h2>
