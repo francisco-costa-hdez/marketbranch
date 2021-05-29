@@ -2,8 +2,7 @@
     <!-- [ngClass]="{ 'collapse' : userFormValid }" -->
     <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5" >
       <div class="card-header text-center w-100 mx-0 px-0">
-          <h3 class="my-2">Registro Producto</h3>
-          <p>Conocer más sobre <a routerLink="/about-us">Acho Market</a>.</p>
+          <h3 class="my-2">Actualizar Producto</h3>
       </div>
       <div class="card-body">
     <form  (ngSubmit)="onSubmit()" class="needs-validation" [formGroup]="productForm" novalidate>
@@ -91,7 +90,8 @@
             Error, no has introducido la subcategoría
          </div>
         </div>
-      <button type="submit" class="btn btn-primary" style="margin-top:5%;">Enviar</button>
+      <button type="button" class="btn btn-danger mr-2" (click)="this.redirect()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Actualizar datos</button>
       </form>
     </div>
   </div>

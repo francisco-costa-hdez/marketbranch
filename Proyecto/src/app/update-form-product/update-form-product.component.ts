@@ -144,6 +144,10 @@ getSubca(i){
 
 }
 
+redirect(){
+  console.log("hola")
+  this.router.navigate(["/manageshop/"]);
+}
 
 
 
@@ -160,7 +164,8 @@ getSubca(i){
       this.db.updateProduct(this.route.snapshot.paramMap.get('id'),this.product).subscribe(
         (response) => {
           console.log(response);
-          this.imageProduct.product_id=response["product"].id
+          // this.imageProduct.product_id=response["product"].id
+          this.router.navigate(["/manageshop/"]);
         },
         (error) => {
           console.log("Se ha producido un error:");
