@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ClientUser } from '../client-user';
 import { validarIguales } from '../app.validator';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 @Component({
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
@@ -18,6 +19,9 @@ export class FormUserComponent implements OnInit {
   errorTlf=""
   userFormValid=false
   client = new ClientUser;
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
     this.userForm=this.form.group(
@@ -36,7 +40,15 @@ export class FormUserComponent implements OnInit {
       }
     )
   }
-  
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+  }
+
   get name() { return this.userForm.get('name'); }
   get email() { return this.userForm.get('email'); }
   get address() { return this.userForm.get('address'); }
@@ -63,26 +75,24 @@ export class FormUserComponent implements OnInit {
               event.stopPropagation();
             }
             form.classList.add('was-validated');
-            
           }, false);
         });
     })();
     }
   
   onSubmit() {
-    this.emailExists=false
-    this.tlfExists=false
-    this.userFormValid==false
+    this.emailExists=false;
+    this.tlfExists=false;
+    this.userFormValid==false;
     
     if(this.userForm.valid){
-      this.client.name=this.name.value
-      this.client.email=this.email.value
-      this.client.tlf=this.tlf.value
-      this.client.password=this.password.value
-      this.client.address=this.address.value
-      this.client.profile_img=this.img.value
-      
-      
+      this.client.name=this.name.value;
+      this.client.email=this.email.value;
+      this.client.tlf=this.tlf.value;
+      this.client.password=this.password.value;
+      this.client.address=this.address.value;
+      // this.client.profile_img=this.img.value;
+      this.client.profile_img=this.croppedImage;
       // console.log(this.client)
       // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
       // console.log(arrayClient)

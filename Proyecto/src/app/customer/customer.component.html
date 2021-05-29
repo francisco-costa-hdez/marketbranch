@@ -2,7 +2,7 @@
     <div class="featured-product product  container-fluid mt-0 pt-0">
         <div class="section-header row align-items-end pl-5 w-100 mx-0">
             <div class="col-2 col-lg-1 p-0">
-                <img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO">
+                <img *ngIf="user" class="float-right shop-icon rounded-circle img-thumbnail w-50" [src]="user.profile_img" title="{{user.name}} profile picture" alt="{{user.name}} profile picture">
             </div>
             <div class="col-10 col-lg-11"><h2 class="row ">&nbsp;Mi cuenta</h2></div>
         </div>
@@ -18,7 +18,7 @@
                     <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><i class="bi bi-clock-history"></i>Historial de compras</a>
                     <a class="nav-link" id="wish-nav" data-toggle="pill" href="#wish-tab" role="tab"><i class="bi bi-bookmark-heart-fill"></i>Lista de deseos</a>
                     <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="bi bi-credit-card-fill"></i>Método de pago</a>
-                    <a class="nav-link" href="index.html"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</a>
+                    <a class="nav-link" routerLink="/logout" (click)="logout()"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</a>
                 </div>
             </div>
             <div class="col-md-8"> 

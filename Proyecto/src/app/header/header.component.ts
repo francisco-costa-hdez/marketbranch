@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { MarketPlaceDBService } from '../market-place-db.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,9 @@ export class HeaderComponent implements OnInit {
   }
   authClient: boolean = false;
   random: number;
+  profile_img;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private db: MarketPlaceDBService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.authorized.customer = false;
@@ -24,6 +26,15 @@ export class HeaderComponent implements OnInit {
         if (this.auth.isAuthenticated()) {
           if (this.auth.isAuthenticatedClient()) {
             this.authorized.customer = true;
+            this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
+              (response) => {
+                if (response) {
+                  if (response["user"]) {
+                    this.profile_img = response["user"].profile_img;
+                  }
+                };
+              }, (error) =>  {}
+            );
           } else if (this.auth.isAuthenticatedShop()){
             this.authorized.shop = true;
           }

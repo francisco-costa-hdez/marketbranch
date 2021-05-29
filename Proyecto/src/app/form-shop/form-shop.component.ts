@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ShopUser } from '../shop-user';
 import { validarIguales } from '../app.validator';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 
 @Component({
@@ -22,6 +23,9 @@ export class FormShopComponent implements OnInit {
   shopUserFormValid=false
   shopUser = new ShopUser;
 
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) {
     this.shopUserForm=this.form.group(
       {
@@ -37,7 +41,15 @@ export class FormShopComponent implements OnInit {
       validators: validarIguales
     }
     )
-   }
+  }
+
+   fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+  }
 
    get admin_name() { return this.shopUserForm.get('admin_name'); }
    get email() { return this.shopUserForm.get('email'); }
@@ -69,17 +81,19 @@ export class FormShopComponent implements OnInit {
 
 
   onSubmit() {
-    this.emailExists=false
-    this.nifExists=false
-    this.imgExists=false
+    this.emailExists=false;
+    this.nifExists=false;
+    this.imgExists=false;
    
     
     if(this.shopUserForm.valid){
-      this.shopUser.admin_name=this.admin_name.value
-      this.shopUser.email=this.email.value
-      this.shopUser.nif=this.nif.value
-      this.shopUser.password=this.password.value
-      this.shopUser.profile_img=this.img.value
+      this.shopUser.admin_name=this.admin_name.value;
+      this.shopUser.email=this.email.value;
+      this.shopUser.nif=this.nif.value;
+      this.shopUser.password=this.password.value;
+      // this.shopUser.profile_img=this.img.value;
+      this.shopUser.profile_img=this.croppedImage;
+      console.log(this.croppedImage);
       
       
       // console.log(this.client)

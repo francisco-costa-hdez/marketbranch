@@ -55,6 +55,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
 import { UpdateFormProductComponent } from './update-form-product/update-form-product.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -131,6 +132,7 @@ const rutas=[
     ReactiveFormsModule,
     NgxSliderModule,
     InfiniteScrollModule,
+    ImageCropperModule
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

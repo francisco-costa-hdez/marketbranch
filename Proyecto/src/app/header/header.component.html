@@ -60,7 +60,10 @@
         </div>
       </ng-template>
       <div class="nav-item dropdown" *ngIf="authorized.shop || authorized.customer; else loggedOut" style="z-index:1;">
-        <a class="nav-link dropdown-toggle text-light clickable" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/assets/images/limon-eco.jpg" class="rounded-circle"width="28px"></a>
+        <a class="nav-link dropdown-toggle text-light clickable" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img *ngIf="!profile_img" src="/assets/images/limon-eco.jpg" class="rounded-circle"width="28px">
+          <img *ngIf="profile_img" [src]="profile_img" class="rounded-circle"width="28px">
+        </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="position:absolute; z-index:2">
           <a *ngIf="authorized.customer" class="dropdown-item" routerLink="/user">Mi Usuario</a>
           <a *ngIf="authorized.shop" class="dropdown-item" routerLink="/manageshop">Mi Tienda</a>

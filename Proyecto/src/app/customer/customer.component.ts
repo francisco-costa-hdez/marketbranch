@@ -38,11 +38,13 @@ export class CustomerComponent implements OnInit {
     this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
       (response) => {
         if (response) {
-          (response["user"]) ? this.user = response["user"] : console.log("Ha ocurrido un problema");
-          this.name.setValue(this.user.name);
-          this.tlf.setValue(this.user.tlf);
-          this.email.setValue(this.user.email);
-          this.address.setValue(this.user.address);
+          if (response["user"]) {
+            this.user = response["user"];
+            this.name.setValue(this.user.name);
+            this.tlf.setValue(this.user.tlf);
+            this.email.setValue(this.user.email);
+            this.address.setValue(this.user.address);
+          }
         };
       }, (error) =>  {}
     );
@@ -91,6 +93,12 @@ export class CustomerComponent implements OnInit {
 
       }
     )
+  }
+  
+  logout() {
+    if (this.auth.isAuthenticated()) {
+      this.auth.logout();
+    }
   }
 
 }

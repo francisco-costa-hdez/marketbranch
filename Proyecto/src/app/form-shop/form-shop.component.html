@@ -58,10 +58,17 @@
         </div>
         <div class="form-group">
             <label for="profile_img">Seleccione imagen de perfil</label>
-            <input type="file" class="form-control-file" name="profile_img" formControlName="profile_img" id="profile_img" required>
+            <input type="file" class="form-control-file" name="profile_img" formControlName="profile_img" id="profile_img" (change)="fileChangeEvent($event)" required>
             <div  *ngIf="shopUserForm.get('profile_img').hasError('required')" class="invalid-feedback">
               El campo imagen de perfil es obligatorio
             </div>
+            <image-cropper
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="1 / 1"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+            ></image-cropper>
           </div>
         <div class="form-group">
           <label for="password">Contraseña</label>
