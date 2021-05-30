@@ -7,6 +7,7 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieService } from 'ngx-cookie-service';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { NotLoggedGuard } from './not-logged-guard.service';
 import { ClientGuard } from './client-guard.service';
@@ -33,6 +34,7 @@ import { FAQComponent } from './faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormLogInComponent } from './form-log-in/form-log-in.component';
 import { FormProductComponent } from './form-product/form-product.component';
+import { FormProductUpdateComponent } from './form-product-update/form-product-update.component';
 import { FormReviewComponent } from './form-review/form-review.component';
 import { FormSearchComponent } from './form-search/form-search.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
@@ -54,8 +56,6 @@ import { ShopCardComponent } from './shop-card/shop-card.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
-import { UpdateFormProductComponent } from './update-form-product/update-form-product.component';
-import { ImageCropperModule } from 'ngx-image-cropper';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -65,12 +65,12 @@ const rutas=[
   { path: 'tienda/:id', component: ShopComponent},
   { path: 'login', component: FormLogInComponent, canActivate: [NotLoggedGuard]},
   { path: 'logout', redirectTo: '/home', pathMatch: 'full'},
-  { path: 'user', component: CustomerComponent, canActivate: [ClientGuard]},
-  { path: 'registrouser', component: FormUserComponent, canActivate: [NotLoggedGuard]},
-  { path: 'registroprod', component: FormProductComponent, canActivate: [ShopGuard]},
-  { path: 'registroshop', component: FormShopComponent, canActivate: [NotLoggedGuard]},
-  { path: 'manageshop', component: ShopManagementComponent, canActivate: [ShopGuard]},
-  { path: 'manageshop/edit/product/:id', component: UpdateFormProductComponent, canActivate: [ShopGuard]},
+  { path: 'mi-usuario', component: CustomerComponent, canActivate: [ClientGuard]},
+  { path: 'registro-cliente', component: FormUserComponent, canActivate: [NotLoggedGuard]},
+  { path: 'registro-tienda', component: FormShopComponent, canActivate: [NotLoggedGuard]},
+  { path: 'administrar-tienda', component: ShopManagementComponent, canActivate: [ShopGuard]},
+  { path: 'administrar-tienda/editar/producto/:id', component: FormProductUpdateComponent, canActivate: [ShopGuard]},
+  { path: 'administrar-tienda/nuevo-producto', component: FormProductComponent, canActivate: [ShopGuard]},
   { path: 'informar', component: ReportABugComponent},
   { path: 'about-us', component: AboutUsComponent},
   { path: 'terminos', component: TermsComponent},
@@ -99,6 +99,7 @@ const rutas=[
     FormLogInComponent,
     FormReviewComponent,
     FormProductComponent,
+    FormProductUpdateComponent,
     FormSearchComponent,
     FormShopComponent,
     FormUserComponent,
@@ -121,8 +122,7 @@ const rutas=[
     TermsComponent,
     PriceFilterPipe,
     RateFilterPipe,
-    SubcategoryFilterPipe,
-    UpdateFormProductComponent
+    SubcategoryFilterPipe
   ],
   imports: [
     BrowserModule,

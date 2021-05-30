@@ -71,14 +71,21 @@
       </div>
       <div class="form-group">
         <label for="description">Descripción *</label>
-        <textarea class="form-control" id="description" name="description" pattern="[0-9a-zA-Z]{1,999}" formControlName="description" rows="3" required></textarea>
+        <textarea class="form-control" id="description" name="description" pattern="[\s\S]{1,999}" formControlName="description" rows="3" required></textarea>
         <div class="invalid-feedback" *ngIf="productForm.get('description').hasError('required')">
           Error, no has introducido la descripción
        </div>
       </div>
       <div class="form-group">
         <label for="image">Seleccione imagen de producto</label>
-        <input type="file" class="form-control-file" id="image" name="image" multiple formControlName="image" required>
+        <input type="file" class="form-control-file" id="image" name="image" multiple formControlName="image" required (change)="fileChangeEvent($event)">
+        <image-cropper
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="1 / 1"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+          ></image-cropper>
         <div class="invalid-feedback" *ngIf="productForm.get('image').hasError('required')">
           Error, no has introducido la imagen del producto
        </div>

@@ -6,6 +6,7 @@ import { Product } from '../product';
 import { Image } from '../image';
 import { CategoryListService } from '../category-list.service';
 import { AuthService } from '../auth.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-form-product',
@@ -19,6 +20,8 @@ export class FormProductComponent implements OnInit {
   productForm:FormGroup;
   product = new Product;
 
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
   imageProduct = new Image;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService, private auth: AuthService) {
@@ -36,15 +39,22 @@ export class FormProductComponent implements OnInit {
     )
    }
 
-   get name() { return this.productForm.get('name'); }
-   get price() { return this.productForm.get('price'); }
-   get discount() { return this.productForm.get('discount'); }
-   get stock() { return this.productForm.get('stock'); }
-   get availability() { return this.productForm.get('availability'); }
-   get description() { return this.productForm.get('description'); }
-   get subcategory_id() { return this.productForm.get('subcategory_id'); }
-   get image() { return this.productForm.get('image'); }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
 
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  get name() { return this.productForm.get('name'); }
+  get price() { return this.productForm.get('price'); }
+  get discount() { return this.productForm.get('discount'); }
+  get stock() { return this.productForm.get('stock'); }
+  get availability() { return this.productForm.get('availability'); }
+  get description() { return this.productForm.get('description'); }
+  get subcategory_id() { return this.productForm.get('subcategory_id'); }
+  get image() { return this.productForm.get('image'); }
 
   ngOnInit(): void {
     // for(let i=1;i<=13;i++){
@@ -118,9 +128,6 @@ getSubca(i){
 
 }
 
-
-
-
   onSubmit() {
    
     if(this.productForm.valid){
@@ -132,12 +139,13 @@ getSubca(i){
        this.product.availability=this.availability.value;
        this.product.subcategory_id=this.subcategory_id.value;
        this.product.shop_id=this.auth.getCurrentUserShop();
-       this.imageProduct.image=this.image.value;
+       this.imageProduct.image=this.croppedImage;
+      //  this.imageProduct.image=this.image.value;
       
       this.db.createProduct(this.product).subscribe(
         (response) => {
           console.log(response);
-          this.imageProduct.product_id=response["product"].id
+          this.imageProduct.product_id=response["product"].id;
           this.db.uploadProductImage(this.imageProduct).subscribe(
             (response) => {
               console.log(response);

@@ -6,13 +6,14 @@ import { Product } from '../product';
 import { Image } from '../image';
 import { CategoryListService } from '../category-list.service';
 import { AuthService } from '../auth.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
-  selector: 'app-update-form-product',
-  templateUrl: './update-form-product.component.html',
-  styleUrls: ['./update-form-product.component.css']
+  selector: 'app-form-product-update',
+  templateUrl: './form-product-update.component.html',
+  styleUrls: ['./form-product-update.component.css']
 })
-export class UpdateFormProductComponent implements OnInit {
+export class FormProductUpdateComponent implements OnInit {
 
   categories = [];
   subCategories = [];
@@ -20,7 +21,9 @@ export class UpdateFormProductComponent implements OnInit {
   productForm:FormGroup;
   product = new Product;
 
-  imageProduct = new Image;
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  image = new Image;
 
   productOld;
 
@@ -48,16 +51,23 @@ export class UpdateFormProductComponent implements OnInit {
     }
 
     this.getProduct(this.route.snapshot.paramMap.get('id'));
-
    }
 
-   get name() { return this.productForm.get('name'); }
-   get price() { return this.productForm.get('price'); }
-   get discount() { return this.productForm.get('discount'); }
-   get stock() { return this.productForm.get('stock'); }
-   get availability() { return this.productForm.get('availability'); }
-   get description() { return this.productForm.get('description'); }
-   get subcategory_id() { return this.productForm.get('subcategory_id'); }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  get name() { return this.productForm.get('name'); }
+  get price() { return this.productForm.get('price'); }
+  get discount() { return this.productForm.get('discount'); }
+  get stock() { return this.productForm.get('stock'); }
+  get availability() { return this.productForm.get('availability'); }
+  get description() { return this.productForm.get('description'); }
+  get subcategory_id() { return this.productForm.get('subcategory_id'); }
   //  get image() { return this.productForm.get('image'); }
 
    ngOnInit(): void {
@@ -78,7 +88,6 @@ export class UpdateFormProductComponent implements OnInit {
           }, false);
         });
     })();
-    console.log(this.productForm.get('discount'))
   }
 
   getProduct(id: string | number) {
@@ -86,17 +95,19 @@ export class UpdateFormProductComponent implements OnInit {
       (response) => {
         if (response["product"]) {
           this.productOld = response["product"][0];
-          this.productForm.enable()
-          this.name.setValue(this.productOld.name);
-          this.price.setValue(this.productOld.price);
-          this.discount.setValue(this.productOld.discount);
-          this.description.setValue(this.productOld.description);
-          this.stock.setValue(this.productOld.stock);
-          this.availability.setValue(this.productOld.availability);
-          this.subcategory_id.setValue(this.productOld.subcategory_id);
-          // this.shop_id.setValue(this.auth.getCurrentUserShop());
-          // this.imageProduct.image=this.image.value;
-          // console.log(this.product);
+          if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
+            this.productForm.enable()
+            this.name.setValue(this.productOld.name);
+            this.price.setValue(this.productOld.price);
+            this.discount.setValue(this.productOld.discount);
+            this.description.setValue(this.productOld.description);
+            this.stock.setValue(this.productOld.stock);
+            this.availability.setValue(this.productOld.availability);
+            this.subcategory_id.setValue(this.productOld.subcategory_id);
+            // this.shop_id.setValue(this.auth.getCurrentUserShop());
+            // this.imageProduct.image=this.image.value;
+            // console.log(this.product);
+          }
         }
       },
       (error) =>  {});
@@ -126,55 +137,65 @@ export class UpdateFormProductComponent implements OnInit {
       (error) => {
       console.error('Request failed with error');
       console.error(error);
-      });
+      }
+    );
   }
 
-getSubca(i){
-  
-  this.db.findSubcategoryByCategoryId(i).subscribe(
-  (response) => {
-  this.subCategories.push(response["subcategories"]);
-  }     
-  ,
-   (error) => {
-   console.error('Request failed with error');
-   console.error(error);
-   });
-   return this.subCategories
+  getSubca(i){
+    
+    this.db.findSubcategoryByCategoryId(i).subscribe(
+    (response) => {
+    this.subCategories.push(response["subcategories"]);
+    }     
+    ,
+    (error) => {
+    console.error('Request failed with error');
+    console.error(error);
+    });
+    return this.subCategories;
+  }
 
-}
+  redirect() {
+    this.router.navigate(["/manageshop"]);
+  }
 
-redirect(){
-  console.log("hola")
-  this.router.navigate(["/manageshop/"]);
-}
-
-
+  delete() {
+    this.db.deleteProduct(this.route.snapshot.paramMap.get('id')).subscribe(
+      (response) => {
+        if (response["message"] = 'Producto eliminado') {
+          this.router.navigate(["/manageshop"]);
+        }
+        // this.imageProduct.product_id=response["product"].id
+      },
+      (error) => {
+        console.log("Se ha producido un error:");
+        console.log(error);
+      }
+    ); 
+  }
 
   onSubmit() {
     if(this.productForm.valid){
-       this.product.name=this.name.value;
-       this.product.price=this.price.value;
-       this.product.discount=this.discount.value;
-       this.product.description=this.description.value;
-       this.product.stock=this.stock.value;
-       this.product.availability=this.availability.value;
-       this.product.subcategory_id=this.subcategory_id.value;
-       
+        this.product.name=this.name.value;
+        this.product.price=this.price.value;
+        this.product.discount=this.discount.value;
+        this.product.description=this.description.value;
+        this.product.stock=this.stock.value;
+        this.product.availability=this.availability.value;
+        this.product.subcategory_id=this.subcategory_id.value;
+        
       this.db.updateProduct(this.route.snapshot.paramMap.get('id'),this.product).subscribe(
         (response) => {
           console.log(response);
           // this.imageProduct.product_id=response["product"].id
-          this.router.navigate(["/manageshop/"]);
+          this.router.navigate(["/manageshop"]);
         },
         (error) => {
           console.log("Se ha producido un error:");
           console.log(error);
-        }); 
-
-      }
-    
-   
+        }
+      ); 
+    }
   }
 
 

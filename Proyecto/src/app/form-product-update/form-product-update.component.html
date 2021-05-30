@@ -77,7 +77,14 @@
         </div>
         <div class="form-group">
           <label for="image">Seleccione imagen de producto</label>
-          <input type="file" class="form-control-file" id="image" name="image" multiple >
+          <input type="file" class="form-control-file" id="image" name="image"  (change)="fileChangeEvent($event)">
+          <image-cropper
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="1 / 1"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+          ></image-cropper>
         </div>
         <div class="form-group">
           <label for="categorias">Categoría y subcategoría  </label>
@@ -90,8 +97,10 @@
             Error, no has introducido la subcategoría
          </div>
         </div>
-      <button type="button" class="btn btn-danger mr-2" (click)="this.redirect()">Cancelar</button>
+      <button type="button" class="btn btn-danger mr-2" (click)="delete()">Eliminar</button>
       <button type="submit" class="btn btn-primary">Actualizar datos</button>
+      <br>
+      <button type="button" class="btn btn-secondary mt-2" (click)="redirect()">Cancelar</button>
       </form>
     </div>
   </div>
