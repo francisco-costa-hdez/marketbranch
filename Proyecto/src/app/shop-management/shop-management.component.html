@@ -28,6 +28,30 @@
                     <div class="tab-pane fade show" id="shop-tab" role="tabpanel" aria-labelledby="shop-nav">
                         <h4>Mi Tienda</h4>
                         <p>Modifica los datos que se mostrarán del comercio:</p>
+                        <form class="row needs-validation" (ngSubmit)="onSubmitShop()" #form="ngForm" [formGroup]="detailsFormShop" novalidate>
+                            <div class="col-md-12">
+                                <input class="form-control" name="name" id="name" formControlName="name" type="text" placeholder="Nombre">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" name="description" id="description" formControlName="description" type="text" placeholder="Descripción">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" name="address" id="address" formControlName="address" type="text" placeholder="Dirección">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="Email">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" name="tlf" id="tlf" formControlName="tlf" type="text" placeholder="Teléfono">
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn mr-2" [ngClass]="[editDetailsShop ? 'btn-danger' : 'btn-primary']" (click)="editShop()">
+                                    <span *ngIf="editDetailsShop">Cancelar</span>
+                                    <span *ngIf="!editDetailsShop">Editar</span>
+                                </button>
+                                <input *ngIf="editDetailsShop" type="submit" class="btn btn-success" value="Actualizar">
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane fade show active" id="stats-tab" role="tabpanel" aria-labelledby="stats-nav">
                         <h4>Estadísticas de la tienda</h4>
@@ -54,21 +78,17 @@
                     </div>
                     <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                         <h4>Detalles de cuenta administrador</h4>
-                        <!-- <form class="row needs-validation" (ngSubmit)="onSubmit()" #form="ngForm" [formGroup]="detailsForm" novalidate>
+                        <form class="row needs-validation" (ngSubmit)="onSubmit()" #form="ngForm" [formGroup]="detailsForm" novalidate>
                             <div class="col-md-12">
-                                <input class="form-control" name="name" id="name" formControlName="name" type="text" placeholder="Nombre">
+                                <input class="form-control" name="admin_name" id="admin_name" formControlName="admin_name" type="text" placeholder="Nombre">
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="tlf" id="tlf" formControlName="tlf" type="text" placeholder="Teléfono">
+                                <input class="form-control" name="nif" id="nif" formControlName="nif" type="text" placeholder="NIF">
                             </div>
                             <div class="col-md-12">
                                 <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="Email">
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="address" id="address" formControlName="address" type="text" placeholder="Dirección">
-                            </div>
-                            <div class="col-md-12">
-                                <input type="button" class="btn btn-primary mr-2" (click)="edit()" value="Editar">
                                 <button class="btn mr-2" [ngClass]="[editDetails ? 'btn-danger' : 'btn-primary']" (click)="edit()">
                                     <span *ngIf="editDetails">Cancelar</span>
                                     <span *ngIf="!editDetails">Editar</span>
@@ -76,7 +96,7 @@
                                 <input *ngIf="editDetails" type="submit" class="btn btn-success" value="Actualizar">
                             </div>
                             
-                        </form> -->
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="account-nav">
                         <h4>Cambiar contraseña</h4>
