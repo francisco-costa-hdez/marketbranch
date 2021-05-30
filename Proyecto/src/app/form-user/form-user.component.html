@@ -20,7 +20,7 @@
           <input type="text" name="address" id ="address" class="form-control" required
             formControlName="address">
           <div class="invalid-feedback" *ngIf="userForm.get('address').hasError('required')">
-            Error, no has introducido la direccion
+            Error, no has introducido la dirección
           </div>
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
           <input type="tel" name="tlf" id="tlf" class="form-control" required
             formControlName="tlf" pattern="^[9|8|7|6]\d{8}$" (change)="this.tlfExists=false">
           <div class="invalid-feedback" *ngIf="userForm.get('tlf').hasError('required'); else telBad">
-            Error, no has introducido el telefono
+            Error, no has introducido el teléfono
           </div>
           <ng-template #telBad>
             <div class="invalid-feedback" *ngIf="userForm.get('tlf').hasError('pattern'); else telGood">

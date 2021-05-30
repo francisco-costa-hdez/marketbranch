@@ -28,16 +28,42 @@
                         <h4>Detalles de cuenta</h4>
                         <form class="row needs-validation" (ngSubmit)="onSubmit()" #form="ngForm" [formGroup]="detailsForm" novalidate>
                             <div class="col-md-12">
-                                <input class="form-control" name="name" id="name" formControlName="name" type="text" placeholder="Nombre">
+                                <label for="name">Nombre</label>
+                                <input class="form-control" name="name" id="name" formControlName="name" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('name').hasError('required')">
+                                    Error, no has introducido tu nombre
+                                </div>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="tlf" id="tlf" formControlName="tlf" type="text" placeholder="Teléfono">
+                                <label for="tlf">Teléfono</label>
+                                <input class="form-control" name="tlf" pattern="^[9|8|7|6]\d{8}$" id="tlf" formControlName="tlf" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('tlf').hasError('required'); else telBad">
+                                    Error, no has introducido el teléfono
+                                  </div>
+                                  <ng-template #telBad>
+                                    <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('tlf').hasError('pattern'); else telGood">
+                                      El teléfono debe tener 9 caracteres y empezar por 9, 8, 7, o 6
+                                    </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="Email">
+                                <label for="email">Email</label>
+                                <input class="form-control" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email" formControlName="email" type="email" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('email').hasError('required'); else emailBad">
+                                    Error, no has introducido el email
+                                </div>
+                                  <ng-template #emailBad>
+                                    <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('email').hasError('pattern');">
+                                      Error, no has introducido el email correctamente
+                                    </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="address" id="address" formControlName="address" type="text" placeholder="Dirección">
+                                <label for="address">Dirección</label>
+                                <input class="form-control" name="address" id="address" formControlName="address" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('address').hasError('required')">
+                                    Error, no has introducido tu dirección
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <!-- <input type="button" class="btn btn-primary mr-2" (click)="edit()" value="Editar"> -->
@@ -50,21 +76,60 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="account-nav">
-                        <h4>Cambiar contraseña</h4>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" placeholder="Contraseña actual">
+                        <form class="needs-validation w-100" (ngSubmit)="onSubmitPass()" #form="ngForm" [formGroup]="passForm" novalidate>
+                            <h4>Cambiar contraseña</h4>
+                            <label for="oldPass">Contraseña actual</label>
+                            <input type="password" class="form-control" id="oldPass" name="oldPass" required
+                              formControlName="oldPass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('oldPass').hasError('required'); else passBad">
+                              Error, debes introducir una contraseña
                             </div>
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="Nueva contraseña">
+                            <ng-template #passBad>
+                              <div class="invalid-feedback" *ngIf="passForm.get('oldPass').hasError('pattern');else passGood">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <label for="newPass1">Nueva contraseña</label>
+                            <input type="password" class="form-control" id="newPass1" name="newPass1" required formControlName="newPass1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('newPass1').hasError('required'); else passBad2" >
+                              Error, no has introducido la repetición de contraseña
                             </div>
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="Confirmar contraseña">
+                            <ng-template #passBad2>
+                              <div class="invalid-feedback" *ngIf="passForm.get('newPass1').hasError('pattern'); else passGood2">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood2>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <label for="newPass2">Repite la contraseña</label>
+                            <input type="password" class="form-control" id="newPass2" name="newPass2" required formControlName="newPass2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('newPass2').hasError('required'); else passBad3" >
+                              Error, no has introducido la repetición de contraseña
                             </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-primary" type="button">Guardar cambios</button>
+                            <ng-template #passBad3>
+                              <div class="invalid-feedback" *ngIf="passForm.get('newPass2').hasError('pattern'); else passGood3">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood3>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <div  *ngIf="!(this.passForm.get('newPass1').value==this.passForm.get('newPass2').value)">
+                              <small style="color:#E05555">Las contraseñas no coinciden</small>
                             </div>
-                        </div>
+                            <p class="form-text text-muted"><small>No compartas tu contraseña con terceros.</small></p>
+                            <button class="btn btn-primary" type="button">Guardar cambios</button>
+                        </form>
                     </div>
                     <div class="tab-pane fade p-0 m-0" id="cart-tab" role="tabpanel" aria-labelledby="cart-nav">
                         <app-cart class="p-0 m-0"></app-cart>

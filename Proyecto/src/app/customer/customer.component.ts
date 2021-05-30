@@ -15,20 +15,14 @@ export class CustomerComponent implements OnInit {
   editDetails: boolean = false;
   detailsForm: FormGroup;
   user: ClientUser;
-  // editedUser:ClientUser;
+  passForm: FormGroup;
 
   constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService) {
-    // this.detailsForm = this.form.group(
-    //   {
-    //     name:['',Validators.required],
-    //     tlf:['',Validators.compose([Validators.minLength(9),Validators.required])],
-    //     email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
-    //     address:['',Validators.required]
-    //   }
-    //   , {
-    //     validators: validarIguales
-    //   }
-    // )
+    this.passForm = new FormGroup({
+      oldPass: new FormControl({value: "", disabled: false}, Validators.required),
+      newPass1: new FormControl({value: "", disabled: false}, Validators.required),
+      newPass2: new FormControl({value: "", disabled: false}, Validators.required),
+    });
     this.detailsForm = new FormGroup({
       name: new FormControl({value: "", disabled: true}, Validators.required),
       tlf: new FormControl({value: "", disabled: true}, Validators.required),
@@ -51,8 +45,25 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    (function() {
+      'use strict';
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+    })();
   }
+  get oldPass() { return this.passForm.get('oldPass'); }
+  get newPass1() { return this.passForm.get('newPass1'); }
+  get newPass2() { return this.passForm.get('newPass2'); }
 
   get name() { return this.detailsForm.get('name'); }
   get tlf() { return this.detailsForm.get('tlf'); }
@@ -70,10 +81,13 @@ export class CustomerComponent implements OnInit {
     }
   }
 
+  onSubmitPass() {
+    
+  }
+
   onSubmit() {
-    console.log("helow")
-    // let editedUser:ClientUser=new ClientUser
     let client: ClientUser = Object.assign({},this.user);
+    if(this.detailsForm.valid){
     client.name=this.name.value
     client.address=this.address.value
     client.email=this.email.value
@@ -83,16 +97,15 @@ export class CustomerComponent implements OnInit {
     console.log(client)
     this.db.updateClientUser(client).subscribe(
       (response)=>{
-        console.log(response)
-        // this.user.name=this.name.value
-        // console.log(this.user.name)
-        // console.log(this.name.value)
-        // this.user.address=this.address.value
-        // this.user.email=this.email.value
-        // this.user.tlf=this.tlf.value
+        this.user.name = client.name
+        this.user.address = client.address
+        this.user.email = client.email
+        this.user.tlf = client.tlf
+        this.edit();
 
       }
     )
+    }
   }
   
   logout() {
@@ -102,6 +115,3 @@ export class CustomerComponent implements OnInit {
   }
 
 }
-
-
-// $2y$10$xJIJYlhDqcYPkGCLa6szdeh5mB83ZJjZOR9IEu3tb2iDLVPgatLXm

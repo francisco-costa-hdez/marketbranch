@@ -26,17 +26,24 @@ export class ShopManagementComponent implements OnInit {
   user: ShopUser;
   shop: Shop;
 
+  passForm: FormGroup;
+
   constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder) {
+    this.passForm = new FormGroup({
+      oldPass: new FormControl({value: "", disabled: false}, Validators.required),
+      newPass1: new FormControl({value: "", disabled: false}, Validators.required),
+      newPass2: new FormControl({value: "", disabled: false}, Validators.required),
+    });
+
     this.detailsForm = new FormGroup({
       admin_name: new FormControl({value: "", disabled: true}, Validators.required),
       nif: new FormControl({value: "", disabled: true}, Validators.required),
-      email: new FormControl({value: "", disabled: true}, Validators.required),
-      // address: new FormControl({value:"", disabled: true}, Validators.required)
+      email: new FormControl({value: "", disabled: true}, Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])),
     });
 
     this.detailsFormShop = new FormGroup({
       name: new FormControl({value: "", disabled: true}, Validators.required),
-      email: new FormControl({value: "", disabled: true}, Validators.required),
+      email: new FormControl({value: "", disabled: true}, Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])),
       address: new FormControl({value:"", disabled: true}, Validators.required),
       description: new FormControl({value:"", disabled: true}, Validators.required),
       tlf: new FormControl({value:"", disabled: true}, Validators.required)
@@ -47,7 +54,6 @@ export class ShopManagementComponent implements OnInit {
         if (response) {
           if (response["user"]) {
             this.user = response["user"][0];
-            console.log(this.user)
             this.admin_name.setValue(this.user.admin_name);
             this.nif.setValue(this.user.nif);
             this.email.setValue(this.user.email);
@@ -55,6 +61,25 @@ export class ShopManagementComponent implements OnInit {
         };
       }, (error) =>  {}
     );
+
+    this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+      (response) => {
+        if (response) {
+          if (response["shop"]) {
+            this.shop = response["shop"];
+            this.name.setValue(this.shop.name);
+            this.emailShop.setValue(this.shop.email);
+            this.address.setValue(this.shop.address);
+            this.description.setValue(this.shop.description);
+            this.tlf.setValue(this.shop.tlf);
+            // console.log(this.shop)
+          }
+          // console.log(response)
+        };
+      }, (error) =>  {}
+    );
+
+
    }
 
    get admin_name() { return this.detailsForm.get('admin_name'); }
@@ -86,7 +111,27 @@ export class ShopManagementComponent implements OnInit {
           console.error(error);
         });
     }
+
+    (function() {
+      'use strict';
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation')
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+    })();
   }
+
+  get oldPass() { return this.passForm.get('oldPass'); }
+  get newPass1() { return this.passForm.get('newPass1'); }
+  get newPass2() { return this.passForm.get('newPass2'); }
 
   initResults(array: Array<object>) {
     this.products = [];
@@ -143,52 +188,51 @@ export class ShopManagementComponent implements OnInit {
   }
 
   onSubmitShop() {
-    console.log("helow")
-    // let editedUser:ClientUser=new ClientUser
-    let Shop_new: Shop = Object.assign({},this.shop);
-    Shop_new.tlf=this.tlf.value
-    Shop_new.email=this.emailShop.value
-    Shop_new.address=this.address.value
-    Shop_new.description=this.description.value
-    Shop_new.name=this.name.value
+    if(this.detailsFormShop.valid){
+    let shop_new: Shop = Object.assign({},this.shop);
+    shop_new.tlf=this.tlf.value
+    shop_new.email=this.emailShop.value
+    shop_new.address=this.address.value
+    shop_new.description=this.description.value
+    shop_new.name=this.name.value
     
-    console.log(Shop)
-    this.db.updateShop(Shop).subscribe(
+    this.db.updateShop(shop_new).subscribe(
       (response)=>{
         console.log(response)
-        // this.user.name=this.name.value
-        // console.log(this.user.name)
-        // console.log(this.name.value)
-        // this.user.address=this.address.value
-        // this.user.email=this.email.value
-        // this.user.tlf=this.tlf.value
+        this.shop.tlf = shop_new.tlf
+        this.shop.email = shop_new.email
+        this.shop.address = shop_new.address
+        this.shop.description = shop_new.description
+        this.shop.name = shop_new.name
+
+        this.editShop()
+      }
+    )
+    }
+  }
+
+  onSubmit() {
+    if(this.detailsForm.valid){
+    let shopUser: ShopUser = Object.assign({},this.user);
+    shopUser.admin_name=this.admin_name.value
+    shopUser.nif=this.nif.value
+    shopUser.email=this.email.value
+    // console.log(shopUser)
+    this.db.updateShoptUser(shopUser).subscribe(
+      (response)=>{
+        console.log(response)
+        this.user.admin_name=shopUser.admin_name
+        this.user.nif=shopUser.nif
+        this.user.email=shopUser.email
+        this.edit();
 
       }
     )
   }
+  }
 
-  onSubmit() {
-    console.log("helow")
-    // let editedUser:ClientUser=new ClientUser
-    let ShopUser: ShopUser = Object.assign({},this.user);
-    ShopUser.admin_name=this.admin_name.value
-    ShopUser.nif=this.nif.value
-    ShopUser.email=this.email.value
-    // this.user.password=this.user.password
-    // this.user.profile_img=this.user.profile_img
-    console.log(ShopUser)
-    this.db.updateShoptUser(ShopUser).subscribe(
-      (response)=>{
-        console.log(response)
-        // this.user.name=this.name.value
-        // console.log(this.user.name)
-        // console.log(this.name.value)
-        // this.user.address=this.address.value
-        // this.user.email=this.email.value
-        // this.user.tlf=this.tlf.value
-
-      }
-    )
+  onSubmitPass() {
+    
   }
 
 }

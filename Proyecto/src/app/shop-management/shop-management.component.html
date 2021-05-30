@@ -12,11 +12,11 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="nav  card flex-column nav-pills p-0 m-0" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="stats-nav" data-toggle="pill" href="#stats-tab" role="tab"><i class="bi bi-graph-up"></i>Mis estadísticas</a>
+                    <a class="nav-link active" id="store-nav" data-toggle="pill" href="#store-tab" role="tab"><i class="bi bi-box-seam"></i>Mis productos</a>
+                    <a class="nav-link" id="stats-nav" data-toggle="pill" href="#stats-tab" role="tab"><i class="bi bi-graph-up"></i>Mis estadísticas</a>
                     <a class="nav-link" id="shop-nav" data-toggle="pill" href="#shop-tab" role="tab"><i class="bi bi-shop"></i>Mi Tienda</a>
-                    <a class="nav-link" id="store-nav" data-toggle="pill" href="#store-tab" role="tab"><i class="bi bi-box-seam"></i>Mis productos</a>
                     <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="bi bi-cart-check-fill"></i>Pedidos</a>
-                    <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><i class="bi bi-clock-history"></i>Historial de compras</a>
+                    <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><i class="bi bi-clock-history"></i>Historial de ventas</a>
                     <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="bi bi-person-fill"></i>Mi cuenta</a>
                     <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="bi bi-credit-card-fill"></i>Método de pago</a>
                     <a class="nav-link" id="security-nav" data-toggle="pill" href="#security-tab" role="tab"><i class="bi bi-shield-lock-fill"></i>Seguridad de cuenta</a>
@@ -30,22 +30,54 @@
                         <p>Modifica los datos que se mostrarán del comercio:</p>
                         <form class="row needs-validation" (ngSubmit)="onSubmitShop()" #form="ngForm" [formGroup]="detailsFormShop" novalidate>
                             <div class="col-md-12">
-                                <input class="form-control" name="name" id="name" formControlName="name" type="text" placeholder="Nombre">
+                                <label for="name">Nombre de mi tienda</label>
+                                <input class="form-control" name="name" id="name" formControlName="name" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('name').hasError('required')">
+                                    Error, no has introducido el nombre de tu tienda
+                                </div>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="description" id="description" formControlName="description" type="text" placeholder="Descripción">
+                                <label for="description">Descripción</label>
+                                <textarea class="form-control" name="description" id="description" formControlName="description" type="text" required>
+                                </textarea>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('description').hasError('required')">
+                                    Error, no has introducido la Descripción
+                                </div>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="address" id="address" formControlName="address" type="text" placeholder="Dirección">
+                                <label for="address">Dirección</label>
+                                <input class="form-control" name="address" id="address" formControlName="address" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('address').hasError('required')">
+                                    Error, no has introducido la dirección
+                                </div>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="Email">
+                                <label for="address">Email</label>
+                                <input class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email"
+                                 id="emailShop" formControlName="email" type="email" required>
+                                 <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('email').hasError('required'); else emailBad">
+                                    Error, no has introducido el email
+                                  </div>
+                                  <ng-template #emailBad>
+                                    <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('email').hasError('pattern');">
+                                      Error, no has introducido el email correctamente
+                                  </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="tlf" id="tlf" formControlName="tlf" type="text" placeholder="Teléfono">
+                                <label for="address">Teléfono</label>
+                                <input class="form-control" pattern="^[9|8|7|6]\d{8}$" name="tlf" id="tlf" formControlName="tlf" type="tel" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('tlf').hasError('required'); else telBad">
+                                    Error, no has introducido el teléfono
+                                  </div>
+                                  <ng-template #telBad>
+                                    <div class="invalid-feedback mb-2" *ngIf="detailsFormShop.get('tlf').hasError('pattern');">
+                                      El teléfono debe tener 9 caracteres y empezar por 9, 8, 7, o 6
+                                    </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn mr-2" [ngClass]="[editDetailsShop ? 'btn-danger' : 'btn-primary']" (click)="editShop()">
+                                <button type="button" class="btn mr-2" [ngClass]="[editDetailsShop ? 'btn-danger' : 'btn-primary']" (click)="editShop()">
                                     <span *ngIf="editDetailsShop">Cancelar</span>
                                     <span *ngIf="!editDetailsShop">Editar</span>
                                 </button>
@@ -53,12 +85,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade show active" id="stats-tab" role="tabpanel" aria-labelledby="stats-nav">
+                    <div class="tab-pane fade show" id="stats-tab" role="tabpanel" aria-labelledby="stats-nav">
                         <h4>Estadísticas de la tienda</h4>
                         <p>Unos gráficos informativos de : pedidos en activo, pedidos hechos, productos con más venta, disponibilidad...</p>
                     </div>
-                    <div class="tab-pane fade" id="store-tab" role="tabpanel" aria-labelledby="store-nav">
+                    <div class="tab-pane fade show active" id="store-tab" role="tabpanel" aria-labelledby="store-nav">
                         <h4>Mis Productos</h4>
+                        <p>Total de productos en la tienda: {{totalProducts.length}}.</p>
+                        <p class="text-center"><a routerLink="nuevo-producto" class="btn btn-success w-50">Añadir un nuevo producto &nbsp;&nbsp;&nbsp;<i class="bi bi-plus-square"></i></a></p>
                         <div class="container-xl"
                             infinite-scroll
                             [infiniteScrollDistance]="scrollDistance"
@@ -67,7 +101,7 @@
                             <div *ngFor="let product of products" class="card">
                                 <div class="row card-body m-0 p-1">
                                     <img class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
-                                    <h6 class="col-4 col-lg-6 my-auto mx-0 pl-1"><a routerLink="/product/{{product.id}}">{{product.name}}</a></h6>
+                                    <h6 class="col-4 col-lg-6 my-auto mx-0 pl-1"><a routerLink="/producto/{{product.id}}">{{product.name}}</a></h6>
                                     <h6 class="col-3 my-auto mx-0 pl-1">{{product.price | currency:" "}} €</h6>
                                     <div class="col-1 col-lg-1 m-0 p-0 row align-items-center">
                                         <a routerLink="edit/product/{{product.id}}" class="btn btn-primary col"><i class="bi bi-pencil-square"></i></a>
@@ -80,16 +114,39 @@
                         <h4>Detalles de cuenta administrador</h4>
                         <form class="row needs-validation" (ngSubmit)="onSubmit()" #form="ngForm" [formGroup]="detailsForm" novalidate>
                             <div class="col-md-12">
-                                <input class="form-control" name="admin_name" id="admin_name" formControlName="admin_name" type="text" placeholder="Nombre">
+                                <label for="admin_name">Nombre</label>
+                                <input class="form-control" name="admin_name" id="admin_name" formControlName="admin_name" type="text" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('admin_name').hasError('required')">
+                                    Error, no has introducido tu nombre 
+                                </div>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="nif" id="nif" formControlName="nif" type="text" placeholder="NIF">
+                                <label for="nif">NIF</label>
+                                <input class="form-control" name="nif" id="nif" formControlName="nif" type="text" 
+                                pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('nif').hasError('required'); else nifBad">
+                                    Error, no has introducido el nif
+                                  </div>
+                                  <ng-template #nifBad>
+                                  <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('nif').hasError('pattern');">
+                                    Error, no has introducido el nif correctamente
+                                  </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="Email">
+                                <label for="email">Email</label>
+                                <input class="form-control" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email" formControlName="email" type="email" required>
+                                <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('email').hasError('required'); else emailBad2">
+                                    Error, no has introducido el email
+                                  </div>
+                                  <ng-template #emailBad2>
+                                    <div class="invalid-feedback mb-2" *ngIf="detailsForm.get('email').hasError('pattern');">
+                                      Error, no has introducido el email correctamente
+                                  </div>
+                                  </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn mr-2" [ngClass]="[editDetails ? 'btn-danger' : 'btn-primary']" (click)="edit()">
+                                <button type="button" class="btn mr-2" [ngClass]="[editDetails ? 'btn-danger' : 'btn-primary']" (click)="edit()">
                                     <span *ngIf="editDetails">Cancelar</span>
                                     <span *ngIf="!editDetails">Editar</span>
                                 </button>
@@ -99,21 +156,60 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="account-nav">
-                        <h4>Cambiar contraseña</h4>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" placeholder="Contraseña actual">
+                        <form class="needs-validation w-100" (ngSubmit)="onSubmitPass()" #form="ngForm" [formGroup]="passForm" novalidate>
+                            <h4>Cambiar contraseña</h4>
+                            <label for="oldPass">Contraseña actual</label>
+                            <input type="password" class="form-control" id="oldPass" name="oldPass" required
+                              formControlName="oldPass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('oldPass').hasError('required'); else passBad">
+                              Error, debes introducir una contraseña
                             </div>
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="Nueva contraseña">
+                            <ng-template #passBad>
+                              <div class="invalid-feedback" *ngIf="passForm.get('oldPass').hasError('pattern');else passGood">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <label for="newPass1">Nueva contraseña</label>
+                            <input type="password" class="form-control" id="newPass1" name="newPass1" required formControlName="newPass1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('newPass1').hasError('required'); else passBad2" >
+                              Error, no has introducido la repetición de contraseña
                             </div>
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="Confirmar contraseña">
+                            <ng-template #passBad2>
+                              <div class="invalid-feedback" *ngIf="passForm.get('newPass1').hasError('pattern'); else passGood2">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood2>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <label for="newPass2">Repite la contraseña</label>
+                            <input type="password" class="form-control" id="newPass2" name="newPass2" required formControlName="newPass2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}">
+                            <div class="invalid-feedback" *ngIf="passForm.get('newPass2').hasError('required'); else passBad3" >
+                              Error, no has introducido la repetición de contraseña
                             </div>
-                            <div class="col-md-12">
-                                <button class="btn">Guardar cambios</button>
+                            <ng-template #passBad3>
+                              <div class="invalid-feedback" *ngIf="passForm.get('newPass2').hasError('pattern'); else passGood3">
+                                Error, debes introducir mayúsculas, minúsculas y números entre 8 y 18 carácteres
+                              </div>
+                            </ng-template>
+                            <ng-template #passGood3>
+                              <div class="valid-feedback">
+                                El patrón de contraseña es correcto
+                              </div>
+                            </ng-template>
+                            <div  *ngIf="!(this.passForm.get('newPass1').value==this.passForm.get('newPass2').value)">
+                              <small style="color:#E05555">Las contraseñas no coinciden</small>
                             </div>
-                        </div>
+                            <p class="form-text text-muted"><small>No compartas tu contraseña con terceros.</small></p>
+                            <button class="btn btn-primary" type="button">Guardar cambios</button>
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                         <div class="table-responsive">
@@ -177,195 +273,4 @@
     </div>
     <!-- My Account End -->
 </section>    
-  <!--  -->
-<!-- <div class="my-account featured-product product"> -->
-    <!-- <div class="section-header container-fluid pl-5"> -->
-        <!-- <div class="row align-items-end"> -->
-            <!-- <div class="col-2 col-lg-1 p-0"> -->
-                <!-- <img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO"> -->
-            <!-- </div> -->
-            <!-- <div class="col-10 col-lg-11"><h1 class="row ">&nbsp;Mi Tienda</h1></div> -->
-        <!-- </div> -->
-    <!-- </div> -->
-<!--      -->
-    <!-- My Account Start -->
-    <!-- <div class="my-account"> -->
-        <!-- <div class="container-fluid"> -->
-            <!-- <div class="row"> -->
-                <!-- <div class="col-md-4"> -->
-                    <!-- <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical"> -->
-                        <!-- <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Detalles de Tienda</a> -->
-                        <!-- <a class="nav-link" id="security-nav" data-toggle="pill" href="#security-tab" role="tab"><i class="fa fa-briefcase"></i>Seguridad de cuenta</a> -->
-                        <!-- <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Mis productos </a> -->
-                        <!-- <a class="nav-link" id="categories-nav" data-toggle="pill" href="#categories-tab" role="tab"><i class="fa fa-folder"></i>Mis categorias </a> -->
-                        <!-- <a class="nav-link" id="subcategories-nav"  data-toggle="pill" href="#subcategories-tab" role="tab"><i class="fa fa-folder-open"></i>Mis subcategorias </a> -->
-                        <!-- <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-stars" viewBox="0 0 16 16"> -->
-                            <!-- <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/> -->
-                            <!-- <path d="M2.242 2.194a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.256-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53zm0 4a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.255-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53zm0 4a.27.27 0 0 1 .516 0l.162.53c.035.115.14.194.258.194h.551c.259 0 .37.333.164.493l-.468.363a.277.277 0 0 0-.094.3l.173.569c.078.255-.213.462-.423.3l-.417-.324a.267.267 0 0 0-.328 0l-.417.323c-.21.163-.5-.043-.423-.299l.173-.57a.277.277 0 0 0-.094-.299l-.468-.363c-.206-.16-.095-.493.164-.493h.55a.271.271 0 0 0 .259-.194l.162-.53z"/> -->
-                          <!-- </svg>  Historial de ventas</a> -->
-                        <!-- <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa fa-credit-card"></i>Método de pago</a> -->
-                        <!-- <a class="nav-link" href="index.html"><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a> -->
-                    <!-- </div> -->
-                <!-- </div> -->
-                <!-- <div class="col-md-8">  -->
-                    <!-- <div class="tab-content"> -->
-                        <!-- <div class="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav"> -->
-                            <!-- <h4>Detalles de Tienda</h4> -->
-                            <!-- <div class="row"> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Usuario"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Nombre de Tienda"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Teléfono"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Email"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Dirección"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Descripción"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <button class="btn">Actualizar</button> -->
-                                    <!-- <br><br> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="security-tab" role="tabpanel" aria-labelledby="account-nav"> -->
-                            <!-- <h4>Cambiar contraseña</h4> -->
-                            <!-- <div class="row"> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="password" placeholder="Contraseña actual"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Nueva contraseña"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <input class="form-control" type="text" placeholder="Confirmar contraseña"> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-md-12"> -->
-                                    <!-- <button class="btn">Guardar cambios</button> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav"> -->
-                            <!-- <button style="margin-bottom:10px;"class="btn">Añadir producto</button> -->
-                            <!-- <div class="table-responsive"> -->
-                                <!-- <table class="table table-bordered"> -->
-                                    <!-- <thead class="thead-dark"> -->
-                                        <!-- <tr> -->
-                                            <!-- <th>No</th> -->
-                                            <!-- <th>Nombre producto</th> -->
-                                            <!-- <th>Subcategoria</th> -->
-                                            <!-- <th>Marca</th> -->
-                                            <!-- <th>Precio</th> -->
-                                            <!-- <th>Descripción</th> -->
-                                            <!-- <th>Descuento</th> -->
-                                            <!-- <th>Stock</th> -->
-                                            <!-- <th>Disponibilidad</th> -->
-                                        <!-- </tr> -->
-                                    <!-- </thead> -->
-                                    <!-- <tbody> -->
-                                        <!-- <tr> -->
-                                            <!-- <td>1</td> -->
-                                            <!-- <td>Producto Nombre</td> -->
-                                            <!-- <td>Subcategoria nombre</td> -->
-                                            <!-- <td>pepsi</td> -->
-                                            <!-- <td>99€</td> -->
-                                            <!-- <td>desc</td> -->
-                                            <!-- <td>10%</td> -->
-                                            <!-- <td>Sin stock</td> -->
-                                            <!-- <td>No</td> -->
-                                        <!-- </tr> -->
-                                    <!-- </tbody> -->
-                                <!-- </table> -->
-                            <!-- </div> -->
-<!--          -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="categories-tab" role="tabpanel" aria-labelledby="categrories-nav"> -->
-                            <!-- <button style="margin-bottom:10px;"class="btn">Añadir categoria</button> -->
-                            <!-- <div class="table-responsive"> -->
-                                <!-- <table class="table table-bordered"> -->
-                                    <!-- <thead class="thead-dark"> -->
-                                        <!-- <tr> -->
-                                            <!-- <th>No</th> -->
-                                            <!-- <th>Nombre categoria</th> -->
-<!--                                          -->
-                                        <!-- </tr> -->
-                                    <!-- </thead> -->
-                                    <!-- <tbody> -->
-                                        <!-- <tr> -->
-                                            <!-- <td>1</td> -->
-                                            <!-- <td>Categoria</td> -->
-                                        <!-- </tr> -->
-                                    <!-- </tbody> -->
-                                <!-- </table> -->
-                            <!-- </div> -->
-<!--          -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="subcategories-tab" role="tabpanel" aria-labelledby="subcategories-nav"> -->
-                            <!-- <button style="margin-bottom:10px;"class="btn">Añadir subcategoria</button> -->
-                            <!-- <div class="table-responsive"> -->
-                                <!-- <table class="table table-bordered"> -->
-                                    <!-- <thead class="thead-dark"> -->
-                                        <!-- <tr> -->
-                                            <!-- <th>No</th> -->
-                                            <!-- <th>Nombre subcategoria</th> -->
-                                            <!-- <th>Nombre categoria</th> -->
-<!--                                          -->
-                                        <!-- </tr> -->
-                                    <!-- </thead> -->
-                                    <!-- <tbody> -->
-                                        <!-- <tr> -->
-                                            <!-- <td>1</td> -->
-                                            <!-- <td>Subcategoria</td> -->
-                                            <!-- <td>Categoria</td> -->
-                                        <!-- </tr> -->
-                                    <!-- </tbody> -->
-                                <!-- </table> -->
-                            <!-- </div> -->
-<!--          -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="history-tab" role="tabpanel" aria-labelledby="orders-nav"> -->
-                            <!-- <div class="table-responsive"> -->
-                                <!-- <table class="table table-bordered"> -->
-                                    <!-- <thead class="thead-dark"> -->
-                                        <!-- <tr> -->
-                                            <!-- <th>No</th> -->
-                                            <!-- <th>Producto</th> -->
-                                            <!-- <th>Fecha</th> -->
-                                            <!-- <th>Precio</th> -->
-                                            <!-- <th>Acción</th> -->
-                                        <!-- </tr> -->
-                                    <!-- </thead> -->
-                                    <!-- <tbody> -->
-                                        <!-- <tr> -->
-                                            <!-- <td>1</td> -->
-                                            <!-- <td>Producto Comprado</td> -->
-                                            <!-- <td>01 Jan 2020</td> -->
-                                            <!-- <td>$99</td> -->
-                                            <!-- <td><button class="btn">Ver</button></td> -->
-                                        <!-- </tr> -->
-                                    <!-- </tbody> -->
-                                <!-- </table> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                        <!-- <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav"> -->
-                            <!-- <h4>Payment Method</h4> -->
-                            <!-- <p> -->
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque. -->
-                            <!-- </p>  -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </div> -->
-    My Account End
-<!--      -->
-  <!--  -->
+ 
