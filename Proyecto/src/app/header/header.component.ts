@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
     shop: false
   }
   authClient: boolean = false;
-  random: number;
   profile_img;
 
   constructor(private auth: AuthService, private router: Router, private db: MarketPlaceDBService) {
@@ -37,6 +36,17 @@ export class HeaderComponent implements OnInit {
             );
           } else if (this.auth.isAuthenticatedShop()){
             this.authorized.shop = true;
+            this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
+              (response) => {
+                if (response) {
+                  console.log(response["user"])
+                  if (response["user"]) {
+                    console.log(response["user"].profile_img)
+                    this.profile_img = response["user"].profile_img;
+                  }
+                };
+              }, (error) =>  {}
+            );
           }
         }
       }
@@ -53,8 +63,37 @@ export class HeaderComponent implements OnInit {
   }
   
   randomize() {
-    this.random = Math.floor(Math.random()*101);
-    this.router.navigate(["/producto/" + this.random]);
-  }
+      let shops: Array<number> = [];
+      this.db.findAllShops().subscribe(
+        (response) => {
+            if (response["shops"]) {
+              response["shops"].forEach((item) =>{
+                if (item.name) {
+                  shops.push(item.id);
+                }
+              });
+              this.router.navigate(["/tienda/" + shops[Math.floor(Math.random()*shops.length)]])
+            }
+            //console.table(this.totalResults)
+          });
+    }
 
+  // randomize() {
+  //   let sum: number = 0;
+  //   this.db.findAllShops().subscribe(
+  //     (response) => {
+  //         if (response["shops"]) {
+  //           response["shops"].forEach((item) =>{
+  //             sum++;
+  //           });
+  //           this.redirect(sum)
+  //         }
+  //         //console.table(this.totalResults)
+  //       });
+  // }
+
+  // redirect(sum: number) {
+  //   let num: number = Math.floor(Math.random()*sum);
+  //   (num != 0) ?  this.router.navigate(["/tienda/" + num]) : this.redirect(sum);
+  // }
 }

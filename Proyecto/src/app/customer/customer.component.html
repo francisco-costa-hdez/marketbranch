@@ -14,7 +14,8 @@
                 <div class="nav  card flex-column nav-pills p-0 m-0" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="bi bi-person-fill"></i>Detalles de cuenta</a>
                     <a class="nav-link" id="security-nav" data-toggle="pill" href="#security-tab" role="tab"><i class="bi bi-shield-lock-fill"></i>Seguridad de cuenta</a>
-                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="bi bi-cart-check-fill"></i>Pedidos</a>
+                    <a class="nav-link" id="cart-nav" data-toggle="pill" href="#cart-tab" role="tab"><i class="bi bi-cart-fill"></i>Carrito</a>
+                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="bi bi-cart-check-fill"></i>Pedidos activos</a>
                     <a class="nav-link" id="history-nav" data-toggle="pill" href="#history-tab" role="tab"><i class="bi bi-clock-history"></i>Historial de compras</a>
                     <a class="nav-link" id="wish-nav" data-toggle="pill" href="#wish-tab" role="tab"><i class="bi bi-bookmark-heart-fill"></i>Lista de deseos</a>
                     <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="bi bi-credit-card-fill"></i>Método de pago</a>
@@ -65,6 +66,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade p-0 m-0" id="cart-tab" role="tabpanel" aria-labelledby="cart-nav">
+                        <app-cart class="p-0 m-0"></app-cart>
+                    </div>    
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                         <div class="table-responsive">
                             <table class="table table-bordered">

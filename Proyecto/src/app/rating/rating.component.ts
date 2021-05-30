@@ -25,7 +25,6 @@ export class RatingComponent implements OnChanges {
         this.stars[i] = 0.5;
         aux = 0;
       } else {
-        console.log("W")
         this.stars[i] = 0;
         aux = 0;
       }

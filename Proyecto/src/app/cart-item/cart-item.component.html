@@ -11,7 +11,7 @@
     <h6 class="col-3 my-auto mx-0 pl-1">{{product.price * product.quantity | currency:" "}} €</h6>
     <form class="col-3 col-lg-2 form-group w-100 my-auto mx-0 p-0">
         <div class="input-group mx-0 p-0">
-            <input type="number" [(ngModel)]="product.quantity" id="quantity_{{product.id}}" name="quantity_{{product.id}}"
+            <input type="number" [(ngModel)]="product.quantity" name="quantity_{{product.id}}"
             class="form-control radius-0 col-6 m-0 p-0 pl-2" min="1" max="250" value="{{product.quantity}}"  (change)="updateQuantity()" (keyup)="updateQuantity()">
             <button #quantity class="input-group-append col-6  btn-danger form-control p-1" type="button" (click)="deleteProduct()">
                 <div class="mx-auto"><i class="bi bi-x text-dark"></i></div>

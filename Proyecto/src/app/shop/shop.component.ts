@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ShopComponent implements OnInit {
   totalResults;
   aux;
   best = [];
-  shop_rating: number = 3.76;
+  shop_rating: number;
 
   order = "reciente";
   sum = 6;
@@ -25,11 +25,15 @@ export class ShopComponent implements OnInit {
   loading: boolean = true;
   show: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) { }
-
-  ngOnInit(): void {
-    this.getShop(this.route.snapshot.paramMap.get('id'));
+  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.getShop(this.route.snapshot.paramMap.get('id'));
+      }
+    })
   }
+
+  ngOnInit(): void {}
 
   initResults(array: Array<object>) {
     this.results = [];
@@ -103,6 +107,17 @@ export class ShopComponent implements OnInit {
           }
           this.aux = [...this.totalResults];
           this.initResults(this.totalResults);
+
+          let num_ratings: number = 0;
+          let sum_ratings: number = 0
+          this.aux.forEach( (product) => {
+            if (parseFloat(product.media_rating) > 0) {
+              num_ratings++;
+              sum_ratings = sum_ratings + parseFloat(product.media_rating);
+            }
+          })
+          this.shop_rating = sum_ratings / num_ratings;
+          // console.log(this.shop_rating)
           // console.table(this.results)
           //console.table(this.aux)
           //console.table(this.best

@@ -249,7 +249,13 @@ export class SearchComponent {
           response["shops"].forEach((item) =>{
             this.totalResults.push(item);
           });
-          this.aux = [...this.totalResults];
+          for(let i = 0, j = 0; i < this.totalResults.length; i++){
+            if (this.totalResults[i].name != null) {
+              this.aux[j] = this.totalResults[i];
+              j++
+            }
+          }
+          this.totalResults = [...this.aux];
           this.resultsInit(this.totalResults);
           this.loading = false;
         }
@@ -314,7 +320,13 @@ export class SearchComponent {
             response["shops"].forEach((item) =>{
               this.totalResults.push(item);
             });
-            this.aux = [...this.totalResults];
+            for(let i = 0, j = 0; i < this.totalResults.length; i++){
+              if (this.totalResults[i].name != null) {
+                this.aux[j] = this.totalResults[i];
+                j++
+              }
+            }
+            this.totalResults = [...this.aux];
             this.resultsInit(this.totalResults);
             this.loading = false;
           }

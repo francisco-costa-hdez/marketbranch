@@ -60,11 +60,13 @@ export class HomeComponent implements OnInit {
         this.latestShops = [];
         if (response["shops"]) {
           response["shops"].forEach((item) =>{
-            let newShop = item;
-            shops.push(newShop);
+            shops.push(item);
           });
-          for(let i=0;i<=3;i++){
-            this.latestShops[i] = shops[i];
+          for(let i = 0, j = 0; j<= 3 && i < shops.length; i++){
+            if (shops[i].name != null) {
+              this.latestShops[j] = shops[i];
+              j++
+            }
           }
           //console.table(this.latestShops)
           this.contentLoaded += 1;
