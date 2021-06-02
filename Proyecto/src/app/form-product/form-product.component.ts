@@ -149,6 +149,7 @@ getSubca(i){
           this.db.uploadProductImage(this.imageProduct).subscribe(
             (response) => {
               console.log(response);
+              this.router.navigate(["/administrar-tienda"])
             },
             (error) => {
               console.log("Se ha producido un error:");

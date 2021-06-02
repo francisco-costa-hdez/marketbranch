@@ -156,14 +156,14 @@ export class FormProductUpdateComponent implements OnInit {
   }
 
   redirect() {
-    this.router.navigate(["/manageshop"]);
+    this.router.navigate(["/administrar-tienda"]);
   }
 
   delete() {
     this.db.deleteProduct(this.route.snapshot.paramMap.get('id')).subscribe(
       (response) => {
         if (response["message"] = 'Producto eliminado') {
-          this.router.navigate(["/manageshop"]);
+          this.redirect();
         }
         // this.imageProduct.product_id=response["product"].id
       },
@@ -188,7 +188,7 @@ export class FormProductUpdateComponent implements OnInit {
         (response) => {
           console.log(response);
           // this.imageProduct.product_id=response["product"].id
-          this.router.navigate(["/manageshop"]);
+          this.redirect();
         },
         (error) => {
           console.log("Se ha producido un error:");
