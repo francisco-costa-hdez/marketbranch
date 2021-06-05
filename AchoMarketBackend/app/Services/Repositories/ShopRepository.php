@@ -22,7 +22,9 @@ class ShopRepository implements IShopRepository
 
     public function findShopById(int $id)
     {
-        return $this->shop->find($id);
+        $shop = $this->shop->find($id);
+        $images = DB::select('SELECT image from shop_images where shop_id = ?',[$id]);
+        return response()->json(['shop' => $shop, 'images' =>$images], 200);
     }
 
     public function findAllShops()
@@ -85,5 +87,12 @@ class ShopRepository implements IShopRepository
         ]);
 
         return response()->json(['message' => 'Los datos se han guardado correctamente']);
+    }
+
+    public function desplegableBusquedas(string $name){
+        $str = '%' . $name . '%';
+        $shops = DB::select('SELECT name FROM shops WHERE name like ? ORDER BY name
+        LIMIT 6',[$str]);
+        return response()->json($shops);
     }
 }

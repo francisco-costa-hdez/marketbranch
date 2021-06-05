@@ -79,4 +79,14 @@ class ShopUserController extends Controller
         }
         else return response()->json(['message'=>'Usuario no autorizado']);
     }
+
+    public function verify(string $confirmation_code)
+    {
+        $user = ShopUser::where('confirmation_code', $confirmation_code)->first();
+        $user->update([
+            'confirmed' => true,
+            'confirmation_code' => null
+        ]);
+        return view('emails.confirmed');
+    }
 }

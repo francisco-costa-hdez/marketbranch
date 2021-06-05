@@ -23,4 +23,6 @@ interface IShopRepository
     public function deleteShop(int $id);
 
     public function updateShop(Request $request);
+
+    public function desplegableBusquedas(string $name);
 }

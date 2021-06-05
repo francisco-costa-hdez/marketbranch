@@ -19,4 +19,6 @@ interface IShopService
     public function deleteShopImage($img_id);
     
     public function deleteShop($id);
+
+    public function desplegableBusquedas(string $name);
 }

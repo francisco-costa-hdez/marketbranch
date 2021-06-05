@@ -27,4 +27,8 @@ interface IProductService
     public function uploadProductImage(Request $data);
 
     public function deleteProductImage(int $img_id);
+
+    public function desplegableBusquedas(string $name);
+
+    public function desplegableBusquedasCategoria(string $name, int $category_id);
 }

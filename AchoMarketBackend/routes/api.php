@@ -16,11 +16,14 @@ Route::get('products/subcategory/{subcategory_id}', [ProductController::class, '
 Route::get('products/category/{subcategory_id}/name/{name}', [ProductController::class, 'findProductByCategoryAndName']);
 Route::get('products/category/{category_id}', [ProductController::class, 'findProductByCategory']);
 Route::get('products/str/{string}', [ProductController::class, 'findProductsByString']);
+Route::get('products/desplegableName/{name}',[ProductController::class, 'desplegableBusquedas']);
+Route::get('products/desplegableCat/{name}/{category_id}',[ProductController::class, 'desplegableBusquedasCategoria']);
 
 Route::get('shops', [ShopController::class, 'findAllShops']);
 Route::get('shops/{id}', [ShopController::class, 'findShopById']);
 Route::get('shops/product/{product_id}', [ShopController::class, 'findShopByProduct']);
 Route::get('shops/str/{str}', [ShopController::class, 'findShopByStr']);
+Route::get('shops/desplegableName/{name}', [ShopController::class, 'desplegableBusquedas']);
 
 Route::get('categories', [CategoryController::class, 'findAllCategories']);
 Route::get('subcategories/{category_id}', [CategoryController::class, 'findSubcategoryByCategoryId']);

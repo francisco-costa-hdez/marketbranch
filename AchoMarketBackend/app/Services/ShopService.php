@@ -60,4 +60,9 @@ class ShopService implements IShopService
         return $this->shopRepository->updateShop($request);
     }
 
+    public function desplegableBusquedas(string $name)
+    {
+        return $this->shopRepository->desplegableBusquedas($name);
+    }
+
 }

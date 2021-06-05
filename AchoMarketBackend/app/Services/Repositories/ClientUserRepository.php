@@ -57,6 +57,7 @@ class ClientUserRepository implements IClientUserRepository
             'message' => 'Sesión iniciada',
             'user' => $user->name,
             'user_id' => $user->id,
+            'profile_img' => $user->profile_img,
             'token' => $token,
         ];
 

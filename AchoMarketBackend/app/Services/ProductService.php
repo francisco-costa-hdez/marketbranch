@@ -74,4 +74,14 @@ class ProductService implements IProductService
     {
         $this->productRepository->deleteProductImage($img_id);
     }
+
+    public function desplegableBusquedas(string $name) 
+    {
+        return $this->productRepository->desplegableBusquedas($name);
+    }
+
+    public function desplegableBusquedasCategoria(string $name, int $category_id) 
+    {
+        return $this->productRepository->desplegableBusquedasCat($name,$category_id);
+    }
 }

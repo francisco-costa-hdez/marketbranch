@@ -20,8 +20,7 @@ class ShopController extends Controller
     }
     public function findShopById(int $id)
     {
-        $shop = $this->shopService->findShopById($id);
-        return response()->json(['shop' => $shop], 200);
+        return $this->shopService->findShopById($id);
     }
 
     public function findAllShops()
@@ -101,5 +100,10 @@ class ShopController extends Controller
             return response()->json(['message' => 'Usuario no autorizado']);
         }
         
+    }
+
+    public function desplegableBusquedas(string $name) 
+    {
+        return $this->shopService->desplegableBusquedas($name);
     }
 }

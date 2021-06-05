@@ -49,7 +49,7 @@ class ShopUserRepository implements IShopUserRepository
     public function updateShopUser(Request $request)
     {
         $this->user->find($request->id)->update([
-            'name' => $request->name,
+            'admin_name' => $request->name,
             'email' => $request->email,
             'nif' => $request->nif,
             'profile_img' => $request->profile_img,
@@ -62,12 +62,12 @@ class ShopUserRepository implements IShopUserRepository
     {
         $user = $this->user->find(auth()->user()->id);
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Los contraseña anterior no es correcta']);
+            return response()->json(['message' => 'La contraseña anterior no es correcta']);
         }
         $user->update([
             'password' => Hash::make($request->new_password)
         ]);
-        return response()->json(['message' => 'Los contraseña se ha actualizado correctamente']);
+        return response()->json(['message' => 'La contraseña se ha actualizado correctamente']);
     }
 
     public function login(Request $request)
@@ -82,6 +82,7 @@ class ShopUserRepository implements IShopUserRepository
             'message' => 'Sesión iniciada',
             'user' => $user,
             'shop_id' => $this->user->find($user->id)->shop->id,
+            'profile_img' => $user->profile_img,
             'token' => $token,
         ];
 

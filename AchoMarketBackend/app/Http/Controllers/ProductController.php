@@ -42,8 +42,7 @@ class ProductController extends Controller
 
     public function findProductById(int $id)
     {
-        $product = $this->productService->findProductById($id);
-        return response()->json(['product'=> $product],200);
+        return $this->productService->findProductById($id);
     }
 
     public function findProductByShop(int $shop_id)    
@@ -96,5 +95,15 @@ class ProductController extends Controller
     public function deleteProductImage(int $img_id)
     {
         $this->productService->deleteProductImage($img_id);
+    }
+
+    public function desplegableBusquedas(string $name) 
+    {
+        return $this->productService->desplegableBusquedas($name);
+    }
+
+    public function desplegableBusquedasCategoria(string $name, int $category_id) 
+    {
+        return $this->productService->desplegableBusquedasCategoria($name,$category_id);
     }
 }

@@ -28,5 +28,9 @@ interface IProductRepository
 
     public function uploadProductImage(Request $request);
 
-    public function deleteProductImage($img_id);
+    public function deleteProductImage(int $img_id);
+
+    public function desplegableBusquedas(string $name);
+
+    public function desplegableBusquedasCat(string $name, int $category_id);
 }

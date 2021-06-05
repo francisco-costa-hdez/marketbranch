@@ -20,6 +20,8 @@ class CreateShopUsersTable extends Migration
                 $table->string('email',100)->unique();
                 $table->binary('profile_img');
                 $table->string('password');
+                $table->boolean('confirmed')->default(0);
+                $table->string('confirmation_code')->nullable();
                 $table->timestamps();
         });
     }
