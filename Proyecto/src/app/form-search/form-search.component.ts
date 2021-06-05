@@ -14,6 +14,10 @@ export class FormSearchComponent implements OnInit {
             "term": ''};
   categories = [];
 
+  options = [];
+
+  loading: boolean = false;
+
   constructor(private router: Router, private db: MarketPlaceDBService, private categoryList: CategoryListService) { }
 
   ngOnInit(): void {
@@ -58,4 +62,65 @@ export class FormSearchComponent implements OnInit {
       this.router.navigate(['/busqueda'], { queryParams: { filter: this.search.filter}});
     }
   }
+
+  select(option: string) {
+    this.search.term = option;
+    this.onSubmit();
+  }
+
+  updateDropdown() {
+    console.log(this.search.filter);
+    if (this.search.term != "" && !this.loading) {
+      this.options = []
+      this.loading = true;
+      if (this.search.filter == "Producto") {
+        this.db.getDropdownProducts(this.search.term).subscribe(
+          (response) => {
+            if (response) {
+              let responses = [];
+              for (let i = 0; response[i]; i++) {
+                responses.push(response[i].name)
+              }
+              this.options = [...responses];
+              this.loading = false;
+            }
+          },
+          (error) => {
+            this.loading = false;
+        });
+      } else if (this.search.filter == "Tienda") {
+        this.db.getDropdownShops(this.search.term).subscribe(
+          (response) => {
+            if (response) {
+              let responses = [];
+              for (let i = 0; response[i]; i++) {
+                responses.push(response[i].name)
+              }
+              this.options = [...responses];
+              this.loading = false;
+            }
+          },
+          (error) => {
+            this.loading = false;
+        });
+      } else if (this.search.filter != undefined) {
+        
+        this.db.getDropdownCategories(this.search.term, this.categoryList.getCategoryId(this.search.filter)).subscribe(
+          (response) => {
+            if (response) {
+              let responses = [];
+              for (let i = 0; response[i]; i++) {
+                responses.push(response[i].name)
+              }
+              this.options = [...responses];
+              this.loading = false;
+            }
+          },
+          (error) => {            
+            this.loading = false;
+        });
+      }
+    }
+  }
+
 }

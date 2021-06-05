@@ -31,7 +31,10 @@
                                         <a class="btn btn-primary mb-4 my-0" routerLink="/tienda/{{shop.id}}">Visitar</a>
                                     </div>
                                     <div class="col-12 col-md-4">
-                                        <a routerLink="/tienda/{{shop.id}}"><img class="d-block img-fluid img-thumbnail" src="/assets/images/limon-eco.jpg" alt="2nd slide"></a>
+                                        <a routerLink="/tienda/{{shop.id}}">
+                                            <img *ngIf="shop.shop_image" class="d-block img-fluid img-thumbnail" [src]="shop.shop_image" alt="Imagen de {{shop.name}} image">
+                                            <img *ngIf="!shop.shop_image" class="d-block img-fluid img-thumbnail" src="/assets/images/img-error2.png" alt="Imagen de {{shop.name}} image">
+                                        </a>
                                     </div>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@ export class FormLogInComponent implements OnInit {
     if(this.loginForm.valid){
       this.user.email= this.email.value;
       this.user.password= this.password.value;
-      console.log(this.user);
+      // console.log(this.user);
       this.validationNeeded = false;
       this.inputError = false;
       (this.client) ? this.loginAsClient() : this.loginAsShop();
@@ -81,9 +81,8 @@ export class FormLogInComponent implements OnInit {
           data.name = response["user"];
           data.id = response["user_id"];
           data.token = response["token"];
-          console.log(data);
           this.auth.setCurrentUser(data);
-          console.log(this.auth.getCurrentUser());
+          // console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
         }
         // this.auth.deleteCurrentUser();
@@ -109,7 +108,7 @@ export class FormLogInComponent implements OnInit {
           data.token = response["token"];
           data.shop = response["shop_id"];
           this.auth.setCurrentUser(data);
-          console.log(this.auth.getCurrentUser());
+          // console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
         }
       },

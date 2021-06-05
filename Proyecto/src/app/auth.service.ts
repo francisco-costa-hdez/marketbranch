@@ -28,19 +28,19 @@ export class AuthService {
   }
 
   getCurrentUserName(): string {
-    return (this.currentUser&&this.currentUser.name) ? this.currentUser.name : null;
+    return (this.currentUser && this.currentUser.name) ? this.currentUser.name : null;
   }
 
   getCurrentUserId(): number {
-    return (this.currentUser&&this.currentUser.id) ? this.currentUser.id : null;
+    return (this.currentUser && this.currentUser.id) ? this.currentUser.id : null;
   }
 
   getCurrentUserToken(): string {
-    return (this.currentUser&&this.currentUser.token) ? this.currentUser.token : null;
+    return (this.currentUser && this.currentUser.token) ? this.currentUser.token : null;
   }
 
   getCurrentUserShop(): string {
-    return (this.currentUser&&this.currentUser.shop) ? this.currentUser.shop : null;
+    return (this.currentUser && this.currentUser.shop) ? this.currentUser.shop : null;
   }
 
   loadCurrentUser(): Cookie {
@@ -54,8 +54,8 @@ export class AuthService {
     this.currentUser = cookie;
     this.cookieService.set('currentUser', JSON.stringify(cookie), {expires: 1, sameSite: "Lax"})
     
-  //   console.log(this.currentUser);
-  //   console.log(this.getCurrentUser());
+    console.log(this.currentUser);
+    console.log(this.getCurrentUser());
   }
 
   // isAuthenticated(): boolean {

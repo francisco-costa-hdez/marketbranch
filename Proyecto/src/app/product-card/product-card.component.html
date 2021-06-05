@@ -1,11 +1,16 @@
 <div class="card bg-light my-1 mx-1 p-0 h-100">
     <div class="card border-0 m-0 p-0">
         <a routerLink="/producto/{{product.id}}">
-            <img class="card-img" src="{{img}}" alt="Card image cap">
+            <img *ngIf="product.product_image" class="card-img" [src]="product.product_image"  alt="Imagen de {{product.name}}">
+            <img *ngIf="!product.product_image" class="card-img" src="{{img}}" alt="Imagen de {{product.name}}">
             <div class="card-img-overlay">
                 <div class="float-right rounded rating" *ngIf="product.media_rating != 0">{{product.media_rating | number:'1.2-2'}} <i class="bi bi-star-fill"></i></div>
                 <div class="col-3  m-0 p-0" *ngIf="product.shop_id">
-                    <a routerLink="/tienda/{{product.shop_id}}"><img class="shop-icon rounded-circle img-thumbnail" src="/assets/images/AchoM2.png" title="Tienda FERNANDO" alt="Tienda FERNANDO"></a>
+                    <a routerLink="/tienda/{{product.shop_id}}">
+                        <img *ngIf="product.shop_image" class="shop-icon rounded-circle img-thumbnail" [src]="product.shop_image" title="{{product.shop_name}}" alt="Imagen de {{product.shop_name}}">
+                        <img *ngIf="!product.shop_image" class="shop-icon rounded-circle img-thumbnail" src="{{img2}}" title="{{product.shop_name}}" alt="Imagen de {{product.shop_name}}">
+                        <!-- <img *ngIf="!product.shop_image" class="shop-icon rounded-circle img-thumbnail" src="/assets/images/AchoM2.png" title="{{product.shop_name}}" alt="Imagen de {{product.shop_name}}"> -->
+                    </a>
                 </div>
             </div>
         </a>

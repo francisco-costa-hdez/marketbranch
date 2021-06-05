@@ -6,10 +6,14 @@
             <option value="Tienda">Tiendas</option>
             <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
         </select>
-        <input type="search" class="form-control border-0 col-6 col-md-7 m-0 p-0" placeholder="Búsqueda"
-        [(ngModel)]="search.term" name="term" #term="ngModel">
+        <input type="search" class="form-control border-0 col-6 col-md-7 m-0 p-0 dropdown-toggle" placeholder="Búsqueda"
+        [(ngModel)]="search.term" name="term" #term="ngModel" (keyup)="updateDropdown()" (paste)="updateDropdown()" 
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" autocomplete="off">
         <button class="input-group-append col-2 col-md-1 btn btn-secondary form-control p-1" type="submit">
             <div><i class="bi bi-search text-light"></i></div>
         </button>
+        <div class="dropdown-menu w-100" [ngClass]="options.length ? 'd-box' : 'd-none'" aria-labelledby="term">
+            <button *ngFor="let option of options" class="dropdown-item" type="button" (click)="select(option)">{{option}}</button>
+        </div>
     </div>
 </form>

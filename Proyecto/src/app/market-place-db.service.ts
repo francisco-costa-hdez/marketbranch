@@ -249,7 +249,7 @@ export class MarketPlaceDBService {
   }
 
   /**********************************************************************************
-   ***** Review *********************************************************************¡
+   ***** Review *********************************************************************
   ***********************************************************************************/
 
   //Gets all the reviews from a product
@@ -276,6 +276,25 @@ export class MarketPlaceDBService {
   //User deletes a review from a product
   deleteReview(review_id: string | number) {
     return this.http.delete( this.url + "/review/delete/" + review_id);
+  }
+
+  /**********************************************************************************
+   ***** Dropdown *******************************************************************
+  ***********************************************************************************/
+
+  //Gets all the reviews from a product
+  getDropdownProducts(search_term: string) {
+    return this.http.get( this.url + "/products/desplegableName/" + search_term);
+  } 
+  
+  //Gets all the reviews from a product
+  getDropdownCategories(search_term: string, category_id: string | number) {
+    return this.http.get( this.url + "/products/desplegableCat/" + search_term + "/" + category_id);
+  } 
+
+   //Gets all the reviews from a product
+  getDropdownShops(search_term: string) {
+    return this.http.get( this.url + "/shops/desplegableName/" + search_term);
   }
   
 }

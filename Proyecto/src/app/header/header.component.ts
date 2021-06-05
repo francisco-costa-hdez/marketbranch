@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MarketPlaceDBService } from '../market-place-db.service';
+import { ProfileImageService } from '../profile-image.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
   profile_img;
   shop_id;
 
-  constructor(private auth: AuthService, private router: Router, private db: MarketPlaceDBService) {
+  constructor(private auth: AuthService, private router: Router, private db: MarketPlaceDBService, private img: ProfileImageService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.authorized.customer = false;
@@ -26,27 +27,33 @@ export class HeaderComponent implements OnInit {
         if (this.auth.isAuthenticated()) {
           if (this.auth.isAuthenticatedClient()) {
             this.authorized.customer = true;
-            this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
-              (response) => {
-                if (response) {
-                  if (response["user"]) {
-                    this.profile_img = response["user"].profile_img;
-                  }
-                };
-              }, (error) =>  {}
-            );
+           
           } else if (this.auth.isAuthenticatedShop()){
             this.authorized.shop = true;
             this.shop_id = this.auth.getCurrentUserShop();
-            this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
-              (response) => {
-                if (response) {
-                  if (response["user"]) {
+            
+          }
+          if (this.img.getImage()) {
+            this.profile_img = this.img.getImage();
+          } else {
+            if (this.authorized.customer) {
+              this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
+                (response) => {
+                  if (response && response["user"]) {
                     this.profile_img = response["user"].profile_img;
                   }
-                };
-              }, (error) =>  {}
-            );
+                }
+              );
+            } else if (this.authorized.shop) {
+              this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
+                (response) => {
+                  if (response && response["user"]) {
+                    this.profile_img = response["user"].profile_img;
+                  }
+                }
+              );
+            }
+            this.img.setImage(this.profile_img);
           }
         }
       }

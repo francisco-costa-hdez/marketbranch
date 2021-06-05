@@ -11,6 +11,7 @@ import { CartService } from '../cart.service';
 export class ProductCardComponent implements OnInit {
   @Input() product;
   img: string;
+  img2: string;
   customer: boolean = false;
 
   constructor(private auth: AuthService, private cart: CartService, private router: Router) {
@@ -25,11 +26,12 @@ export class ProductCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.customer = false;
-      if (this.auth.isAuthenticatedClient()) {
-        this.customer = true;
-      }
-    this.img = (Math.floor( Math.random() * 2)) ? "/assets/images/limon-eco.jpg" : "/assets/images/limon-eco2.jpg";
+    this.customer = false;
+    if (this.auth.isAuthenticatedClient()) {
+      this.customer = true;
+    }
+    this.img = (Math.floor( Math.random() * 2)) ? "/assets/images/img-error.png" : "/assets/images/img-error2.png";
+    this.img2 = (Math.floor( Math.random() * 2)) ? "/assets/images/img-error.png" : "/assets/images/img-error2.png";
   }
 
   addToCart() {
