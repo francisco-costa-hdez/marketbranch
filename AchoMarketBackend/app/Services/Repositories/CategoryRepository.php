@@ -3,9 +3,10 @@
 namespace App\Services\Repositories;
 
 use App\Models\Category;
+use App\Services\Repositories\Interfaces\ICategoryRepository;
 use Illuminate\Support\Facades\DB;
 
-class CategoryRepository
+class CategoryRepository implements ICategoryRepository
 {
     protected $category;
 

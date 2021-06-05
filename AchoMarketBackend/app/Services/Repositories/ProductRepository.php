@@ -4,10 +4,11 @@ namespace App\Services\Repositories;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Services\Repositories\Interfaces\IProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProductRepository
+class ProductRepository implements IProductRepository
 {
 
     protected $product;
@@ -19,6 +20,11 @@ class ProductRepository
 
     public function findAllProducts()
     {
+        // $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image
+        // FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories on subcategories.category_id = categories.id) LEFT JOIN product_images pi ON pi.product_id = p.id
+        // GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image
+        // ORDER BY p.created_at DESC');
+
         $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
         categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) 
         AS media_rating FROM (((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 

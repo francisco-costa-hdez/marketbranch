@@ -40,6 +40,11 @@ class ClientUserService implements IClientUserService
        return $this->clientUserRepository->updateClientUser($request);
     }
 
+    public function updatePassword(Request $request)
+    {
+       return $this->clientUserRepository->updatePassword($request);
+    }
+
     public function deleteClientUser(int $id)
     {
        return $this->clientUserRepository->deleteClientUser($id);

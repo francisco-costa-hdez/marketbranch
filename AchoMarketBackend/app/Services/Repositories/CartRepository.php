@@ -5,9 +5,10 @@ namespace App\Services\Repositories;
 use App\Models\Cart;
 use App\Models\ClientUser;
 use App\Models\Product;
+use App\Services\Repositories\Interfaces\ICartRepository;
 use Illuminate\Support\Facades\DB;
 
-class CartRepository
+class CartRepository implements ICartRepository
 {
     protected $cart;
 

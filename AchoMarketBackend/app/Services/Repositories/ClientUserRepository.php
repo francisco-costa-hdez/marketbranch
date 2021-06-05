@@ -3,10 +3,11 @@
 namespace App\Services\Repositories;
 
 use App\Models\ClientUser;
+use App\Services\Repositories\Interfaces\IClientUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ClientUserRepository
+class ClientUserRepository implements IClientUserRepository
 {
     protected $user;
 
@@ -29,9 +30,9 @@ class ClientUserRepository
             "tlf" => $request->tlf,
             "profile_img" => $request->profile_img,
             "address" => $request->address,
-            "password" => bcrypt($request->password)
+            "password" => Hash::make($request->password)
         ])->assignRole('client_user');
-        $token = $user->createToken('client_user',['client_user','user'])->plainTextToken;
+        $token = $user->createToken('client_user', ['client_user', 'user'])->plainTextToken;
         $response = [
             'user' => $user,
             'token' => $token,
@@ -46,11 +47,9 @@ class ClientUserRepository
         $user = $this->user->where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response(['message' => 'credenciales no válidas'], 401);
-        }
-        else if(!$user->confirmed)
-        {
-            return response(['message' => 'Verifica tu cuenta de correo electrónico para iniciar sesión'], 401);
+            return response(['message' => 'credenciales no válidas']);
+        } else if (!$user->confirmed) {
+            return response(['message' => 'Verifica tu cuenta de correo electrónico para iniciar sesión']);
         }
 
         $token = $user->createToken('client_user')->plainTextToken;
@@ -77,10 +76,21 @@ class ClientUserRepository
             'email' => $request->email,
             'tlf' => $request->tlf,
             'profile_img' => $request->profile_img,
-            'address' => $request->address,
-            'password' => bcrypt($request->password),
+            'address' => $request->address
         ]);
         return response()->json(['message' => 'Los datos se han actualizado correctamente']);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = $this->user->find(auth()->user()->id);
+        if (Hash::check($request->password, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return response()->json(['message' => 'La contraseña se ha actualizado correctamente']);
+        }
+        return response()->json(['message' => 'La contraseña anterior no es correcta']);
     }
 
     public function deleteClientUser(int $id)

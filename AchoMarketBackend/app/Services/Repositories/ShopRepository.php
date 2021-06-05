@@ -5,10 +5,11 @@ namespace App\Services\Repositories;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\ShopImage;
+use App\Services\Repositories\Interfaces\IShopRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ShopRepository
+class ShopRepository implements IShopRepository
 {
     protected $shop;
     protected $product;

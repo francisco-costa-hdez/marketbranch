@@ -61,6 +61,15 @@ class ShopUserController extends Controller
         }
         else return response()->json(['message'=>'Usuario no autorizado']);
     }
+
+    public function updatePassword(Request $request)
+    {
+        if(auth()->user()->id && auth()->user()->tokenCan('shop_user'))
+        {
+            return $this->user->updatePassword($request);  
+        }
+        else return response()->json(['message'=>'Usuario no autorizado']);
+    }
     
     public function deleteShopUser(int $id)
     {

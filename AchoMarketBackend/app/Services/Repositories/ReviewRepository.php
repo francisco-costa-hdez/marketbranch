@@ -5,10 +5,11 @@ namespace App\Services\Repositories;
 use App\Models\ClientUser;
 use App\Models\Product;
 use App\Models\Review;
+use App\Services\Repositories\Interfaces\IReviewRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ReviewRepository
+class ReviewRepository implements IReviewRepository
 {
 
     private $review;

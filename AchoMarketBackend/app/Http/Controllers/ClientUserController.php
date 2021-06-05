@@ -66,6 +66,13 @@ class ClientUserController extends Controller
         } else return response()->json(['message' => 'Usuario no autorizado']);
     }
 
+    public function updatePassword(Request $request)
+    {
+        if (auth()->user()->id && auth()->user()->tokenCan('client_user')) {
+            return $this->user->updatePassword($request);
+        } else return response()->json(['message' => 'Usuario no autorizado']);
+    }
+
     public function deleteClientUser(int $id)
     {
         if (auth()->user()->id == $id && auth()->user()->tokenCan('client_user')) {

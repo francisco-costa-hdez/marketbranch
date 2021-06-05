@@ -4,11 +4,12 @@ namespace App\Services\Repositories;
 
 use App\Models\Shop;
 use App\Models\ShopUser;
+use App\Services\Repositories\Interfaces\IShopUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class ShopUserRepository
+class ShopUserRepository implements IShopUserRepository
 {
     protected $user;
 
@@ -30,13 +31,13 @@ class ShopUserRepository
             "email" => $request->email,
             "nif" => $request->nif,
             "profile_img" => $request->profile_img,
-            "password" => bcrypt($request->password)
+            "password" => Hash::make($request->password)
         ])->assignRole('shop_user');
 
         Shop::create([
             'shop_user_id' => $user->id
         ]);
-        $token = $user->createToken('shop_user',['shop_user','user'])->plainTextToken;
+        $token = $user->createToken('shop_user', ['shop_user', 'user'])->plainTextToken;
         $response = [
             'user' => $user,
             'token' => $token,
@@ -47,35 +48,44 @@ class ShopUserRepository
 
     public function updateShopUser(Request $request)
     {
-            $this->user->find($request->id)->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'nif' => $request->nif,
-                'profile_img' => $request->profile_img,
-                'password' => bcrypt($request->password),
-            ]);
+        $this->user->find($request->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'nif' => $request->nif,
+            'profile_img' => $request->profile_img,
+        ]);
 
-            return response()->json(['message' => 'Los datos se han actualizado correctamente']);
+        return response()->json(['message' => 'Los datos se han actualizado correctamente']);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = $this->user->find(auth()->user()->id);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Los contraseña anterior no es correcta']);
+        }
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+        return response()->json(['message' => 'Los contraseña se ha actualizado correctamente']);
     }
 
     public function login(Request $request)
     {
-       $user = $this->user->where('email',$request->email)->first();
-       
-       if(!$user || !Hash::check($request->password, $user->password))
-       {
-            return response(['message' => 'credenciales no válidas'],401);
-       }
+        $user = $this->user->where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response(['message' => 'credenciales no válidas']);
+        }
 
-       $token = $user->createToken('shop')->plainTextToken;
-       $response = [
-           'message' => 'Sesión iniciada',
-           'user' => $user,
-           'shop_id' => $this->user->find($user->id)->shop->id,
-           'token' => $token,
-       ];
+        $token = $user->createToken('shop')->plainTextToken;
+        $response = [
+            'message' => 'Sesión iniciada',
+            'user' => $user,
+            'shop_id' => $this->user->find($user->id)->shop->id,
+            'token' => $token,
+        ];
 
-       return response($response, 201);
+        return response($response, 201);
     }
 
     public function logout(Request $request)
@@ -83,11 +93,10 @@ class ShopUserRepository
         $this->user->find($request->id)->tokens()->delete();
         return ['message' => 'logged out'];
     }
-    
+
     public function deleteShopUser(int $id)
     {
         $this->user->destroy($id);
         return response()->json(['message' => 'El usuario se ha borrado correctamente']);
     }
-    
 }

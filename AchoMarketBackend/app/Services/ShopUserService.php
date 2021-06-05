@@ -45,4 +45,9 @@ class ShopUserService implements IShopUserService
         return $this->shopUserRepository->deleteShopUser($id);
     }
 
+    public function updatePassword(Request $request)
+    {
+        return $this->shopUserRepository->updatePassword($request);
+    }
+
 }

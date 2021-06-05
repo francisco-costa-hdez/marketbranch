@@ -9,9 +9,6 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopUserController;
 use Illuminate\Support\Facades\Route;
 
-
-
-
 Route::get('products', [ProductController::class, 'findAllProducts']);
 Route::get('products/{id}', [ProductController::class, 'findProductById']);
 Route::get('products/shop/{shop_id}', [ProductController::class, 'findProductByShop']);
@@ -55,11 +52,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('clientuser/delete/{id}', [ClientUserController::class, 'deleteClientUser']);
     Route::get('clientuser/{id}', [ClientUserController::class, 'findClientUserById']);
     Route::post('clientuser/logout', [ClientUserController::class, 'logout']);
+    Route::put('clientuser/pass/update', [ClientUserController::class, 'updatePassword']);
 
     Route::get('shopuser/{id}', [ShopUserController::class, 'findShopUserById']);
     Route::put('shopuser/update', [ShopUserController::class, 'updateShopUser']);
     Route::delete('shopuser/delete/{id}', [ShopUserController::class, 'deleteShopUser']);
     Route::post('shopuser/logout', [ShopUserController::class, 'logout']);
+    Route::put('shopuser/pass/update', [ShopUserController::class, 'updatePassword']);
 
     Route::get('cart/products/{user_id}', [CartController::class, 'getProducts']);
     Route::post('cart/add/{product_id}/{user_id}', [CartController::class, 'addProduct']);
