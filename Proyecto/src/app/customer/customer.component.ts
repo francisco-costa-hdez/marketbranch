@@ -28,7 +28,7 @@ export class CustomerComponent implements OnInit {
       tlf: new FormControl({value: "", disabled: true}, Validators.required),
       email: new FormControl({value: "", disabled: true}, Validators.required),
       address: new FormControl({value:"", disabled: true}, Validators.required),
-      image: new FormControl({value: "", disabled: true}, Validators.required)
+      image: new FormControl({value: "", disabled: true})
 
     });
     this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
@@ -99,7 +99,8 @@ export class CustomerComponent implements OnInit {
       client.address=this.address.value;
       client.email=this.email.value;
       client.tlf=this.tlf.value;
-      client.profile_img=this.croppedImage;
+      let image = (this.croppedImage) ? this.croppedImage : this.user.profile_img;
+      client.profile_img=image;
       console.log(client)
       this.db.updateClientUser(client).subscribe(
         (response)=>{
@@ -108,7 +109,7 @@ export class CustomerComponent implements OnInit {
             this.user.address = client.address;
             this.user.email = client.email;
             this.user.tlf = client.tlf;
-            this.user.profile_img=this.croppedImage;
+            this.user.profile_img = image;
             // this.auth.setCurrentUserProfileImage(this.user.profile_img);
             this.dataChanged = true;
           } else {

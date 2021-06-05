@@ -50,7 +50,8 @@ export class ShopManagementComponent implements OnInit {
       email: new FormControl({value: "", disabled: true}, Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])),
       address: new FormControl({value:"", disabled: true}, Validators.required),
       description: new FormControl({value:"", disabled: true}, Validators.required),
-      tlf: new FormControl({value:"", disabled: true}, Validators.required)
+      tlf: new FormControl({value:"", disabled: true}, Validators.required),
+      image: new FormControl({value: "", disabled: true}, Validators.required)
     });
 
     this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
@@ -104,6 +105,7 @@ export class ShopManagementComponent implements OnInit {
   get emailShop() { return this.detailsFormShop.get('email'); }
   get description() { return this.detailsFormShop.get('description'); }
   get address() { return this.detailsFormShop.get('address'); }
+  get image2() { return this.detailsFormShop.get('image'); }
 
   ngOnInit(): void {
     this.products = [];
@@ -198,22 +200,41 @@ export class ShopManagementComponent implements OnInit {
   onSubmitShop() {
     if(this.detailsFormShop.valid){
     let shop_new: Shop = Object.assign({},this.shop);
+    this.shopNotChanged = false;
+    this.shopChanged = false;
+
     shop_new.tlf=this.tlf.value
     shop_new.email=this.emailShop.value
     shop_new.address=this.address.value
     shop_new.description=this.description.value
     shop_new.name=this.name.value
-    
+    let image = {image: "", shop_id: ""}
+    image.image = this.croppedImage
+    image.shop_id  = this.auth.getCurrentUserShop()
     this.db.updateShop(shop_new).subscribe(
       (response)=>{
         console.log(response)
+        if (response["message"] == "Los datos se han guardado correctamente") {
         this.shop.tlf = shop_new.tlf
         this.shop.email = shop_new.email
         this.shop.address = shop_new.address
         this.shop.description = shop_new.description
         this.shop.name = shop_new.name
 
+        this.shopChanged = true;
+        }
+        else {
+          this.shopNotChanged = true;
+        }
         this.editShop()
+      },
+      (error) => {
+        this.shopNotChanged = true;
+      }
+    )
+    this.db.uploadShopImage(image).subscribe(
+      (response)=>{
+        console.log(response)
       }
     )
     }
