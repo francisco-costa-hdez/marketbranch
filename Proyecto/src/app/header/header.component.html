@@ -1,23 +1,3 @@
-<!-- NAV DEVELOPER -->
-<div class="text-white bg-dark">
-    &nbsp;<a routerLink="/home" routerLinkActive="active">Home</a>
-    &nbsp;<a routerLink="/busqueda" routerLinkActive="active">Búsqueda</a>
-    &nbsp;<a routerLink="/mi-usuario" routerLinkActive="active">Mi usuario</a>
-    &nbsp;<a routerLink="/administrar-tienda" routerLinkActive="active">Mi Tienda</a>
-    &nbsp;<a routerLink="/producto/1" routerLinkActive="active">Producto</a>
-    &nbsp;<a routerLink="/tienda/1" routerLinkActive="active">Tienda</a>
-    &nbsp;<a routerLink="/informar" routerLinkActive="active">Informar</a>
-    &nbsp;<a routerLink="/about-us" routerLinkActive="active">About us</a>
-    &nbsp;<a routerLink="/faq" routerLinkActive="active">FAQ</a>
-    &nbsp;<a routerLink="/terminos" routerLinkActive="active">Terminos</a>
-    &nbsp;<a routerLink="/contacto" routerLinkActive="active">Contacto</a>
-    &nbsp;<a routerLink="/login" routerLinkActive="active">LOG IN</a>
-    &nbsp;<a routerLink="/registro-cliente" routerLinkActive="active">RegistroClient</a>
-    &nbsp;<a routerLink="/administrar-tienda/nuevo-producto" routerLinkActive="active">RegistroProd</a>
-    &nbsp;<a routerLink="/registro-tienda" routerLinkActive="active">RegistroShop</a>
-    &nbsp;<a routerLink="/un-happymeal-con-fanta-de-naranja-por-favor" routerLinkActive="active">404</a>
-</div>
-<!-- NAV DEVELOPER -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand order-1 order-md-1" routerLink="home"><span class="h1">Ach<img src="/assets/images/ach-yellow.png" width="35px" alt="Logo Minimalista de Acho Market"> Market</span></a>
     
@@ -49,7 +29,8 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="position:absolute; z-index:2">
           <a *ngIf="authorized.customer" class="dropdown-item" routerLink="/mi-usuario">Mi Usuario</a>
-          <a *ngIf="authorized.shop" class="dropdown-item" routerLink="/administrar-tienda">Mi Tienda</a>
+          <a *ngIf="authorized.shop" class="dropdown-item" routerLink="/tienda/{{shop_id}}">Mi Tienda</a>
+          <a *ngIf="authorized.shop" class="dropdown-item" routerLink="/administrar-tienda">Administrar tienda</a>
           <a *ngIf="authorized.customer" class="dropdown-item" routerLink="/404">Lista de deseos <i class="bi bi-bookmark-heart"></i></a>
           <button class="dropdown-item clickable" routerLink="/logout" (click)="logout()">Cerrar sesión <i class="bi bi-box-arrow-right"></i></button>
         </div>

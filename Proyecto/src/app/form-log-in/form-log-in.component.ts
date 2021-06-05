@@ -16,17 +16,19 @@ export class FormLogInComponent implements OnInit {
   client: boolean =  true;
   loginForm: FormGroup;
   user = new LoginUser;
+  validationNeeded: boolean = false;
+  inputError: boolean = false;
+ 
 
-  constructor(private form:FormBuilder,
-              private db:MarketPlaceDBService,
-              private auth: AuthService,
-              private router: Router) {
+  constructor(private form:FormBuilder, private db:MarketPlaceDBService, private auth: AuthService, private router: Router) {
     this.loginForm=this.form.group(
       {
         email:['',Validators.required],
         password:['',Validators.compose([Validators.minLength(8),Validators.maxLength(16),Validators.required])]
       }
     );
+    this.validationNeeded = false;
+    this.inputError = false;
   }
 
   get email() { return this.loginForm.get('email'); }
@@ -59,19 +61,22 @@ export class FormLogInComponent implements OnInit {
       this.user.email= this.email.value;
       this.user.password= this.password.value;
       console.log(this.user);
+      this.validationNeeded = false;
+      this.inputError = false;
       (this.client) ? this.loginAsClient() : this.loginAsShop();
     }
   }
 
   loginAsClient() {
-    console.log("Log as Client")
+    
     this.db.LogInClientUser(this.user).subscribe(
       (response) => {
-        if (response["message"]=="credenciales no válidas") {
-          console.log("error")
+        if (response["message"] == "Verifica tu cuenta de correo electrónico para iniciar sesión"){
+          this.validationNeeded = true;
+        }
+        else if (response["message"] == "credenciales no válidas") {
+          this.inputError = true
         } else {
-          console.log(response);
-          // this.auth.deleteCurrentUser();
           let data = new Cookie;
           data.name = response["user"];
           data.id = response["user_id"];
@@ -81,10 +86,11 @@ export class FormLogInComponent implements OnInit {
           console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
         }
+        // this.auth.deleteCurrentUser();
       },
       (error) => {
-        console.log("Se ha producido un error:")
-        console.log(error)
+        // console.log("Se ha producido un error:")
+        // console.log(error)
       }
     ); 
   }
@@ -93,10 +99,9 @@ export class FormLogInComponent implements OnInit {
     console.log("Log as Shop")
     this.db.LogInShopUser(this.user).subscribe(
       (response) => {
-        if (response["message"]=="credenciales no válidas") {
-          console.log("error")
+        if (response["message"] == "credenciales no válidas") {
+          this.inputError = true;
         } else {
-          console.log(response);
           // this.auth.deleteCurrentUser();
           let data = new Cookie;
           data.name = response["user"].admin_name;
@@ -106,12 +111,11 @@ export class FormLogInComponent implements OnInit {
           this.auth.setCurrentUser(data);
           console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
-          console.log("first log should redirect to manageshop");
         }
       },
       (error) => {
-        console.log("Se ha producido un error:")
-        console.log(error)
+        // console.log("Se ha producido un error:")
+        // console.log(error)
       }
     ); 
   }
@@ -120,12 +124,16 @@ export class FormLogInComponent implements OnInit {
     if (!this.client) {
       this.client = true;
     }
+    this.validationNeeded = false;
+      this.inputError = false;
   }
 
   setShop() {
     if (this.client) {
       this.client = false;
     }
+    this.validationNeeded = false;
+      this.inputError = false;
   }
 
 }

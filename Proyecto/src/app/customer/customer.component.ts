@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { validarIguales } from '../app.validator';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { AuthService } from '../auth.service';
 import { ClientUser } from '../client-user';
 import { MarketPlaceDBService } from '../market-place-db.service';
@@ -15,19 +15,21 @@ export class CustomerComponent implements OnInit {
   editDetails: boolean = false;
   detailsForm: FormGroup;
   user: ClientUser;
-  passForm: FormGroup;
+
+  dataNotChanged: boolean = false;
+  dataChanged: boolean = false;
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService) {
-    this.passForm = new FormGroup({
-      oldPass: new FormControl({value: "", disabled: false}, Validators.required),
-      newPass1: new FormControl({value: "", disabled: false}, Validators.required),
-      newPass2: new FormControl({value: "", disabled: false}, Validators.required),
-    });
     this.detailsForm = new FormGroup({
       name: new FormControl({value: "", disabled: true}, Validators.required),
       tlf: new FormControl({value: "", disabled: true}, Validators.required),
       email: new FormControl({value: "", disabled: true}, Validators.required),
-      address: new FormControl({value:"", disabled: true}, Validators.required)
+      address: new FormControl({value:"", disabled: true}, Validators.required),
+      image: new FormControl({value: "", disabled: true}, Validators.required)
+
     });
     this.db.findClientUserById(this.auth.getCurrentUserId()).subscribe(
       (response) => {
@@ -61,50 +63,63 @@ export class CustomerComponent implements OnInit {
         });
     })();
   }
-  get oldPass() { return this.passForm.get('oldPass'); }
-  get newPass1() { return this.passForm.get('newPass1'); }
-  get newPass2() { return this.passForm.get('newPass2'); }
+ 
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
 
   get name() { return this.detailsForm.get('name'); }
   get tlf() { return this.detailsForm.get('tlf'); }
   get email() { return this.detailsForm.get('email'); }
   get address() { return this.detailsForm.get('address'); }
+  get image() { return this.detailsForm.get('image'); }
 
   edit() {
     if(this.user){
-    this.editDetails = (this.editDetails) ? false : true;
-    (this.editDetails) ? this.detailsForm.enable() : this.detailsForm.disable();
-    this.name.setValue(this.user.name);
-    this.tlf.setValue(this.user.tlf);
-    this.email.setValue(this.user.email);
-    this.address.setValue(this.user.address);
+      this.editDetails = (this.editDetails) ? false : true;
+      (this.editDetails) ? this.detailsForm.enable() : this.detailsForm.disable();
+      this.name.setValue(this.user.name);
+      this.tlf.setValue(this.user.tlf);
+      this.email.setValue(this.user.email);
+      this.address.setValue(this.user.address);
     }
   }
 
-  onSubmitPass() {
-    
-  }
-
-  onSubmit() {
-    let client: ClientUser = Object.assign({},this.user);
-    if(this.detailsForm.valid){
-    client.name=this.name.value
-    client.address=this.address.value
-    client.email=this.email.value
-    client.tlf=this.tlf.value
-    // this.user.password=this.user.password
-    // this.user.profile_img=this.user.profile_img
-    console.log(client)
-    this.db.updateClientUser(client).subscribe(
-      (response)=>{
-        this.user.name = client.name
-        this.user.address = client.address
-        this.user.email = client.email
-        this.user.tlf = client.tlf
-        this.edit();
-
-      }
-    )
+  onSubmitUserData() {
+    if (this.detailsForm.valid) {
+      this.dataNotChanged = false;
+      this.dataChanged = false;
+      
+      let client: ClientUser = Object.assign({},this.user);
+      client.name=this.name.value;
+      client.address=this.address.value;
+      client.email=this.email.value;
+      client.tlf=this.tlf.value;
+      client.profile_img=this.croppedImage;
+      console.log(client)
+      this.db.updateClientUser(client).subscribe(
+        (response)=>{
+          if (response["message"]=="Los datos se han actualizado correctamente") {
+            this.user.name = client.name;
+            this.user.address = client.address;
+            this.user.email = client.email;
+            this.user.tlf = client.tlf;
+            this.user.profile_img=this.croppedImage;
+            // this.auth.setCurrentUserProfileImage(this.user.profile_img);
+            this.dataChanged = true;
+          } else {
+            this.dataNotChanged = true;
+          }
+          this.edit();
+        },
+        (error) => {
+          this.dataNotChanged = true;
+        }
+      )
     }
   }
   

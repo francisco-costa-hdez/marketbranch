@@ -56,6 +56,8 @@ import { ShopCardComponent } from './shop-card/shop-card.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
+import { ShopInfoComponent } from './shop-info/shop-info.component';
+import { FormUpdatePasswordComponent } from './form-update-password/form-update-password.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -72,6 +74,7 @@ const rutas=[
   { path: 'administrar-tienda/editar/producto/:id', component: FormProductUpdateComponent, canActivate: [ShopGuard]},
   { path: 'administrar-tienda/nuevo-producto', component: FormProductComponent, canActivate: [ShopGuard]},
   { path: 'informar', component: ReportABugComponent},
+  { path: 'vender-en-acho-market', component: ShopInfoComponent},
   { path: 'about-us', component: AboutUsComponent},
   { path: 'terminos', component: TermsComponent},
   { path: 'contacto', component: ContactComponent},
@@ -122,7 +125,9 @@ const rutas=[
     TermsComponent,
     PriceFilterPipe,
     RateFilterPipe,
-    SubcategoryFilterPipe
+    SubcategoryFilterPipe,
+    ShopInfoComponent,
+    FormUpdatePasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -40,6 +40,7 @@ export class MarketPlaceDBService {
   findProductsByCategory(category_id: string | number) {
     return this.http.get( this.url + "/products/category/" + category_id);
   }
+
   //Gets all the products from an especific category with coincidence with a pattern in name or description
   findProductsByCategoryAndName(category_id: string | number, search_term: string) {
     return this.http.get( this.url + "/products/category/" + category_id + "/name/" + search_term);
@@ -171,6 +172,11 @@ export class MarketPlaceDBService {
   updateClientUser(user) {
     return this.http.put( this.url + "/clientuser/update", user);
   }
+
+  //Updates the password of an existent client user
+  updateClientUserPassword(pass) {
+    return this.http.put( this.url + "/clientuser/pass/update", pass);
+  }
   
   //Deletes a client user
   deleteClientUser(user_id) {
@@ -203,8 +209,13 @@ export class MarketPlaceDBService {
   }
   
   //Updates the data of an existent shop user
-  updateShoptUser(user) {
+  updateShopUser(user) {
     return this.http.put( this.url + "/shopuser/update", user);
+  }
+
+   //Updates the password of an existent shop user
+   updateShopUserPassword(pass) {
+    return this.http.put( this.url + "/shopuser/pass/update", pass);
   }
   
   //Deletes a shop user

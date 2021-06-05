@@ -4,6 +4,7 @@ import { MarketPlaceDBService } from '../market-place-db.service';
 import { ShopUser } from '../shop-user';
 import { Shop } from '../shop';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-shop-management',
@@ -19,26 +20,29 @@ export class ShopManagementComponent implements OnInit {
   scrollDistance = 1;
   direction = "";
 
-  editDetails: boolean = false;
-  editDetailsShop: boolean = false;
-  detailsForm: FormGroup;
   detailsFormShop: FormGroup;
+  detailsForm: FormGroup;
+  
   user: ShopUser;
   shop: Shop;
 
-  passForm: FormGroup;
+  editDetails: boolean = false;
+  editDetailsShop: boolean = false;
+
+  userNotChanged: boolean = false;
+  userChanged: boolean = false;
+  shopNotChanged: boolean = false;
+  shopChanged: boolean = false;
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder) {
-    this.passForm = new FormGroup({
-      oldPass: new FormControl({value: "", disabled: false}, Validators.required),
-      newPass1: new FormControl({value: "", disabled: false}, Validators.required),
-      newPass2: new FormControl({value: "", disabled: false}, Validators.required),
-    });
-
     this.detailsForm = new FormGroup({
       admin_name: new FormControl({value: "", disabled: true}, Validators.required),
       nif: new FormControl({value: "", disabled: true}, Validators.required),
       email: new FormControl({value: "", disabled: true}, Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])),
+      image: new FormControl({value: "", disabled: true}, Validators.required)
     });
 
     this.detailsFormShop = new FormGroup({
@@ -82,10 +86,18 @@ export class ShopManagementComponent implements OnInit {
 
    }
 
-   get admin_name() { return this.detailsForm.get('admin_name'); }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  get admin_name() { return this.detailsForm.get('admin_name'); }
   get nif() { return this.detailsForm.get('nif'); }
   get email() { return this.detailsForm.get('email'); }
-
+  get image() { return this.detailsForm.get('image'); }
 
   get name() { return this.detailsFormShop.get('name'); }
   get tlf() { return this.detailsFormShop.get('tlf'); }
@@ -128,10 +140,6 @@ export class ShopManagementComponent implements OnInit {
         });
     })();
   }
-
-  get oldPass() { return this.passForm.get('oldPass'); }
-  get newPass1() { return this.passForm.get('newPass1'); }
-  get newPass2() { return this.passForm.get('newPass2'); }
 
   initResults(array: Array<object>) {
     this.products = [];
@@ -211,28 +219,38 @@ export class ShopManagementComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmitUserData() {
     if(this.detailsForm.valid){
-    let shopUser: ShopUser = Object.assign({},this.user);
-    shopUser.admin_name=this.admin_name.value
-    shopUser.nif=this.nif.value
-    shopUser.email=this.email.value
-    // console.log(shopUser)
-    this.db.updateShoptUser(shopUser).subscribe(
-      (response)=>{
-        console.log(response)
-        this.user.admin_name=shopUser.admin_name
-        this.user.nif=shopUser.nif
-        this.user.email=shopUser.email
-        this.edit();
+      this.userNotChanged = false;
+      this.userChanged = false;
 
-      }
-    )
-  }
-  }
 
-  onSubmitPass() {
-    
+      let shopUser: ShopUser = Object.assign({},this.user);
+      shopUser.admin_name=this.admin_name.value
+      shopUser.nif=this.nif.value;
+      shopUser.email=this.email.value;
+      shopUser.profile_img=this.croppedImage;
+
+      console.log(shopUser)
+      this.db.updateShopUser(shopUser).subscribe(
+        (response)=>{
+          console.log(response)
+          if (response["message"] == "Los datos se han actualizado correctamente") {
+            this.user.admin_name = shopUser.admin_name;
+            this.user.nif = shopUser.nif;
+            this.user.email = shopUser.email;
+            this.user.profile_img = this.croppedImage;
+            this.userChanged = true;
+          } else {
+            this.userNotChanged = true;
+          }
+          this.edit();
+        },
+        (error) => {
+          this.userNotChanged = true;
+        }
+      )
+    }
   }
 
 }

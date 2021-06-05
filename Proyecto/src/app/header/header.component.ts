@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   }
   authClient: boolean = false;
   profile_img;
+  shop_id;
 
   constructor(private auth: AuthService, private router: Router, private db: MarketPlaceDBService) {
     this.router.events.subscribe((event: Event) => {
@@ -36,6 +37,7 @@ export class HeaderComponent implements OnInit {
             );
           } else if (this.auth.isAuthenticatedShop()){
             this.authorized.shop = true;
+            this.shop_id = this.auth.getCurrentUserShop();
             this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
               (response) => {
                 if (response) {
