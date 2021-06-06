@@ -8,13 +8,10 @@ export class CarouselOfItemsComponent implements OnInit {
   
   @Input() carouselId;
   @Input() group=[];
-  
 
   constructor( ) { }
 
-  ngOnInit(): void {
-    //console.table(this.group)
-    
+  ngOnInit(): void {    
   }
 
   

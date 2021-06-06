@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class PhotoGalleryComponent implements OnInit {
 
+  @Input() images;
   @Output() control = new EventEmitter<boolean>();
   constructor() { }
 

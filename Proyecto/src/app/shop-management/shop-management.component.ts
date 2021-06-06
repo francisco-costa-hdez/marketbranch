@@ -5,6 +5,7 @@ import { ShopUser } from '../shop-user';
 import { Shop } from '../shop';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ProfileImageService } from '../profile-image.service';
 
 @Component({
   selector: 'app-shop-management',
@@ -37,7 +38,7 @@ export class ShopManagementComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder) {
+  constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder, private img: ProfileImageService) {
     this.detailsForm = new FormGroup({
       admin_name: new FormControl({value: "", disabled: true}, Validators.required),
       nif: new FormControl({value: "", disabled: true}, Validators.required),
@@ -261,6 +262,9 @@ export class ShopManagementComponent implements OnInit {
             this.user.nif = shopUser.nif;
             this.user.email = shopUser.email;
             this.user.profile_img = this.croppedImage;
+
+            this.img.setImage(this.croppedImage)
+            
             this.userChanged = true;
           } else {
             this.userNotChanged = true;

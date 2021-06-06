@@ -1,8 +1,8 @@
 <section class="container-fluid m-0 p-0">
     <div class="featured-product product  container-fluid mt-0 pt-0">
         <div class="section-header row align-items-end pl-5 w-100 mx-0">
-            <div class="col-2 col-lg-1 p-0">
-                <img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="Tienda FERNANDO" alt="Tienda FERNANDO">
+            <div class="col-3 col-sm-2 col-lg-1 p-0">
+                <img *ngIf="user" class="float-right shop-icon rounded-circle w-100 col-12 col-lg-11" [src]="user.profile_img" title="{{user.name}} profile picture" alt="{{user.name}} profile picture">
             </div>
             <div class="col-10 col-lg-11"><h2 class="row ">&nbsp;Mi tienda: Administración</h2></div>
         </div>

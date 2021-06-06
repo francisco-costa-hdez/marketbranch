@@ -23,11 +23,25 @@ export class ShopComponent implements OnInit {
   direction = "";
 
   loading: boolean = true;
+  loadingProducts: boolean = true;
   show: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        this.shop;
+        this.results = [];
+        this.totalResults;
+        this.aux;
+        this.best = [];
+        this.shop_rating;
+
+        this.sum = 6;
+        this.scrollDistance = 1;
+
+        this.loading = true;
+        this.loadingProducts = true;
+        this.show = false;
         this.getShop(this.route.snapshot.paramMap.get('id'));
       }
     })
@@ -107,7 +121,7 @@ export class ShopComponent implements OnInit {
           }
           this.aux = [...this.totalResults];
           this.initResults(this.totalResults);
-
+          this.loadingProducts = false;
           let num_ratings: number = 0;
           let sum_ratings: number = 0
           this.aux.forEach( (product) => {
@@ -123,12 +137,8 @@ export class ShopComponent implements OnInit {
           //console.table(this.best
         }
         //console.table(this.totalResults)
-      },
-      (error) => {
-        console.error('Request failed with error');
-        console.error(error);
-      });
-  
+      }
+    );
   }
 
   orderResults(order = null) {

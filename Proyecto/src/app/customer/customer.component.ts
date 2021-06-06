@@ -4,6 +4,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { AuthService } from '../auth.service';
 import { ClientUser } from '../client-user';
 import { MarketPlaceDBService } from '../market-place-db.service';
+import { ProfileImageService } from '../profile-image.service';
 
 @Component({
   selector: 'app-customer',
@@ -22,7 +23,7 @@ export class CustomerComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService) {
+  constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService, private img: ProfileImageService) {
     this.detailsForm = new FormGroup({
       name: new FormControl({value: "", disabled: true}, Validators.required),
       tlf: new FormControl({value: "", disabled: true}, Validators.required),
@@ -101,7 +102,7 @@ export class CustomerComponent implements OnInit {
       client.tlf=this.tlf.value;
       let image = (this.croppedImage) ? this.croppedImage : this.user.profile_img;
       client.profile_img=image;
-      console.log(client)
+      // console.log(client)
       this.db.updateClientUser(client).subscribe(
         (response)=>{
           if (response["message"]=="Los datos se han actualizado correctamente") {
@@ -110,7 +111,9 @@ export class CustomerComponent implements OnInit {
             this.user.email = client.email;
             this.user.tlf = client.tlf;
             this.user.profile_img = image;
-            // this.auth.setCurrentUserProfileImage(this.user.profile_img);
+
+            this.img.setImage(image);
+
             this.dataChanged = true;
           } else {
             this.dataNotChanged = true;

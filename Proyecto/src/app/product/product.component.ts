@@ -81,8 +81,6 @@ export class ProductComponent implements OnInit {
   getProduct(id: string | number) {
     this.db.findProductById(id).subscribe(
       (response) => {
-        console.log(response)
-        console.log(response["images"])
         if (response["product"]) {
           this.product = response["product"][0];
           if (response["images"]) {

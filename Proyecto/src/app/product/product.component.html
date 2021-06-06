@@ -2,7 +2,7 @@
 <app-error404 *ngIf="!loading && !product && !categorization && !shop"></app-error404>
 <ng-container *ngIf="product && categorization && shop">
     <ng-container *ngIf="show">
-        <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
+        <app-photo-gallery *ngIf="images" (control)="toggleGallery($event)" [images]="images"></app-photo-gallery>
     </ng-container>
     <section class="container-fluid m-0 p-0">
         <div class="product">

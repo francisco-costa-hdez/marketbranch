@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
-<app-error404 *ngIf="!loading && !shop"></app-error404>
-<ng-container *ngIf="shop">
+<app-error404 *ngIf="!loading && (!shop || !shop.name)"></app-error404>
+<ng-container *ngIf="shop && shop.name">
     <ng-container *ngIf="show">
         <app-photo-gallery (control)="toggleGallery($event)"></app-photo-gallery>
     </ng-container>
@@ -61,6 +61,7 @@
             </div>
         </div>
         <br>
+        <article *ngIf="!loadingProducts">
             <article class="featured-product product">
                 <div class="section-header pl-5">
                     <h1>Nuestros productos mejor valorados</h1>
@@ -94,6 +95,7 @@
             </div>
 
             </article>
+        </article>
         <br>
     </section>
 </ng-container>
