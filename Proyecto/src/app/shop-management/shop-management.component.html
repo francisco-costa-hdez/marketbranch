@@ -89,7 +89,7 @@
                                   </ng-template>
                             </div>
                             <div class="col-md-12">
-                                <label for="image">Cambia tu imagen de perfil</label>
+                                <label for="image">Añadir imagen: </label>
                                 <input type="file" class="form-control-file" id="imageShop" name="image" formControlName="image" required (change)="fileChangeEvent($event)">
                                 <image-cropper *ngIf="editDetailsShop"
                                     [imageChangedEvent]="imageChangedEvent"
@@ -111,6 +111,21 @@
                                 <input *ngIf="editDetailsShop" type="submit" class="btn btn-success" value="Actualizar">
                             </div>
                         </form>
+                        <div *ngIf="images.length" class="mt-3">
+                            <h4>Imágenes de la tienda</h4>
+                            <p>Las siguientes imagenes se muestran en tu tienda, puedes eliminarlas al clicar sobre el botón rojo indicado la Equis.</p>
+                            <p>* La primera imagen se tendrá en cuenta como principal.</p>
+                            <div class="row row-cols-2">
+                                <div *ngFor="let image of images" class="card bg-light my-1 p-0">
+                                    <div class="card border-0 m-0 p-0">
+                                            <img class="card-img" [src]="image.image"  alt="Imagen de la tienda">
+                                            <div class="card-img-overlay">
+                                                <div class="float-right rounded rating" ><button class="btn btn-danger" (click)="imageDelete()"><i class="bi bi-x"></i></button></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade show" id="stats-tab" role="tabpanel" aria-labelledby="stats-nav">
                         <h4>Estadísticas de la tienda</h4>

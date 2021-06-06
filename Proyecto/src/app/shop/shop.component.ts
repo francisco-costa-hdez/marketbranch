@@ -16,6 +16,7 @@ export class ShopComponent implements OnInit {
   aux;
   best = [];
   shop_rating: number;
+  shop_subcat = []
 
   order = "reciente";
   sum = 6;
@@ -37,6 +38,7 @@ export class ShopComponent implements OnInit {
         this.aux;
         this.best = [];
         this.shop_rating;
+        this.shop_subcat = []
 
         this.sum = 6;
         this.scrollDistance = 1;
@@ -91,6 +93,7 @@ export class ShopComponent implements OnInit {
       (response) => {
         if (response["shop"]) {
           this.shop = response["shop"];
+          this.shop.description = this.shop.description.replace(/\r?\n/g, '<br>');
           this.loading = false;
           if (response["images"]) {
             response["images"].forEach( (image) => {
@@ -131,12 +134,22 @@ export class ShopComponent implements OnInit {
           this.loadingProducts = false;
           let num_ratings: number = 0;
           let sum_ratings: number = 0
+          let subcategories = [];
           this.aux.forEach( (product) => {
+            console.log(product)
+            if(!subcategories.includes(product.subcategory_id)) {
+              subcategories.push(product.subcategory_id);
+            }
             if (parseFloat(product.media_rating) > 0) {
               num_ratings++;
               sum_ratings = sum_ratings + parseFloat(product.media_rating);
             }
           })
+          if (subcategories.length) {
+            
+            this.shop_subcat = [...subcategories];
+          }
+          console.log(this.shop_subcat)
           this.shop_rating = sum_ratings / num_ratings;
           // console.log(this.shop_rating)
           // console.table(this.results)

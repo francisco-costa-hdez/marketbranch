@@ -26,6 +26,7 @@ export class ShopManagementComponent implements OnInit {
   
   user: ShopUser;
   shop: Shop;
+  images = [];
 
   editDetails: boolean = false;
   editDetailsShop: boolean = false;
@@ -72,6 +73,9 @@ export class ShopManagementComponent implements OnInit {
       (response) => {
         if (response) {
           if (response["shop"]) {
+            if (response["images"]) {
+             this.images = response["images"]
+            }
             this.shop = response["shop"];
             this.name.setValue(this.shop.name);
             this.emailShop.setValue(this.shop.email);
@@ -79,6 +83,7 @@ export class ShopManagementComponent implements OnInit {
             this.description.setValue(this.shop.description);
             this.tlf.setValue(this.shop.tlf);
             // console.log(this.shop)
+            // console.log(this.images)
           }
           // console.log(response)
         };
@@ -276,6 +281,10 @@ export class ShopManagementComponent implements OnInit {
         }
       )
     }
+  }
+
+  imageDelete() {
+
   }
 
 }

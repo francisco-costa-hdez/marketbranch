@@ -15,25 +15,25 @@
             <div class="col-12 row">
                 <div class="col-12 col-md-10 mx-auto">
                     <h3>Nuestra tienda</h3>
-                    <p>{{shop.description}}</p>
+                    <div [innerHTML]="shop.description"></div>
                 </div>
             </div>
-            
+            <br>
+            <br>
             <div class="col-12 row">
                 <div class="col-12 col-md-10 row mx-auto">
-                    <div class="col-12 col-md-6">
-                        <h4>Nuestros productos:</h4>
-                        <p>En nuestra tienda puedes comprar productos de:</p>
-                        <ul class="row row-cols-2 row-cols-md-1">
-                            <li>Moda</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                        </ul>
-                        <p>La valoración media de nuestros productos es:</p>
-                        <h5>{{shop_rating}}&nbsp;<app-rating [rating]="shop_rating"></app-rating></h5>
+                    <div class="col-12 col-md-6 m-0 p-0">
+                        <ng-container *ngIf="shop_subcat.length">
+                            <h4>Nuestros productos:</h4>
+                            <p>En nuestra tienda puedes comprar productos de:</p>
+                            <ul class="row row-cols-2 row-cols-md-1">
+                                <li *ngFor="let subcat of shop_subcat">{{subcat}}</li>
+                            </ul>
+                        </ng-container>
+                        <ng-container *ngIf="shop_rating">
+                            <p>La valoración media de nuestros productos es:</p>
+                            <h5>{{shop_rating}}&nbsp;<app-rating [rating]="shop_rating"></app-rating></h5>
+                        </ng-container>
                     </div>
                     <div class="col-12 col-md-6 row">
                         <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
@@ -103,105 +103,3 @@
         <br>
     </section>
 </ng-container>
-<!-- <app-loading-screen *ngIf="loading"></app-loading-screen>
-<app-error404 *ngIf="!loading && (!shop || !shop.name)"></app-error404>
-<ng-container *ngIf="!loading && shop && shop.name">
-    <ng-container *ngIf="show">
-        <app-photo-gallery (control)="toggleGallery($event)" [images]="images"></app-photo-gallery>
-    </ng-container>
-    <section class="container-fluid m-0 p-0">
-        <div class="product">
-            <div class="section-header container-fluid pl-5 d-flex justify-content-between align-items-center">
-                <h1>{{shop.name}}</h1>
-                <h4 *ngIf="shop_rating">{{shop_rating}} <app-rating [rating]="shop_rating"></app-rating></h4>
-            </div>
-        </div>
-        <div class="row container-xl mx-auto">
-            <div class="col-12 col-md-6">
-                <div class="row">
-                    <div class="col-12 col-lg-11  m-0 p-0">
-                        <div class="row" style="margin:0; padding:10px;">
-                            <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
-                            <img *ngIf="!images[0]" src="assets/images/img-error2.png" class="m-0 p-0 w-100">
-                        </div>
-                        <div class="row m-0 p-0" >
-                            <div class="col-4" style="margin:0; padding:10px;" >
-                                <img *ngIf="images[1]" [src]="images[1]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                            </div>
-                            <div class="col-4" style="margin:0; padding:10px;" >
-                                <img *ngIf="images[2]" [src]="images[2]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                            </div>
-                            <div class="col-4" style="margin:0; padding:10px;" >
-                                <img *ngIf="images[3]" [src]="images[3]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-1  m-0 p-0">
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="row">
-                    <div class="col-12 col-1-lg  m-0 p-0">
-                    </div>
-                    <div class="col-12 col-11-lg" style="margin:0;padding:10px;">
-                        <div class="product">
-                            <div>
-                                <h3>Nuestra tienda</h3>
-                            </div
-                        ></div>
-                        <p>{{shop.description}}</p>
-                        <h4>En nuestra tienda encontrarás productos de:</h4>
-                        <ul>
-                            <li>Moda</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                            <li>Categoría</li>
-                        </ul>
-                        <h3>Contacta con nosotros:</h3>
-                        <p><i class="bi bi-telephone"></i> Teléfono: {{shop.tlf}}</p>
-                        <p><i class="bi bi-envelope"></i> Correo electrónico: {{shop.email}}</p>
-                        <p><i class="bi bi-shop"></i> Visita en nuestra tienda en:{{shop.address}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <article *ngIf="!loadingProducts">
-            <article class="featured-product product">
-                <div class="section-header pl-5">
-                    <h1>Nuestros productos mejor valorados</h1>
-                </div>
-                <div class="container-fluid">
-                    <app-carousel-of-items [group]="best" [carouselId]="'best'"></app-carousel-of-items>
-                </div>
-            </article>
-            <article class="featured-product product">
-            <div class="section-header pl-5 row w-100 mx-0">
-                <h1 class="col-12 col-lg-9">Todos nuestros productos</h1>
-                <form class="col-12 col-lg-3">
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label  w-100"for="orderAllProducts">Ordenar</label>
-                        <select  #order class="col-6 col-md-4 col-lg-8 form-control w-100" 
-                        id="orderAllProducts" (change)="orderResults(order)">
-                            <option value="reciente">Más recientes</option>
-                            <option value="antiguo">Más antiguos</option>
-                            <option value="mejor">Mejor valorados</option>
-                            <option value="peor">Peor valorados</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="container m-auto row row-cols-2 row-cols-md-3 row-cols-lg-4"
-                infinite-scroll
-                [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollThrottle]="throttle"
-                (scrolled)="onScrollDown()">
-                <app-product-card *ngFor="let result of results " [product]="result" class="my-1"></app-product-card>
-            </div>
-
-            </article>
-        </article>
-        <br>
-    </section>
-</ng-container> -->

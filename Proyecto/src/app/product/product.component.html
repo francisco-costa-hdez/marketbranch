@@ -61,7 +61,7 @@
                             </span>  
                         </h3>
                         <h3>Descripción del producto</h3>
-                        <p>{{product.description}}</p>
+                        <div [innerHTML]="product.description"></div>
                         <p>Marca: {{product.tademark_id}}</p>
                         <p>Categoría: {{categorization.category_name}}</p>
                         <p>Subcategoría: {{categorization.subcategory_name}}</p>

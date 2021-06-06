@@ -89,6 +89,7 @@ export class ProductComponent implements OnInit {
             })
           }
           if (this.product) {
+            this.product.description = this.product.description.replace(/\r?\n/g, '<br>');
             this.getCategorization(this.product.subcategory_id);
             this.getShop(this.product.shop_id);
             this.getReviews(id);

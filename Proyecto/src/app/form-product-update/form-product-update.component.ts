@@ -176,14 +176,13 @@ export class FormProductUpdateComponent implements OnInit {
 
   onSubmit() {
     if(this.productForm.valid){
-        this.product.name=this.name.value;
-        this.product.price=this.price.value;
-        this.product.discount=this.discount.value;
-        this.product.description=this.description.value;
-        this.product.stock=this.stock.value;
-        this.product.availability=this.availability.value;
-        this.product.subcategory_id=this.subcategory_id.value;
-        
+      this.product.name=this.name.value;
+      this.product.price=this.price.value;
+      this.product.discount=this.discount.value;
+      this.product.description=this.description.value;
+      this.product.stock=this.stock.value;
+      this.product.availability=this.availability.value;
+      this.product.subcategory_id=this.subcategory_id.value;
       this.db.updateProduct(this.route.snapshot.paramMap.get('id'),this.product).subscribe(
         (response) => {
           console.log(response);
@@ -197,7 +196,4 @@ export class FormProductUpdateComponent implements OnInit {
       ); 
     }
   }
-
-
-
 }
