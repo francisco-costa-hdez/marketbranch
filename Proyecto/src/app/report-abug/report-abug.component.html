@@ -1,83 +1,27 @@
-<section class="container-fluid">
-  <div class="my-account featured-product product">
-    <div class="section-header container-fluid pl-5">
-        <div class="row align-items-end">
-            
-            <div class="col-12"><h1 class="row ">&nbsp;Informar de un error</h1></div>
-        </div>
+<section class="container-fluid d-flex justify-content-center">
+  <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">
+    <div class="card-header text-center w-100 mx-0 px-0">
+        <h3 class="my-2">Informar de un error</h3>
     </div>
-    <form class="row">
-      <div style="margin-left:auto;margin-right:auto;"class="col-6">
-      <div class="form-group">
-            <label for="exampleFormControlTextarea1">Mensaje *</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
+    <div class="card-body">
+      <form novalidate class="needs-validation" [formGroup]="bugForm">
         <div class="form-group">
-          <label for="exampleFormControlInput1">Email *</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" style="width:300px;">
+          <label for="message">Mensaje *</label>
+          <textarea name="message" formControlName="message" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Valora esta página</label>
-          <select class="form-control" id="exampleFormControlSelect1" style="width:100px;">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-          </select>
+        <label for="email">Email *</label>
+        <input name="email" formControlName="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required>
         </div>
-        <div style="margin:5px;">
+        <div class="form-group">
+        <label for="points">Valora esta página</label>
+        <input type="number" name="points" step="any" min="0" max="10" id="points" formControlName="points" class="form-control">
+        </div>
+        <div class="m-1">
           * Campos obligatorios
         </div>
-        <!-- <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">1</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">2</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">3</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">4</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">5</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">6</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">7</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">8</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">9</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">10</label>
-        </div> -->
-        <div>
-          <button type="submit" class="btn btn-primary mb-2">Enviar</button>
-        </div>
-      </div>
-    </form>
+        <button type="submit" class="btn btn-primary mt-1">Enviar</button>
+      </form>
+    </div>
   </div>
 </section>

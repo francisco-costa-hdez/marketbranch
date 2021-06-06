@@ -47,7 +47,7 @@
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" name="email" id="email" placeholder="micorreo@mail.com" required
-            formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" (change)="this.emailExists=false">
+            formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (change)="this.emailExists=false">
           <div class="invalid-feedback" *ngIf="userForm.get('email').hasError('required'); else emailBad">
             Error, no has introducido el email
           </div>
