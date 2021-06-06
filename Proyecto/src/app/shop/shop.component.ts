@@ -10,6 +10,7 @@ import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 export class ShopComponent implements OnInit {
 
   shop;
+  images;
   results = [];
   totalResults;
   aux;
@@ -30,6 +31,7 @@ export class ShopComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.shop;
+        this.images = [];
         this.results = [];
         this.totalResults;
         this.aux;
@@ -87,9 +89,14 @@ export class ShopComponent implements OnInit {
   getShop(id: string | number) {
     this.db.findShopById(id).subscribe(
       (response) => {
-        if (response) {
+        if (response["shop"]) {
           this.shop = response["shop"];
           this.loading = false;
+          if (response["images"]) {
+            response["images"].forEach( (image) => {
+              this.images.push(image.image);
+            })
+          }
           //console.log(this.shop)
           if (this.shop) {
             this.getProducts(id);

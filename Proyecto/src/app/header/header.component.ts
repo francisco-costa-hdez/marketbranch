@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
               this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
                 (response) => {
                   if (response && response["user"]) {
-                    this.profile_img = response["user"].profile_img;
+                    this.profile_img = response["user"][0].profile_img;
                   }
                 }
               );

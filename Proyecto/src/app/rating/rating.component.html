@@ -1,1 +1,1 @@
-<i *ngFor="let star of stars" class="bi" [ngClass]="[star==1 ? 'bi-star-fill' : '',  star==0.5 ? 'bi-star-half' : '', star==0 ? 'bi-star' : '']"></i>
+<span class="d-flex flex-nowrap!"><i *ngFor="let star of stars" class="bi" [ngClass]="[star==1 ? 'bi-star-fill' : '',  star==0.5 ? 'bi-star-half' : '', star==0 ? 'bi-star' : '']"></i></span>
