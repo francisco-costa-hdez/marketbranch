@@ -54,8 +54,8 @@ export class AuthService {
     this.currentUser = cookie;
     this.cookieService.set('currentUser', JSON.stringify(cookie), {expires: 1, sameSite: "Lax"})
     
-    console.log(this.currentUser);
-    console.log(this.getCurrentUser());
+    // console.log(this.currentUser);
+    // console.log(this.getCurrentUser());
   }
 
   // isAuthenticated(): boolean {
@@ -91,7 +91,6 @@ export class AuthService {
   }
 
   private logOutClient() {
-    console.log()
     this.db.LogOutClientUser(this.getCurrentUserId()).subscribe(
       (response) => {
         if (response["message"]=="logged out") {
@@ -122,7 +121,6 @@ export class AuthService {
       }
     ); 
   }
-
 
   // getAuthorizationToken() {
   //   console.log("authorization")

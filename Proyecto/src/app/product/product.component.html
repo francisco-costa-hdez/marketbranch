@@ -21,18 +21,18 @@
                 <div class="row">
                     <div class="col-12 col-lg-11  m-0 p-0">
                         <div class="row" style="margin:0; padding:10px;">
-                            
-                            <img src="assets/images/limon-eco.jpg" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                            <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                            <img *ngIf="!images[0]" src="assets/images/img-error2.png" class="m-0 p-0 w-100">
                         </div>
                         <div class="row m-0 p-0" >
                             <div class="col-4" style="margin:0; padding:10px;" >
-                                    <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                                <img *ngIf="images[1]" [src]="images[1]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                             </div>
                             <div class="col-4" style="margin:0; padding:10px;" >
-                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                                <img *ngIf="images[2]" [src]="images[2]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                             </div>
                             <div class="col-4" style="margin:0; padding:10px;" >
-                                <img src="assets/images/AchoM2.png" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
+                                <img *ngIf="images[3]" [src]="images[3]" class="w-100 m-0 p-0 clickable" (click) = chosePrincipal()>
                             </div>
                         </div>
                     </div>

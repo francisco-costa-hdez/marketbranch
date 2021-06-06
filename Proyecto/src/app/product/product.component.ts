@@ -12,6 +12,7 @@ import { CartService } from '../cart.service';
 export class ProductComponent implements OnInit {
 
   product;
+  images;
   shop;
   categorization;
   reviews;
@@ -34,6 +35,7 @@ export class ProductComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.product = null;
+        this.images = [];
         this.shop = null;
         this.categorization = null;
         this.reviews = [];
@@ -79,9 +81,15 @@ export class ProductComponent implements OnInit {
   getProduct(id: string | number) {
     this.db.findProductById(id).subscribe(
       (response) => {
+        console.log(response)
+        console.log(response["images"])
         if (response["product"]) {
           this.product = response["product"][0];
-          // console.log(this.product);
+          if (response["images"]) {
+            response["images"].forEach( (image) => {
+              this.images.push(image.image);
+            })
+          }
           if (this.product) {
             this.getCategorization(this.product.subcategory_id);
             this.getShop(this.product.shop_id);

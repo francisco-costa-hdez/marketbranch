@@ -5,6 +5,7 @@ import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { AuthService } from '../auth.service';
 import { Cookie } from '../cookie';
 import { LoginUser } from '../login-user';
+import { ProfileImageService } from '../profile-image.service';
 
 @Component({
   selector: 'app-form-log-in',
@@ -20,7 +21,7 @@ export class FormLogInComponent implements OnInit {
   inputError: boolean = false;
  
 
-  constructor(private form:FormBuilder, private db:MarketPlaceDBService, private auth: AuthService, private router: Router) {
+  constructor(private form:FormBuilder, private db:MarketPlaceDBService, private auth: AuthService, private router: Router, private img: ProfileImageService) {
     this.loginForm=this.form.group(
       {
         email:['',Validators.required],
@@ -81,7 +82,9 @@ export class FormLogInComponent implements OnInit {
           data.name = response["user"];
           data.id = response["user_id"];
           data.token = response["token"];
+          data.token = response["token"];
           this.auth.setCurrentUser(data);
+          this.img.setImage(response["profile_img"]);
           // console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
         }
@@ -108,6 +111,7 @@ export class FormLogInComponent implements OnInit {
           data.token = response["token"];
           data.shop = response["shop_id"];
           this.auth.setCurrentUser(data);
+          this.img.setImage(response["profile_img"]);
           // console.log(this.auth.getCurrentUser());
           this.router.navigate(['/home']);
         }

@@ -48,11 +48,8 @@ export class FormSearchComponent implements OnInit {
           });
           this.categoryList.setCategoriesFromArray(this.categories);
         }
-      },
-      (error) => {
-        console.error('Request failed with error');
-        console.error(error);
-    });
+      }
+    );
   }
 
   goToSearch() {
@@ -69,7 +66,6 @@ export class FormSearchComponent implements OnInit {
   }
 
   updateDropdown() {
-    console.log(this.search.filter);
     if (this.search.term != "" && !this.loading) {
       this.options = []
       this.loading = true;
@@ -120,6 +116,8 @@ export class FormSearchComponent implements OnInit {
             this.loading = false;
         });
       }
+    } else if (this.search.term == "" && !this.loading) {
+      this.options = []
     }
   }
 
