@@ -23,26 +23,40 @@ class ShopRepository implements IShopRepository
     public function findShopById(int $id)
     {
         $shop = $this->shop->find($id);
-        $images = DB::select('SELECT image from shop_images where shop_id = ?',[$id]);
+        $images = DB::select('SELECT id,image from shop_images where shop_id = ?',[$id]);
         return response()->json(['shop' => $shop, 'images' =>$images], 200);
     }
 
     public function findAllShops()
     {
-        return $this->shop->orderBy('created_at', 'desc')->get();
+       $shops =  DB::select("SELECT s.*, si.image as image
+                            from shops s LEFT JOIN shop_images si ON s.id = si.shop_id
+                            WHERE s.name != ''
+                            ORDER BY s.created_at DESC");
+        return $shops;
     }
 
     public function findShopByProduct(int $product_id)
     {
-        return $this->product->find($product_id)->shop;
-    }
+        $shop = DB::select('SELECT s.*, si.image as image
+        from (shops s LEFT JOIN shop_images si ON s.id = si.shop_id)
+        LEFT JOIN products p ON p.shop_id = s.id
+        WHERE p.id = ?
+        ORDER BY s.created_at DESC',[$product_id]);
+        return $shop;
+    }   
 
     public function findShopByStr(string $str)
     {
-        return $this->shop
-            ->where('name', 'like', '%' . $str . '%')
-            ->orWhere('description', 'like', '%' . $str . '%')->get();
+        $string = '%' . $str . '%';
+        $shops = DB::select("SELECT s.*, si.image as image
+        from shops s LEFT JOIN shop_images si ON s.id = si.shop_id
+        WHERE s.name like ? or s.description like ?
+        ORDER BY s.created_at DESC",[$string,$string]);
+
+        return $shops;
     }
+    
     public function createShop(Request $request)
     {
         $this->shop->create([

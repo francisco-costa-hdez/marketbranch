@@ -6,6 +6,7 @@ use App\Models\ClientUser;
 use App\Services\Repositories\Interfaces\IClientUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ClientUserRepository implements IClientUserRepository
 {
@@ -70,15 +71,31 @@ class ClientUserRepository implements IClientUserRepository
         return ['message' => 'logged out'];
     }
 
-    public function updateClientUser(Request $request)
+    public function updateClientUser(Request $request, array $data)
     {
-        $this->user->find($request->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'tlf' => $request->tlf,
-            'profile_img' => $request->profile_img,
-            'address' => $request->address
-        ]);
+        if ($request->email != $this->user->find($request->id)->email) {
+            Mail::send('emails.confirmation_code', $data, function ($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+            $this->user->find($request->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'tlf' => $request->tlf,
+                'profile_img' => $request->profile_img,
+                'confirmed' => false,
+                'confirmation_code' => $data['confirmation_code'],
+                'address' => $request->address
+            ]);
+        } else {
+            $this->user->find($request->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'tlf' => $request->tlf,
+                'profile_img' => $request->profile_img,
+                'address' => $request->address
+            ]);
+        }
+
         return response()->json(['message' => 'Los datos se han actualizado correctamente']);
     }
 

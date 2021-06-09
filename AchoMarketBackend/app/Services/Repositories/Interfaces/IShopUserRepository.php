@@ -8,9 +8,9 @@ interface IShopUserRepository
 {
     public function findShopUserById(int $id);
 
-    public function createShopUser(Request $request);
+    public function createShopUser(Request $request, String $confirmation_code);
 
-    public function updateShopUser(Request $request);
+    public function updateShopUser(Request $request, array $data);
 
     public function login(Request $request);
 

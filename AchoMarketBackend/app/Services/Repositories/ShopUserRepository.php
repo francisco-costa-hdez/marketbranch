@@ -8,6 +8,7 @@ use App\Services\Repositories\Interfaces\IShopUserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ShopUserRepository implements IShopUserRepository
 {
@@ -24,13 +25,14 @@ class ShopUserRepository implements IShopUserRepository
         shops.shop_user_id where shop_users.id = ?', [$id]);
     }
 
-    public function createShopUser(Request $request)
+    public function createShopUser(Request $request, String $confirmation_code)
     {
         $user = $this->user->create([
             "admin_name" => $request->admin_name,
             "email" => $request->email,
             "nif" => $request->nif,
             "profile_img" => $request->profile_img,
+            'confirmation_code' => $confirmation_code,
             "password" => Hash::make($request->password)
         ])->assignRole('shop_user');
 
@@ -46,14 +48,28 @@ class ShopUserRepository implements IShopUserRepository
         return response($response, 201);
     }
 
-    public function updateShopUser(Request $request)
+    public function updateShopUser(Request $request, array $data)
     {
-        $this->user->find($request->id)->update([
-            'admin_name' => $request->name,
-            'email' => $request->email,
-            'nif' => $request->nif,
-            'profile_img' => $request->profile_img,
-        ]);
+        if ($request->email != $this->user->find($request->id)->email) {
+            Mail::send('emails.confirmation_code-2', $data, function ($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+            $this->user->find($request->id)->update([
+                'admin_name' => $request->name,
+                'email' => $request->email,
+                'nif' => $request->nif,
+                'profile_img' => $request->profile_img,
+                'confirmed' => false,
+                'confirmation_code' => $data['confirmation_code'],
+            ]);
+        } else {
+            $this->user->find($request->id)->update([
+                'admin_name' => $request->name,
+                'email' => $request->email,
+                'nif' => $request->nif,
+                'profile_img' => $request->profile_img,
+            ]);
+        }
 
         return response()->json(['message' => 'Los datos se han actualizado correctamente']);
     }

@@ -61,8 +61,37 @@ class ClientUserController extends Controller
 
     public function updateClientUser(Request $request)
     {
+        $data['confirmation_code'] = Str::random(25);
+        $data['email'] = $request->email;
+        $data['name'] = $request->name;
+        if($request->email != auth()->user()->email && $request->tlf != auth()->user()->tlf){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:client_users,email|unique:shop_users,email',
+                "tlf" => 'required|unique:client_users,tlf',
+                "address" => 'required'
+            ]);
+        }else if($request->email != auth()->user()->email){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:client_users,email|unique:shop_users,email',
+                "tlf" => 'required',
+                "address" => 'required'
+            ]);
+        }else if($request->tlf != auth()->user()->tlf){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required',
+                "tlf" => 'required|unique:client_users,tlf',
+                "address" => 'required'
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
         if (auth()->user()->id == $request->id && auth()->user()->tokenCan('client_user')) {
-            return $this->user->updateClientUser($request);
+            return $this->user->updateClientUser($request,$data);
         } else return response()->json(['message' => 'Usuario no autorizado']);
     }
 

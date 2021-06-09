@@ -20,33 +20,33 @@ class ProductRepository implements IProductRepository
 
     public function findAllProducts()
     {
-        $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image
-        FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories on subcategories.category_id = categories.id) LEFT JOIN product_images pi ON pi.product_id = p.id
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image
+        $allProducts = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image, shop_images.image as shop_image
+        FROM (((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories on subcategories.category_id = categories.id) LEFT JOIN product_images pi ON pi.product_id = p.id) LEFT JOIN shop_images ON shop_images.shop_id = shops.id
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image, shop_images.image
         ORDER BY p.created_at DESC');
         return $allProducts;
     }
 
     public function findProductBySubcategory(int $subcategory_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image 
-        FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) 
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id, ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image, shop_images.image as shop_image
+        FROM (((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) 
         JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories on subcategories.category_id = categories.id) 
-        LEFT JOIN product_images pi ON pi.product_id = p.id
-        WHERE subcategories.id=? 
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image
+        LEFT JOIN product_images pi ON pi.product_id = p.id) LEFT JOIN shop_images ON shop_images.shop_id = shops.id
+        WHERE subcategories.id=?
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image,shop_images.image
         ORDER BY p.created_at DESC', [$subcategory_id]);
         return $products;
     }
 
     public function findProductByCategory(int $category_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image 
-        FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) 
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0) AS media_rating, pi.image as product_image, shop_images.image as shop_image 
+        FROM (((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops ON p.shop_id = shops.id) 
         JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories on subcategories.category_id = categories.id) 
-        LEFT JOIN product_images pi ON pi.product_id = p.id
+        LEFT JOIN product_images pi ON pi.product_id = p.id) LEFT JOIN shop_images ON shop_images.shop_id = shops.id
         WHERE categories.id=? 
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id,shops.name,categories.id,p.subcategory_id, pi.image,shop_images.image
         ORDER BY p.created_at DESC', [$category_id]);
         return $products;
     }
@@ -54,11 +54,11 @@ class ProductRepository implements IProductRepository
     public function findProductByCategoryAndName(int $category_id, string $name)
     {
         $str = '%' . $name . '%';
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating, pi.image
-        FROM ((products p LEFT JOIN reviews r ON p.id = r.product_id) 
-        JOIN subcategories s ON p.subcategory_id = s.id) LEFT JOIN product_images pi ON pi.product_id = p.id
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id, ifnull(round(AVG(r.rating),1),0)  AS media_rating, pi.image, shop_images.image as shop_image
+        FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) 
+        JOIN subcategories s ON p.subcategory_id = s.id) LEFT JOIN product_images pi ON pi.product_id = p.id) LEFT JOIN shops ON p.shop_id = shops.id) LEFT JOIN shop_images ON shops.id = shop_images.shop_id
         WHERE s.category_id = ? and p.name like ?
-        GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id,pi.image
+        GROUP By p.id, p.name,p.price,p.discount,p.shop_id,p.subcategory_id,pi.image, shop_images.image
         ORDER BY p.created_at DESC', [$category_id, $str]);
         return $products;
     }
@@ -77,11 +77,11 @@ class ProductRepository implements IProductRepository
 
     public function findProductByShop(int $shop_id)
     {
-        $products = DB::select('SELECT p.id, p.name,p.price,p.discount, ifnull(round(AVG(r.rating),1),0)  AS media_rating, pi.image
-        FROM products p LEFT JOIN reviews r ON p.id = r.product_id LEFT JOIN product_images pi ON
-        pi.product_id = p.id
+        $products = DB::select('SELECT p.id, p.name,p.price,p.discount, ifnull(round(AVG(r.rating),1),0)  AS media_rating, pi.image, s.category_id as category_id
+        FROM ((products p LEFT JOIN reviews r ON p.id = r.product_id) LEFT JOIN product_images pi ON
+        pi.product_id = p.id) LEFT JOIN subcategories s ON p.subcategory_id = s.id
         WHERE p.shop_id = ?
-        GROUP By p.id, p.name, p.price,p.discount,p.shop_id, pi.image
+        GROUP By p.id, p.name, p.price,p.discount,p.shop_id, pi.image,s.category_id
         ORDER BY p.created_at DESC', [$shop_id]);
         return $products;
     }
@@ -91,11 +91,12 @@ class ProductRepository implements IProductRepository
         $str = '%' . $string . '%';
         $products = DB::select("SELECT p.id, p.name,p.price,p.discount,p.shop_id,shops.name as shop_name,
         categories.id as category_id,p.subcategory_id as subcategory_id,ifnull(round(AVG(r.rating),1),0) 
-        AS media_rating, pi.image FROM ((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
+        AS media_rating, pi.image,shop_images.image as shop_image FROM (((((products p LEFT JOIN reviews r ON p.id = r.product_id) JOIN shops 
         ON p.shop_id = shops.id) JOIN subcategories ON p.subcategory_id = subcategories.id) JOIN categories 
-        on subcategories.category_id = categories.id) LEFT JOIN product_images pi ON pi.product_id = p.id 
+        on subcategories.category_id = categories.id) LEFT JOIN product_images pi ON pi.product_id = p.id) LEFT JOIN 
+        shop_images ON shop_images.shop_id = shops.id
         WHERE p.name LIKE ? OR p.description LIKE ?
-        GROUP BY p.id, p.name, p.price,p.discount,p.shop_id, shops.name,categories.id,p.subcategory_id, pi.image
+        GROUP BY p.id, p.name, p.price,p.discount,p.shop_id, shops.name,categories.id,p.subcategory_id, pi.image, shop_images.image
         ORDER BY p.created_at DESC", [$str, $str]);
         return $products;
     }

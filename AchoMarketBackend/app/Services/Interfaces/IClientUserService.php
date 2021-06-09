@@ -8,9 +8,9 @@ interface IClientUserService
 {
     public function findClientUserById(int $id);
 
-    public function createClientUser(Request $data, $confirmation_code);
+    public function createClientUser(Request $data, String $confirmation_code);
 
-    public function updateClientUser(Request $request);
+    public function updateClientUser(Request $request, array $data);
 
     public function login(Request $request);
 

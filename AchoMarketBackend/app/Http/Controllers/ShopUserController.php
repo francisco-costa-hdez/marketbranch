@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ShopUser;
 use App\Services\ShopUserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ShopUserController extends Controller
 {
@@ -28,7 +30,9 @@ class ShopUserController extends Controller
 
     public function createShopUser(Request $request)
     {
-
+        $data['confirmation_code'] = Str::random(25);
+        $data['email'] = $request->email;
+        $data['name'] = $request->admin_name;
         $validator = Validator::make($request->all(), [
             'admin_name' => 'required',
             'email' => 'required|email|unique:shop_users,email|unique:client_users,email',
@@ -40,7 +44,10 @@ class ShopUserController extends Controller
         {
             return response()->json($validator->errors());
         }
-        return $this->user->createShopUser($request);
+        Mail::send('emails.confirmation_code-2', $data, function ($message) use ($data) {
+            $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+        });
+        return $this->user->createShopUser($request,$data['confirmation_code']);
     }
 
     public function login(Request $request)
@@ -55,9 +62,37 @@ class ShopUserController extends Controller
 
     public function updateShopUser(Request $request)
     {
+        $data['confirmation_code'] = Str::random(25);
+        $data['email'] = $request->email;
+        $data['name'] = $request->name;
+        if($request->email != auth()->user()->email && $request->nif != auth()->user()->nif){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:client_users,email|unique:shop_users,email',
+                "nif" => 'required|unique:shop_users,nif',
+                "profile_img" => 'required'
+            ]);
+        }else if($request->email != auth()->user()->email){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:client_users,email|unique:shop_users,email',
+                "nif" => 'required',
+                "profile_img" => 'required'
+            ]);
+        }else if($request->nif != auth()->user()->nif){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required',
+                "nif" => 'required|unique:shop_users,nif',
+                "profile_img" => 'required'
+            ]);
+        }
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
         if(auth()->user()->id == $request->id && auth()->user()->tokenCan('shop_user'))
         {
-            return $this->user->updateShopUser($request);  
+            return $this->user->updateShopUser($request, $data);  
         }
         else return response()->json(['message'=>'Usuario no autorizado']);
     }

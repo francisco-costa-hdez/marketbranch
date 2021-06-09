@@ -20,9 +20,9 @@ class ShopUserService implements IShopUserService
         return $this->shopUserRepository->findShopUserById($id);
     }
 
-    public function createShopUser(Request $request)
+    public function createShopUser(Request $request, String $confirmation_code)
     {
-        return $this->shopUserRepository->createShopUser($request);
+        return $this->shopUserRepository->createShopUser($request,$confirmation_code);
     }
 
     public function login(Request $request)
@@ -35,9 +35,9 @@ class ShopUserService implements IShopUserService
         return $this->shopUserRepository->logout($request);
     }
 
-    public function updateShopUser(Request $request)
+    public function updateShopUser(Request $request, array $data)
     {
-        return $this->shopUserRepository->updateShopUser($request);
+        return $this->shopUserRepository->updateShopUser($request, $data);
     }
     
     public function deleteShopUser(int $id)

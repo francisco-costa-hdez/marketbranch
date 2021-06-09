@@ -35,9 +35,9 @@ class ClientUserService implements IClientUserService
         return $this->clientUserRepository->login($request);
     }
     
-    public function updateClientUser(Request $request)
+    public function updateClientUser(Request $request, array $data)
     {
-       return $this->clientUserRepository->updateClientUser($request);
+       return $this->clientUserRepository->updateClientUser($request, $data);
     }
 
     public function updatePassword(Request $request)
