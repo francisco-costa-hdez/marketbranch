@@ -5,8 +5,8 @@
             <p>{{shop.description | slice:0:150}}...</p>
         </div>
         <div class="col-4 h-100 d-flex align-items-center">
-            <img *ngIf="shop.shop_image" routerLink="/tienda/{{shop.id}}" class="w-100 img-thumbnail clickable" [src]="shop.shop_image" alt="Imagen de {{shop.name}} image">
-            <img *ngIf="!shop.shop_image" routerLink="/tienda/{{shop.id}}" class="w-100 img-thumbnail clickable" src="/assets/images/img-error2.png" alt="Imagen de {{shop.name}} image">
+            <img *ngIf="shop.image" routerLink="/tienda/{{shop.id}}" class="w-100 img-thumbnail clickable" [src]="shop.image" alt="Imagen de {{shop.name}} image">
+            <img *ngIf="!shop.image" routerLink="/tienda/{{shop.id}}" class="w-100 img-thumbnail clickable" src="/assets/images/img-error2.png" alt="Imagen de {{shop.name}} image">
         </div>
     </div>
 </div>

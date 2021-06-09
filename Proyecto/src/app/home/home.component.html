@@ -27,7 +27,7 @@
                                 <div class="row align-items-center m-0 p-0">
                                     <div class="col-12 col-md-8">
                                         <h2>{{shop.name}}</h2>
-                                        <p>{{shop.description}}</p>
+                                        <p>{{shop.description | slice:0:150}}...</p>
                                         <a class="btn btn-primary mb-4 my-0" routerLink="/tienda/{{shop.id}}">Visitar</a>
                                     </div>
                                     <div class="col-12 col-md-4">

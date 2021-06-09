@@ -10,7 +10,6 @@ export class ShopCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.shop)
   }
 
 }

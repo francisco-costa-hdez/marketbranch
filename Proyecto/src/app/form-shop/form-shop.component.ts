@@ -93,7 +93,7 @@ export class FormShopComponent implements OnInit {
       this.shopUser.password=this.password.value;
       // this.shopUser.profile_img=this.img.value;
       this.shopUser.profile_img=this.croppedImage;
-      console.log(this.croppedImage);
+      // console.log(this.croppedImage);
       
       
       // console.log(this.client)
@@ -105,7 +105,7 @@ export class FormShopComponent implements OnInit {
       // console.log(jsonArrayClient)
       this.db.createShopUser(this.shopUser).subscribe(
         (response) => {
-          console.log(response)
+          // console.log(response)
           if(response["email"]){
           this.emailExists=true
           response["email"].forEach((item) =>{
@@ -125,7 +125,7 @@ export class FormShopComponent implements OnInit {
           });
         }
         if(!(response["nif"] || response["email"] || response["profile_img"])){
-          console.log("todo ha ido bien")
+          // console.log("todo ha ido bien")
           this.shopUserFormValid=true
           // this.router.navigate(['/validshopuser']);
         }

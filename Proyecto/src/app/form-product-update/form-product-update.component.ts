@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { Product } from '../product';
@@ -16,14 +16,22 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class FormProductUpdateComponent implements OnInit {
 
   categories = [];
+  images = [];
   subCategories = [];
 
+  photoForm: FormGroup;
   productForm:FormGroup;
   product = new Product;
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  image = new Image;
+  imageObject = new Image;
+
+  photoNotUploaded: boolean = false;
+  photoUploaded: boolean = false;
+
+  imageShopChangedEvent: any = '';
+  croppedShop: any = '';
 
   productOld;
 
@@ -40,7 +48,11 @@ export class FormProductUpdateComponent implements OnInit {
         subcategory_id:['',Validators.required]
         // image:['',Validators.required]
       }
+      
     )
+    this.photoForm = new FormGroup({
+      image: new FormControl({value: "", disabled: false}, Validators.required)
+    });
 
     this.productForm.disable()
     
@@ -69,6 +81,9 @@ export class FormProductUpdateComponent implements OnInit {
   get description() { return this.productForm.get('description'); }
   get subcategory_id() { return this.productForm.get('subcategory_id'); }
   //  get image() { return this.productForm.get('image'); }
+
+  get image() { return this.photoForm.get('image'); }
+
 
    ngOnInit(): void {
 
@@ -195,5 +210,51 @@ export class FormProductUpdateComponent implements OnInit {
         }
       ); 
     }
+  }
+
+  onSubmitPhoto() {
+    if(this.photoForm.valid) {
+      this.photoNotUploaded = false;
+      this.photoUploaded = false;
+      
+      let image = {image: "", shop_id: ""};
+      image.image = this.croppedShop;
+      image.shop_id  = this.auth.getCurrentUserShop();
+
+      this.db.uploadProductImage(image).subscribe(
+        (response)=>{
+          if (response["message"] = "Imagen subida correctamente") {
+            this.photoUploaded = true;
+            this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+              (response) => {
+                if (response["shop"]) {
+                  if (response["images"]) {
+                    this.images = response["images"]
+                  }
+                }
+              }
+           );
+          } else {
+            this.photoNotUploaded = true;
+          }
+        }
+      )
+    }
+  }
+
+  imageDelete(id) {
+    this.db.deleteShopImage(id).subscribe(
+      (response)=>{
+        this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+          (response) => {
+            if (response["shop"]) {
+              if (response["images"]) {
+                this.images = response["images"]
+              }
+            }
+          }
+        )
+      }
+    )
   }
 }

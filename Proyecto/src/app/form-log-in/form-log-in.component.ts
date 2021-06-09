@@ -19,8 +19,6 @@ export class FormLogInComponent implements OnInit {
   user = new LoginUser;
   validationNeeded: boolean = false;
   inputError: boolean = false;
-  clientRegister=true;
-  shopRegister=false;
  
 
   constructor(private form:FormBuilder, private db:MarketPlaceDBService, private auth: AuthService, private router: Router, private img: ProfileImageService) {
@@ -100,7 +98,6 @@ export class FormLogInComponent implements OnInit {
   }
 
   loginAsShop() {
-    console.log("Log as Shop")
     this.db.LogInShopUser(this.user).subscribe(
       (response) => {
         if (response["message"] == "credenciales no válidas") {
@@ -126,8 +123,6 @@ export class FormLogInComponent implements OnInit {
   }
 
   setClient() {
-    this.clientRegister=true
-    this.shopRegister=false
     if (!this.client) {
       this.client = true;
     }
@@ -136,8 +131,6 @@ export class FormLogInComponent implements OnInit {
   }
 
   setShop() {
-    this.clientRegister=false
-    this.shopRegister=true
     if (this.client) {
       this.client = false;
     }

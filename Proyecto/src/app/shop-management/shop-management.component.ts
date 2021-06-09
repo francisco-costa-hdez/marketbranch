@@ -58,7 +58,6 @@ export class ShopManagementComponent implements OnInit {
       address: new FormControl({value:"", disabled: true}, Validators.required),
       description: new FormControl({value:"", disabled: true}, Validators.required),
       tlf: new FormControl({value:"", disabled: true}, Validators.required),
-      image: new FormControl({value: "", disabled: true}, Validators.required)
     });
 
     this.photoFormShop = new FormGroup({
@@ -138,7 +137,9 @@ export class ShopManagementComponent implements OnInit {
       this.db.findProductByShop(this.auth.getCurrentUserShop()).subscribe(
         (response) => {
           if (response["products"]) {
+            console.log(response)
             response["products"].forEach((item) => {
+
               this.totalProducts.push(item);
             });
             this.initResults(this.totalProducts);
@@ -234,7 +235,6 @@ export class ShopManagementComponent implements OnInit {
     shop_new.name=this.name.value;
     this.db.updateShop(shop_new).subscribe(
       (response)=>{
-        console.log(response)
         if (response["message"] == "Los datos se han guardado correctamente") {
           this.shop.tlf = shop_new.tlf;
           this.shop.email = shop_new.email;
@@ -268,10 +268,8 @@ export class ShopManagementComponent implements OnInit {
       shopUser.nif=this.nif.value;
       // shopUser.profile_img=this.croppedImage;
       shopUser.profile_img = (this.croppedUser) ? this.croppedUser : this.user.profile_img;
-      console.log(shopUser);
       this.db.updateShopUser(shopUser).subscribe(
         (response)=>{
-          console.log(response);
           if (response["message"] == "Los datos se han actualizado correctamente") {
             this.user.admin_name = shopUser.name;
             this.user.nif = shopUser.nif;
@@ -294,9 +292,7 @@ export class ShopManagementComponent implements OnInit {
   }
 
   onSubmitPhoto() {
-    console.log("a")
     if(this.photoFormShop.valid) {
-      console.log("b")
       this.photoNotUploaded = false;
       this.photoUploaded = false;
       
@@ -304,21 +300,17 @@ export class ShopManagementComponent implements OnInit {
       image.image = this.croppedShop;
       image.shop_id  = this.auth.getCurrentUserShop();
 
-      console.log(image)
       this.db.uploadShopImage(image).subscribe(
         (response)=>{
           if (response["message"] = "Imagen subida correctamente") {
             this.photoUploaded = true;
             this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
               (response) => {
-                if (response) {
-                  if (response["shop"]) {
-                    if (response["images"]) {
-                     this.images = response["images"]
-                    }
+                if (response["shop"]) {
+                  if (response["images"]) {
+                    this.images = response["images"]
                   }
-                  
-                };
+                }
               }
            );
           } else {
@@ -329,9 +321,19 @@ export class ShopManagementComponent implements OnInit {
     }
   }
 
-
-  imageDelete() {
-
+  imageDelete(id) {
+    this.db.deleteShopImage(id).subscribe(
+      (response)=>{
+        this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+          (response) => {
+            if (response["shop"]) {
+              if (response["images"]) {
+                this.images = response["images"]
+              }
+            }
+          }
+        )
+      }
+    )
   }
-
 }

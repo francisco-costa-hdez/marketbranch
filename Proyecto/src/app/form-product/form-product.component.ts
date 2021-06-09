@@ -82,7 +82,7 @@ export class FormProductComponent implements OnInit {
           }, false);
         });
     })();
-    console.log(this.productForm.get('discount'))
+    // console.log(this.productForm.get('discount'))
   }
 
 
@@ -144,11 +144,11 @@ getSubca(i){
       
       this.db.createProduct(this.product).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           this.imageProduct.product_id=response["product"].id;
           this.db.uploadProductImage(this.imageProduct).subscribe(
             (response) => {
-              console.log(response);
+              // console.log(response);
               this.router.navigate(["/administrar-tienda"])
             },
             (error) => {

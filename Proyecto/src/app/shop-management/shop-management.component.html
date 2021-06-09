@@ -126,35 +126,34 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                            <div class="col-md-12">
-                                <label for="imageShop">Añadir imagen: </label>
-                                <input type="file" class="form-control-file" id="imageShop" name="imageShop" formControlName="imageShop" required (change)="fileShopChangeEvent($event)">
-                                <image-cropper
-                                    [imageChangedEvent]="imageShopChangedEvent"
-                                    [maintainAspectRatio]="true"
-                                    [aspectRatio]="1 / 1"
-                                    format="png"
-                                    (imageCropped)="imageShopCropped($event)"
-                                ></image-cropper>
-                                <div class="invalid-feedback" *ngIf="photoFormShop.get('imageShop').hasError('required')">
-                                    Error, no has introducido la imagen
+                                <div class="col-md-12">
+                                    <label for="imageShop">Añadir imagen: </label>
+                                    <input type="file" class="form-control-file" id="imageShop" name="imageShop" formControlName="imageShop" required (change)="fileShopChangeEvent($event)">
+                                    <image-cropper
+                                        [imageChangedEvent]="imageShopChangedEvent"
+                                        [maintainAspectRatio]="true"
+                                        [aspectRatio]="1 / 1"
+                                        format="png"
+                                        (imageCropped)="imageShopCropped($event)"
+                                    ></image-cropper>
+                                    <div class="invalid-feedback" *ngIf="photoFormShop.get('imageShop').hasError('required')">
+                                        Error, no has introducido la imagen
+                                    </div>
                                 </div>
-                            </div>
-                            <br>
-                            <div class="col-md-12 my-2">
-                                <input type="submit" class="btn btn-primary" value="Subir">
-                            </div>
-                            <br>
-                        </form>
+                                <div class="col-md-12 my-2">
+                                    <input type="submit" class="btn btn-primary" value="Subir">
+                                </div>
+                                <br>
+                            </form>
                             <p>Las siguientes imagenes se muestran en tu tienda, puedes eliminarlas al clicar sobre el botón rojo indicado la Equis.</p>
                             <p>* La primera imagen se tendrá en cuenta como principal.</p>
                             <div *ngIf="images.length" class="row row-cols-2">
                                 <div *ngFor="let image of images" class="card bg-light my-1 p-0">
                                     <div class="card border-0 m-0 p-0">
-                                            <img class="card-img" [src]="image.image"  alt="Imagen de la tienda">
-                                            <div class="card-img-overlay">
-                                                <div class="float-right rounded rating" ><button class="btn btn-danger" (click)="imageDelete()"><i class="bi bi-x"></i></button></div>
-                                            </div>
+                                        <img class="card-img" [src]="image.image"  alt="Imagen de la tienda">
+                                        <div class="card-img-overlay">
+                                            <div class="float-right rounded rating" ><button class="btn btn-danger" (click)="imageDelete(image.id)"><i class="bi bi-x"></i></button></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +174,8 @@
                             (scrolled)="onScrollDown()">
                             <div *ngFor="let product of products" class="card">
                                 <div class="row card-body m-0 p-1">
-                                    <img class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
+                                    <img *ngIf="product.image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" [src]="product.image">
+                                    <img *ngIf="!product.image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
                                     <h6 class="col-4 col-lg-6 my-auto mx-0 pl-1"><a routerLink="/producto/{{product.id}}">{{product.name}}</a></h6>
                                     <h6 class="col-3 my-auto mx-0 pl-1">{{product.price | currency:" "}} €</h6>
                                     <div class="col-1 col-lg-1 m-0 p-0 row align-items-center">
