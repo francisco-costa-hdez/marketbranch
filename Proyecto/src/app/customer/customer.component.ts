@@ -102,7 +102,7 @@ export class CustomerComponent implements OnInit {
       client.tlf=this.tlf.value;
       let image = (this.croppedImage) ? this.croppedImage : this.user.profile_img;
       client.profile_img=image;
-      // console.log(client)
+      console.log(client)
       this.db.updateClientUser(client).subscribe(
         (response)=>{
           if (response["message"]=="Los datos se han actualizado correctamente") {

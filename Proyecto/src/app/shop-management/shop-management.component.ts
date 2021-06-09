@@ -21,6 +21,7 @@ export class ShopManagementComponent implements OnInit {
   scrollDistance = 1;
   direction = "";
 
+  photoFormShop: FormGroup;
   detailsFormShop: FormGroup;
   detailsForm: FormGroup;
   
@@ -35,16 +36,20 @@ export class ShopManagementComponent implements OnInit {
   userChanged: boolean = false;
   shopNotChanged: boolean = false;
   shopChanged: boolean = false;
+  photoNotUploaded: boolean = false;
+  photoUploaded: boolean = false;
 
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
+  imageShopChangedEvent: any = '';
+  imageUserChangedEvent: any = '';
+  croppedShop: any = '';
+  croppedUser: any = '';
 
   constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder, private img: ProfileImageService) {
     this.detailsForm = new FormGroup({
       admin_name: new FormControl({value: "", disabled: true}, Validators.required),
       nif: new FormControl({value: "", disabled: true}, Validators.required),
       email: new FormControl({value: "", disabled: true}, Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])),
-      image: new FormControl({value: "", disabled: true}, Validators.required)
+      image: new FormControl({value: "", disabled: true})
     });
 
     this.detailsFormShop = new FormGroup({
@@ -54,6 +59,10 @@ export class ShopManagementComponent implements OnInit {
       description: new FormControl({value:"", disabled: true}, Validators.required),
       tlf: new FormControl({value:"", disabled: true}, Validators.required),
       image: new FormControl({value: "", disabled: true}, Validators.required)
+    });
+
+    this.photoFormShop = new FormGroup({
+      imageShop: new FormControl({value: "", disabled: false}, Validators.required)
     });
 
     this.db.findShopUserById(this.auth.getCurrentUserId()).subscribe(
@@ -93,12 +102,20 @@ export class ShopManagementComponent implements OnInit {
 
    }
 
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
+  fileShopChangeEvent(event: any): void {
+    this.imageShopChangedEvent = event;
   }
 
-  imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
+  imageShopCropped(event: ImageCroppedEvent) {
+    this.croppedShop = event.base64;
+  }
+
+  fileUserChangeEvent(event: any): void {
+    this.imageUserChangedEvent = event;
+  }
+
+  imageUserCropped(event: ImageCroppedEvent) {
+    this.croppedUser = event.base64;
   }
 
   get admin_name() { return this.detailsForm.get('admin_name'); }
@@ -111,7 +128,8 @@ export class ShopManagementComponent implements OnInit {
   get emailShop() { return this.detailsFormShop.get('email'); }
   get description() { return this.detailsFormShop.get('description'); }
   get address() { return this.detailsFormShop.get('address'); }
-  get image2() { return this.detailsFormShop.get('image'); }
+
+  get imageShop() { return this.photoFormShop.get('imageShop'); }
 
   ngOnInit(): void {
     this.products = [];
@@ -209,40 +227,32 @@ export class ShopManagementComponent implements OnInit {
     this.shopNotChanged = false;
     this.shopChanged = false;
 
-    shop_new.tlf=this.tlf.value
-    shop_new.email=this.emailShop.value
-    shop_new.address=this.address.value
-    shop_new.description=this.description.value
-    shop_new.name=this.name.value
-    let image = {image: "", shop_id: ""}
-    image.image = this.croppedImage
-    image.shop_id  = this.auth.getCurrentUserShop()
+    shop_new.tlf=this.tlf.value;
+    shop_new.email=this.emailShop.value;
+    shop_new.address=this.address.value;
+    shop_new.description=this.description.value;
+    shop_new.name=this.name.value;
     this.db.updateShop(shop_new).subscribe(
       (response)=>{
         console.log(response)
         if (response["message"] == "Los datos se han guardado correctamente") {
-        this.shop.tlf = shop_new.tlf
-        this.shop.email = shop_new.email
-        this.shop.address = shop_new.address
-        this.shop.description = shop_new.description
-        this.shop.name = shop_new.name
+          this.shop.tlf = shop_new.tlf;
+          this.shop.email = shop_new.email;
+          this.shop.address = shop_new.address;
+          this.shop.description = shop_new.description;
+          this.shop.name = shop_new.name;
 
-        this.shopChanged = true;
-        }
-        else {
+          this.shopChanged = true;
+          }
+          else {
+            this.shopNotChanged = true;
+          }
+          this.editShop()
+        },
+        (error) => {
           this.shopNotChanged = true;
         }
-        this.editShop()
-      },
-      (error) => {
-        this.shopNotChanged = true;
-      }
-    )
-    this.db.uploadShopImage(image).subscribe(
-      (response)=>{
-        console.log(response)
-      }
-    )
+      )
     }
   }
 
@@ -251,24 +261,24 @@ export class ShopManagementComponent implements OnInit {
       this.userNotChanged = false;
       this.userChanged = false;
 
-
-      let shopUser: ShopUser = Object.assign({},this.user);
-      shopUser.admin_name=this.admin_name.value
-      shopUser.nif=this.nif.value;
+      let shopUser = {id: '', name: '', email: '', nif: '', profile_img: ''};
+      shopUser.id = this.user.id;
+      shopUser.name=this.admin_name.value;
       shopUser.email=this.email.value;
-      shopUser.profile_img=this.croppedImage;
-
-      console.log(shopUser)
+      shopUser.nif=this.nif.value;
+      // shopUser.profile_img=this.croppedImage;
+      shopUser.profile_img = (this.croppedUser) ? this.croppedUser : this.user.profile_img;
+      console.log(shopUser);
       this.db.updateShopUser(shopUser).subscribe(
         (response)=>{
-          console.log(response)
+          console.log(response);
           if (response["message"] == "Los datos se han actualizado correctamente") {
-            this.user.admin_name = shopUser.admin_name;
+            this.user.admin_name = shopUser.name;
             this.user.nif = shopUser.nif;
             this.user.email = shopUser.email;
-            this.user.profile_img = this.croppedImage;
+            // this.user.profile_img =  shopUser.profile_img;
 
-            this.img.setImage(this.croppedImage)
+            this.img.setImage(this.user.profile_img);
             
             this.userChanged = true;
           } else {
@@ -282,6 +292,43 @@ export class ShopManagementComponent implements OnInit {
       )
     }
   }
+
+  onSubmitPhoto() {
+    console.log("a")
+    if(this.photoFormShop.valid) {
+      console.log("b")
+      this.photoNotUploaded = false;
+      this.photoUploaded = false;
+      
+      let image = {image: "", shop_id: ""};
+      image.image = this.croppedShop;
+      image.shop_id  = this.auth.getCurrentUserShop();
+
+      console.log(image)
+      this.db.uploadShopImage(image).subscribe(
+        (response)=>{
+          if (response["message"] = "Imagen subida correctamente") {
+            this.photoUploaded = true;
+            this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+              (response) => {
+                if (response) {
+                  if (response["shop"]) {
+                    if (response["images"]) {
+                     this.images = response["images"]
+                    }
+                  }
+                  
+                };
+              }
+           );
+          } else {
+            this.photoNotUploaded = true;
+          }
+        }
+      )
+    }
+  }
+
 
   imageDelete() {
 
