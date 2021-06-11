@@ -6,14 +6,21 @@
     </ng-container>
     <section class="container-fluid m-0 p-0">
         <div class="product">
-        <div class="section-header container-fluid pl-5">
-            <h1 class="row ">{{product.name}}</h1>
+        <div class="section-header container-fluid pl-5 d-flex justify-content-start flex-wrap">
+            <h1 class="m-0 p-0">{{product.name}}</h1>
+            <h3 class="row align-items-center m-0 p-0">
+                <div class="col-2 col-lg-1  m-0 p-0">
+                    <a routerLink="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
+                </div>
+                <span class="col-10 col-lg-11 m-0 p-0">&nbsp;<a href="/tienda/{{shop.id}}">{{shop.name}}</a></span>
+            </h3>
+            <!-- <div class="float-none float-md-left h1">{{product.name}}</div>
             <div class="row align-items-end">
                 <div class="col-2 col-lg-1  m-0 p-0">
                     <a href="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
                 </div>
-                <div class="col-10 col-lg-11 h3"><a href="/tienda/{{shop.id}}">{{shop.name}}</a></div>
-            </div>
+                <div class="col-5 col-lg-11 h3"><a href="/tienda/{{shop.id}}">{{shop.name}}</a></div>
+            </div> -->
         </div>
         </div>
         <div class="row container-xl mx-auto" >
@@ -55,7 +62,7 @@
                                 </button>
                             </h2>
                         </div>
-                        <h3>{{product.media_rating}}
+                        <h3 *ngIf="product.media_rating && product.media_rating !=0">{{product.media_rating}}
                             <span>
                                 <app-rating *ngIf="product.media_rating" [rating]="product.media_rating"></app-rating>
                             </span>  
@@ -107,6 +114,11 @@
                         [infiniteScrollThrottle]="throttle"
                         (scrolled)="onScrollDown()">
                         <app-review-card *ngFor="let review of reviews" [review]="review"></app-review-card>
+                    </div>
+                    <div *ngIf="!reviews">
+                        <div class="alert alert-info" role="alert">
+                            Nadie ha valorado aún sobre este producto, ¿Lo has probado? Sé el primero en valorarlo.
+                        </div>
                     </div>
                 </div>
             </div>

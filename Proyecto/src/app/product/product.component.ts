@@ -61,7 +61,7 @@ export class ProductComponent implements OnInit {
     if (this.auth.isAuthenticatedClient()) {
       this.cart.addToCartList(this.product.id)
     } else {
-      alert("Inicia sesión");
+      alert("Para comprar en Acho Market debes iniciar sesión");
     }
   }
 

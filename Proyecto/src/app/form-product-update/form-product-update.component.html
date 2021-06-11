@@ -1,10 +1,10 @@
 <section class="container-fluid d-flex justify-content-center">
-    <!-- [ngClass]="{ 'collapse' : userFormValid }" -->
-    <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5" >
-      <div class="card-header text-center w-100 mx-0 px-0">
-          <h3 class="my-2">Actualizar Producto</h3>
-      </div>
-      <div class="card-body">
+  <!-- [ngClass]="{ 'collapse' : userFormValid }" -->
+  <div  class="card col-12 col-md-10 col-lg-6 mx-0 px-0 my-5" >
+    <div class="card-header text-center w-100 mx-0 px-0">
+        <h3 class="my-2">Actualizar Producto</h3>
+    </div>
+  <div class="card-body">
     <form  (ngSubmit)="onSubmit()" class="needs-validation" [formGroup]="productForm" novalidate>
       <div class="form-group">
           <label for="nombre">Nombre *</label>
@@ -75,7 +75,7 @@
             Error, no has introducido la descripción
          </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="image">Seleccione imagen de producto</label>
           <input type="file" class="form-control-file" id="image" name="image"  (change)="fileChangeEvent($event)">
           <image-cropper
@@ -85,7 +85,7 @@
               format="png"
               (imageCropped)="imageCropped($event)"
           ></image-cropper>
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="categorias">Categoría y subcategoría  </label>
           <select  class="custom-select col-md-7 d-block" name="subcategory_id" id="subcategory_id" required formControlName="subcategory_id">
@@ -103,53 +103,55 @@
       <button type="button" class="btn btn-secondary mt-2" (click)="redirect()">Cancelar</button>
       </form>
     </div>
-    <div class="mt-3">
-      <h4>Imágenes del producto</h4>
-      <form class="row needs-validation" (ngSubmit)="onSubmitPhoto()" #form="ngForm" [formGroup]="photoForm" novalidate>
-          <div *ngIf="photoUploaded" class="alert alert-success alert-dismissible fade show col-md-12" role="alert">
-              ¡Imagen Subida con éxito!
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div *ngIf="photoNotUploaded" class="alert alert-danger alert-dismissible fade show" role="alert">
-              No se  ha podido subir la imagen, si el problema persiste <a routerLink="/informar">contacta con nosotros</a>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="col-md-12">
-              <label for="image">Añadir imagen: </label>
-              <input type="file" class="form-control-file" id="image" name="image" formControlName="image" required (change)="fileChangeEvent($event)">
-              <image-cropper
+    <div class="mt-3 w-100">
+      <div class="container-fluid">
+        <h4>Imágenes del producto</h4>
+        <form class="row needs-validation" (ngSubmit)="onSubmitPhoto()" #form="ngForm" [formGroup]="photoForm" novalidate>
+            <div *ngIf="photoUploaded" class="alert alert-success alert-dismissible fade show col-md-12" role="alert">
+                ¡Imagen Subida con éxito!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div *ngIf="photoNotUploaded" class="alert alert-danger alert-dismissible fade show" role="alert">
+                No se  ha podido subir la imagen, si el problema persiste <a routerLink="/informar">contacta con nosotros</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12">
+                <label for="image">Añadir imagen: </label>
+                <input type="file" class="form-control-file" id="image" name="image" formControlName="image" required (change)="fileChangeEvent($event)">
+                <image-cropper
                   [imageChangedEvent]="imageChangedEvent"
                   [maintainAspectRatio]="true"
                   [aspectRatio]="1 / 1"
                   format="png"
-                  (imageCropped)="imageCropped($event)"
-              ></image-cropper>
-              <div class="invalid-feedback" *ngIf="photoForm.get('image').hasError('required')">
-                  Error, no has introducido la imagen
-              </div>
-          </div>
-          <div class="col-md-12 my-2">
-              <input type="submit" class="btn btn-primary" value="Subir">
-          </div>
-          <br>
-      </form>
-      <p>Las siguientes imagenes se muestran en tu tienda, puedes eliminarlas al clicar sobre el botón rojo indicado la Equis.</p>
-      <p>* La primera imagen se tendrá en cuenta como principal.</p>
-      <div *ngIf="images.length" class="row row-cols-2">
-          <div *ngFor="let image of images" class="card bg-light my-1 p-0">
-              <div class="card border-0 m-0 p-0">
-                  <img class="card-img" [src]="image.image"  alt="Imagen de la tienda">
-                  <div class="card-img-overlay">
-                      <div class="float-right rounded rating" ><button class="btn btn-danger" (click)="imageDelete(image.id)"><i class="bi bi-x"></i></button></div>
-                  </div>
-              </div>
-          </div>
+                  (imageCropped)="imageCropped($event)">
+                </image-cropper>
+                <div class="invalid-feedback" *ngIf="photoForm.get('image').hasError('required')">
+                    Error, no has introducido la imagen
+                </div>
+            </div>
+            <div class="col-md-12 my-2">
+                <input type="submit" class="btn btn-primary" value="Subir">
+            </div>
+            <br>
+        </form>
+        <p>Las siguientes imágenes se muestran en tu producto, puedes eliminarlas al clicar sobre el botón rojo indicado la Equis.</p>
+        <p>* La primera imagen se tendrá en cuenta como principal.</p>
+        <div *ngIf="images.length" class="row row-cols-2 w-100 mx-auto">
+            <div *ngFor="let image of images" class="card bg-light my-1 p-0">
+                <div class="card border-0">
+                    <img class="card-img" [src]="image.image"  alt="Imagen del producto">
+                    <div class="card-img-overlay">
+                        <div class="float-right rounded rating" ><button class="btn btn-danger" (click)="imageDelete(image.id)"><i class="bi bi-x"></i></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
-  </div>
+    </div>
   </div>
 
   <!-- <div *ngIf="userFormValid" class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">

@@ -30,9 +30,6 @@ export class FormProductUpdateComponent implements OnInit {
   photoNotUploaded: boolean = false;
   photoUploaded: boolean = false;
 
-  imageShopChangedEvent: any = '';
-  croppedShop: any = '';
-
   productOld;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService, private auth: AuthService,
@@ -108,6 +105,7 @@ export class FormProductUpdateComponent implements OnInit {
   getProduct(id: string | number) {
     this.db.findProductById(id).subscribe(
       (response) => {
+        console.log(response)
         if (response["product"]) {
           this.productOld = response["product"][0];
           if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
@@ -119,9 +117,10 @@ export class FormProductUpdateComponent implements OnInit {
             this.stock.setValue(this.productOld.stock);
             this.availability.setValue(this.productOld.availability);
             this.subcategory_id.setValue(this.productOld.subcategory_id);
-            // this.shop_id.setValue(this.auth.getCurrentUserShop());
-            // this.imageProduct.image=this.image.value;
-            // console.log(this.product);
+            if (response["images"]) {
+              this.images = response["images"]
+              console.log(this.images)
+            }
           }
         }
       },
@@ -217,43 +216,49 @@ export class FormProductUpdateComponent implements OnInit {
       this.photoNotUploaded = false;
       this.photoUploaded = false;
       
-      let image = {image: "", shop_id: ""};
-      image.image = this.croppedShop;
-      image.shop_id  = this.auth.getCurrentUserShop();
+      let image = {image: "", product_id: ""};
+      image.image = this.croppedImage;
+      image.product_id  = this.productOld.id;
 
+      console.log(image)
       this.db.uploadProductImage(image).subscribe(
         (response)=>{
-          if (response["message"] = "Imagen subida correctamente") {
-            this.photoUploaded = true;
-            this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
-              (response) => {
-                if (response["shop"]) {
+          this.db.findProductById(image.product_id).subscribe(
+            (response) => {
+              console.log(response)
+              if (response["product"]) {
+                if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
                   if (response["images"]) {
                     this.images = response["images"]
+                    console.log(this.images)
                   }
                 }
               }
-           );
-          } else {
-            this.photoNotUploaded = true;
-          }
+            },
+            (error) =>  {}
+          );
         }
       )
     }
   }
 
   imageDelete(id) {
-    this.db.deleteShopImage(id).subscribe(
+    this.db.deleteProductImage(id).subscribe(
       (response)=>{
-        this.db.findShopById(this.auth.getCurrentUserId()).subscribe(
+        this.db.findProductById(this.productOld.id).subscribe(
           (response) => {
-            if (response["shop"]) {
-              if (response["images"]) {
-                this.images = response["images"]
+            console.log(response)
+            if (response["product"]) {
+              if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
+                if (response["images"]) {
+                  this.images = response["images"]
+                  console.log(this.images)
+                }
               }
             }
-          }
-        )
+          },
+          (error) =>  {}
+        );
       }
     )
   }

@@ -1,77 +1,74 @@
-
-<div class="my-account featured-product product mt-0 pt-0">
-    <div class="section-header container-fluid pl-5">
-        <div class="row align-items-end"> 
-            <div class="col-12"><h1 class="row ">&nbsp;FAQ</h1></div>
-        </div>
+<section class="container-fluid m-0 p-0">
+  <div class="featured-product product  container-fluid mt-0 pt-0">
+    <div class="section-header row align-items-end pl-5 w-100 mx-0">
+        <div class="col-10 col-lg-11"><h2 class="row ">F.A.Q.</h2></div>
     </div>
-</div>
-<div class="container" style="width:60%;margin-bottom: 10px;">
-<div id="accordion">
-    <div class="card" >
-      <div class="card-header" id="headingOne">
-        <h5 class="mb-0 row" >
-          <span class="col-12"><h2>¿Qué pasa si no me llega el producto?</h2></span>
-          <span class="col-10"></span>
-          <span class="col-12 col-lg-2">
-            <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Leer
-          </button>
-        </span>
-        </h5>
-      </div>
-  
-      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-         <p>Acho Market se toma en serio la lucha contra el fraude, por lo que para cualquier usuario que se sospeche que esté realizando una posible estafa,
-           se procederá a la suspensión temporal de la cuenta, hasta que se verifique mediante investigación si ese usuario puede seguir activo o no. Para más información
-           revise nuestros <a routerLink="/terminos">Términos y condiciones</a>
-         </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" >
-      <div class="card-header" id="headingTwo">
-        <h5 class="mb-0 row" >
-          <span class="col-12"><h2>¿Puedo comprar si soy un Usuario-Tienda?</h2></span>
-          <span class="col-10"></span>
-          <span class="col-12 col-lg-2">
-            <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            Leer
-          </button>
-        </span>
-        </h5>
-      </div>
-  
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-        <div class="card-body">
-          <p>No, en este caso el perfil del Usuario-Tienda solo puede realizar la venta de los productos que sube a la plataforma, para poder comprar debe cerrar sesión como Usuario-Tienda y <a routerLink="/registro-cliente">registrarse como cliente</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" >
-      <div class="card-header" id="heading3">
-        <h5 class="mb-0 row" >
-          <span class="col-12"><h2>¿Puedo tener una cuenta de cliente y Usuario-Tienda?</h2></span>
-          <span class="col-10"></span>
-          <span class="col-12 col-lg-2">
-            <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-            Leer
-          </button>
-        </span>
-        </h5>
-      </div>
-  
-      <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
-        <div class="card-body">
-          <p>Sí, aunque no está permitido utilizar el mismo correo electrónico, se debe crear una cuenta diferente con otra dirección de email para cada cuenta.</p>
-        </div>
-      </div>
-    </div>
-
-    
-
   </div>
-</div>
+  <div class="container-xl mt-2 mb-4">
+    <div id="accordion">
+      <div class="card" >
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0 row" >
+            <span class="col-12"><h2>¿Qué ocurre si no me llega el producto?</h2></span>
+            <span class="col-10"></span>
+            <span class="col-12 col-lg-2">
+              <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Leer
+            </button>
+          </span>
+          </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+          <p>Acho Market se toma en serio la lucha contra el fraude, por lo que para cualquier usuario que se sospeche que esté realizando una posible estafa,
+            se procederá a la suspensión temporal de la cuenta, hasta que se verifique mediante investigación si ese usuario puede seguir activo o no. Para más información
+            revise nuestros <a routerLink="/terminos">Términos y condiciones</a>
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" >
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0 row" >
+            <span class="col-12"><h2>¿Puedo comprar si desde una cuenta de administrador de tienda?</h2></span>
+            <span class="col-10"></span>
+            <span class="col-12 col-lg-2">
+              <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              Leer
+            </button>
+          </span>
+          </h5>
+        </div>
+    
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+            <p>No, en este caso el perfil del usuario administrador de tienda únicamente puede realizar la venta de los productos que sube a la plataforma. Para poder comprar debe cerrar sesión e iniciar sesión o <a routerLink="/registro-cliente">registrarse como cliente</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" >
+        <div class="card-header" id="heading3">
+          <h5 class="mb-0 row" >
+            <span class="col-12"><h2>¿Puedo tener una cuenta de cliente y usuario administrador de tienda?</h2></span>
+            <span class="col-10"></span>
+            <span class="col-12 col-lg-2">
+              <button class="btn btn-secondary w-100" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+              Leer
+            </button>
+          </span>
+          </h5>
+        </div>
+    
+        <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+            <p>Sí, aunque no está permitido utilizar el mismo correo electrónico, se debe crear una cuenta diferente con otra dirección de email para cada cuenta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</section>
