@@ -57,8 +57,6 @@ export class FormContactComponent implements OnInit {
       
       this.db.sendMessage(mail).subscribe(
         (response) => {
-          console.log(response)
-
           if(response["message"] ="Mensaje enviado correctamente"){
             this.messageOk = true;
             this.message.setValue("");

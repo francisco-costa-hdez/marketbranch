@@ -26,9 +26,9 @@
           <div class="form-group">
             <label for="email">Email *</label>
             <input name="email" formControlName="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email" placeholder="micorreo@email.com" required>
-            <div *ngIf="emailError">
-              Inserta tu correo electrónico para poder enviar el formulario.
-            </div> 
+            <div *ngIf="emailError" class="alert alert-danger" role="alert">
+              Inserta tu correo electrónico válido para poder enviar el formulario.
+            </div>  
           </div>
           <div class="form-group">
             <label for="message">Mensaje *</label>
