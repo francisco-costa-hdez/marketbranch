@@ -22,23 +22,32 @@
             <br>
             <div class="col-12 row">
                 <div class="col-12 col-md-10 row mx-auto">
-                    <div class="col-12 col-md-6 m-0 p-0">
-                        <ng-container *ngIf="shop_subcat.length">
-                            <h4>Nuestros productos:</h4>
-                            <p>En nuestra tienda puedes comprar productos de:</p>
-                            <ul class="row row-cols-2 row-cols-md-1">
-                                <li *ngFor="let subcat of shop_subcat">{{subcat}}</li>
-                            </ul>
-                        </ng-container>
-                        <ng-container *ngIf="shop_rating">
-                            <p>La valoración media de nuestros productos es:</p>
-                            <h5>{{shop_rating}}&nbsp;<app-rating [rating]="shop_rating"></app-rating></h5>
-                        </ng-container>
+                    <div *ngIf="(shop_cat.length || shop_rating); else onlyImage" class="col-12 row m-0 p-0">
+                        <div class="col-12 col-md-6 m-0 p-0">
+                            <ng-container *ngIf="shop_cat.length">
+                                <h4>Nuestros productos:</h4>
+                                <p>En nuestra tienda puedes comprar productos de:</p>
+                                <ul class="row row-cols-2 row-cols-md-1">
+                                    <li *ngFor="let cat of shop_cat">{{cat}}</li>
+                                </ul>
+                            </ng-container>
+                            <ng-container *ngIf="shop_rating">
+                                <p>La valoración media de nuestros productos es:</p>
+                                <h5>{{shop_rating}}&nbsp;<app-rating [rating]="shop_rating"></app-rating></h5>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 col-md-6 row">
+                            <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                            <img *ngIf="!images[0]" src="assets/images/img-error2.png" class="m-0 p-0 w-100">
+                        </div>
                     </div>
-                    <div class="col-12 col-md-6 row">
-                        <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
-                        <img *ngIf="!images[0]" src="assets/images/img-error2.png" class="m-0 p-0 w-100">
-                    </div>
+                    <ng-template #onlyImage>
+                        <div *ngIf="(images[0])" class="col-12 row m-0 p-0">
+                            <div class="col-12 col-md-6 mx-auto row">
+                                <img *ngIf="images[0]" [src]="images[0]" class="m-0 p-0 w-100 clickable" (click) = toggleGallery(true)>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
             <div class="col-12 row">
@@ -96,7 +105,7 @@
                 [infiniteScrollDistance]="scrollDistance"
                 [infiniteScrollThrottle]="throttle"
                 (scrolled)="onScrollDown()">
-                <app-product-card *ngFor="let result of results " [product]="result" class="my-1"></app-product-card>
+                <app-product-card *ngFor="let result of results" [product]="result" class="my-1"></app-product-card>
             </div>
             </article>
         </article>

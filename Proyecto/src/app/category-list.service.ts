@@ -23,15 +23,29 @@ export class CategoryListService {
   getCategoryId(name: string) {
     let id = 0;
     if(name.length > 0) {
-      if (!this.categories.length) {
+      if (this.categories.length) {
+        this.categories.forEach((category) => {
+          if (category.name.localeCompare(name) == 0) {
+            id = category.id;
+          }
+        });
       }
-      this.categories.forEach((category) => {
-        if (category.name.localeCompare(name) == 0) {
-          id = category.id;
-        }
-      });
     }
     return id;
+  }
+
+  getCategoryName(id: string) {
+    let name = "";
+    if(Number(id) > 0) {
+      if (this.categories.length) {
+        this.categories.forEach((category) => {
+          if (category.id.toString() == (id)) {
+            name = category.name;
+          }
+        });
+      }
+    }
+    return name;
   }
 
   setCategoriesFromArray(categoryArray: Array<any>) {

@@ -24,7 +24,6 @@ import { AppComponent } from './app.component';
 import { CarouselOfItemsComponent } from './carousel-of-items/carousel-of-items.component';
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
-import { ContactComponent } from './contact/contact.component';
 import { CustomerComponent } from './customer/customer.component';
 import { Error401Component } from './error401/error401.component';
 import { Error403Component } from './error403/error403.component';
@@ -32,12 +31,15 @@ import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
 import { FAQComponent } from './faq/faq.component';
 import { FooterComponent } from './footer/footer.component';
+import { FormContactComponent } from './form-contact/form-contact.component';
 import { FormLogInComponent } from './form-log-in/form-log-in.component';
 import { FormProductComponent } from './form-product/form-product.component';
 import { FormProductUpdateComponent } from './form-product-update/form-product-update.component';
 import { FormReviewComponent } from './form-review/form-review.component';
+import { FormReportComponent } from './form-report/form-report.component';
 import { FormSearchComponent } from './form-search/form-search.component';
 import { FormShopComponent } from './form-shop/form-shop.component';
+import { FormUpdatePasswordComponent } from './form-update-password/form-update-password.component';
 import { FormUserComponent } from './form-user/form-user.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -47,17 +49,15 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductComponent } from './product/product.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { RatingComponent } from './rating/rating.component';
-import { ReportABugComponent } from './report-abug/report-abug.component';
 import { ReviewCardComponent } from './review-card/review-card.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { SearchComponent } from './search/search.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
 import { ShopCardComponent } from './shop-card/shop-card.component';
 import { ShopComponent } from './shop/shop.component';
+import { ShopInfoComponent } from './shop-info/shop-info.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
-import { ShopInfoComponent } from './shop-info/shop-info.component';
-import { FormUpdatePasswordComponent } from './form-update-password/form-update-password.component';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -73,11 +73,11 @@ const rutas=[
   { path: 'administrar-tienda', component: ShopManagementComponent, canActivate: [ShopGuard]},
   { path: 'administrar-tienda/editar/producto/:id', component: FormProductUpdateComponent, canActivate: [ShopGuard]},
   { path: 'administrar-tienda/nuevo-producto', component: FormProductComponent, canActivate: [ShopGuard]},
-  { path: 'informar', component: ReportABugComponent},
+  { path: 'informar', component: FormReportComponent},
   { path: 'vender-en-acho-market', component: ShopInfoComponent},
   { path: 'about-us', component: AboutUsComponent},
   { path: 'terminos', component: TermsComponent},
-  { path: 'contacto', component: ContactComponent},
+  { path: 'contacto', component: FormContactComponent},
   { path: 'faq', component: FAQComponent},
   { path: '401', component: Error401Component},
   { path: '403', component: Error403Component},
@@ -91,7 +91,6 @@ const rutas=[
     CarouselOfItemsComponent,
     CartComponent,
     CartItemComponent,
-    ContactComponent,
     CustomerComponent,
     Error401Component,
     Error403Component,
@@ -99,12 +98,15 @@ const rutas=[
     Error500Component,
     FAQComponent,
     FooterComponent,
+    FormContactComponent,
     FormLogInComponent,
     FormReviewComponent,
     FormProductComponent,
     FormProductUpdateComponent,
+    FormReportComponent,
     FormSearchComponent,
     FormShopComponent,
+    FormUpdatePasswordComponent,
     FormUserComponent,
     HeaderComponent,
     HomeComponent,
@@ -114,20 +116,18 @@ const rutas=[
     ProductComponent,
     PurchaseComponent,
     RatingComponent,
-    ReportABugComponent,
     ReviewCardComponent,
     ScrollToTopComponent,
     SearchComponent,
     SearchSidebarComponent,
     ShopCardComponent,
     ShopComponent,
+    ShopInfoComponent,
     ShopManagementComponent,
+    SubcategoryFilterPipe,
     TermsComponent,
     PriceFilterPipe,
-    RateFilterPipe,
-    SubcategoryFilterPipe,
-    ShopInfoComponent,
-    FormUpdatePasswordComponent
+    RateFilterPipe
   ],
   imports: [
     BrowserModule,

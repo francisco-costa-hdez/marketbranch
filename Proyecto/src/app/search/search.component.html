@@ -16,27 +16,47 @@
             </form>
         </div>
         <div class="row container-fluid mx-auto p-0">
-            <div class="col-12 col-lg-3 my-2 px-auto pb-4">
+            <div *ngIf="search.type =='Producto' && results.length" class="col-12 col-lg-3 my-2 px-auto pb-4">
                <app-search-sidebar [type]="search.type" [categoryId]="categoryId" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)" (subcategoryChangeEvent)="updateSubcategoryFilter($event)"></app-search-sidebar>
             </div>
             <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>
             <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
-             <div *ngIf="search.type == 'Producto'" class="search-results col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto"
-                infinite-scroll
-                [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollThrottle]="throttle"
-                (scrolled)="onScrollDown()">
-                        <app-product-card  *ngFor="let result of results" [product]="result" class="my-1"></app-product-card>
-               
-            </div>
-            <div *ngIf="search.type == 'Tienda'" class="search-results col-12 col-lg-9 row row-cols-1 row-cols-lg-2 mx-auto px-auto"
-                infinite-scroll
-                [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollThrottle]="throttle"
-                (scrolled)="onScrollDown()">
-                <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
-               
-            </div>  
+            <ng-container *ngIf="!loading && results.length;else fail">
+                <div *ngIf="search.type == 'Producto'" class="search-results col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto"
+                    infinite-scroll
+                    [infiniteScrollDistance]="scrollDistance"
+                    [infiniteScrollThrottle]="throttle"
+                    (scrolled)="onScrollDown()">
+                            <app-product-card  *ngFor="let result of results" [product]="result" class="my-1"></app-product-card>
+                
+                </div>
+                <div *ngIf="search.type == 'Tienda'" class="search-results col-12 col-lg-9 row row-cols-1 row-cols-lg-2 mx-auto px-auto"
+                    infinite-scroll
+                    [infiniteScrollDistance]="scrollDistance"
+                    [infiniteScrollThrottle]="throttle"
+                    (scrolled)="onScrollDown()">
+                    <app-shop-card *ngFor="let result of results " [shop]="result" class="my-1"></app-shop-card>
+                
+                </div>
+            </ng-container>
         </div>
+        <ng-template #fail>
+            <div *ngIf="!loading" class="featured-product product  container-fluid mt-0 pt-0">
+                <div class="card text-center mb-0 col-12 col-md-6 mx-auto my-3">
+                    <div class="card-body mt-4">
+                      <h2 class="card-title">La búsqueda introducida no ha arrojado ningún resultado.</h2>
+                      <p class="card-text mt-4">Puedes probar a visitar nuestras <a routerLink="/busqueda" [queryParams]="{filter: 'Tienda'}">tiendas </a></p>
+                      <p class="card-text">También puedes explorar todos los <a routerLink="/busqueda" [queryParams]="{filter: 'Producto'}">productos</a> de la web</p>
+                      <p class="card-text">Visita nuestras <a href="https://www.instagram.com/achomarket_oficial/">redes</a> para estar al día de las últimas noticias</p>
+                      <p class="card-text">Si tienes dudas puedes revisar nuestro <a routerLink="/faq">F.A.Q.</a> para obtener respuestas</p>
+                      <p class="card-text">Si crees que se trata de un error siempre puedes contactar con nosotros en <a routerLink="/informar">Informar de un error</a></p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3>Desde Ach<img class="align-center" src="assets/images/ach-yellow.png" width="5%"> Market le damos las gracias por su paciencia</h3>
+                </div> 
+            </div>
+        </ng-template>
     </article>
+    <br><br>
 </section>

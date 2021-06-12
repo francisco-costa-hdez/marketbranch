@@ -297,4 +297,17 @@ export class MarketPlaceDBService {
     return this.http.get( this.url + "/shops/desplegableName/" + search_term);
   }
   
+  /**********************************************************************************
+   ***** Contacto *******************************************************************
+  ***********************************************************************************/
+ 
+  //Creates a shop user
+  reportError(message) {
+    return this.http.post( this.url + "/error", message);
+  }
+
+  //Creates a shop user
+  sendMessage(message) {
+    return this.http.post( this.url + "/contact", message);
+  }
 }

@@ -10,17 +10,11 @@
             <h1 class="m-0 p-0">{{product.name}}</h1>
             <h3 class="row align-items-center m-0 p-0">
                 <div class="col-2 col-lg-1  m-0 p-0">
-                    <a routerLink="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
+                    <a *ngIf="!shop.image" routerLink="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/ach-yellow.png" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
+                    <a *ngIf="shop.image" routerLink="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" [src]="shop.image" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
                 </div>
                 <span class="col-10 col-lg-11 m-0 p-0">&nbsp;<a href="/tienda/{{shop.id}}">{{shop.name}}</a></span>
             </h3>
-            <!-- <div class="float-none float-md-left h1">{{product.name}}</div>
-            <div class="row align-items-end">
-                <div class="col-2 col-lg-1  m-0 p-0">
-                    <a href="/tienda/{{shop.id}}"><img class="float-right shop-icon rounded-circle img-thumbnail w-50" src="/assets/images/limon-eco.jpg" title="{{shop.name}}" alt="{{shop.name}} profile photo"></a>
-                </div>
-                <div class="col-5 col-lg-11 h3"><a href="/tienda/{{shop.id}}">{{shop.name}}</a></div>
-            </div> -->
         </div>
         </div>
         <div class="row container-xl mx-auto" >

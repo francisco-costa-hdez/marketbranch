@@ -1,0 +1,40 @@
+<section class="container-fluid d-flex justify-content-center">
+    <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">
+      <div class="card-header text-center w-100 mx-0 px-0">
+          <h3 class="my-2">Contacto</h3>
+      </div>
+      <div class="card-body">
+          <div *ngIf="messageOk" class="alert alert-success alert-dismissible fade show col-md-12" role="alert">
+            ¡Tu mensaje se ha enviado! Nuestro equipo te atenderá lo antes posible.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div *ngIf="messageError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            No se han podido guardar los cambios, si el problema persiste <a routerLink="/informar">contacta con nosotros</a>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form novalidate class="needs-validation" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <!-- <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+          </div> -->
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input name="email" formControlName="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email" placeholder="micorreo@email.com" required>
+            </div>
+          <div class="form-group">
+            <label for="message">Mensaje *</label>
+            <textarea name="message" formControlName="message" class="form-control" id="message" rows="3" required></textarea>
+          </div>
+          <div class="m-1">
+            * Campos obligatorios
+          </div>
+          <button type="submit" class="btn btn-primary mt-1">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  

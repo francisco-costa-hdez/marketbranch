@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { MarketPlaceDBService } from '../market-place-db.service';
+
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  selector: 'app-form-contact',
+  templateUrl: './form-contact.component.html',
+  styleUrls: ['./form-contact.component.css']
 })
-export class ContactComponent implements OnInit {
+export class FormContactComponent implements OnInit {
 
   contactForm:FormGroup;
+  messageOk: boolean;
+  messageError: boolean;
 
   constructor(private db: MarketPlaceDBService,private form:FormBuilder) {
+    this.messageOk = false;
+    this.messageError = false;
     this.contactForm=this.form.group(
       {
-        message:['',Validators.required],
-        name:['',Validators.required],
         email:['',Validators.compose([Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),Validators.required])],
-        
+        message:[''],
       }
     )
-   }
+  }
+
+  get email() { return this.contactForm.get('email'); }
+  get message() { return this.contactForm.get('message'); }
 
   ngOnInit(): void {
     (function() {
@@ -39,4 +45,29 @@ export class ContactComponent implements OnInit {
     })();
   }
 
+  onSubmit() {
+    this.messageOk = false;
+    this.messageError = false;
+    
+    if(this.contactForm.valid){
+      let mail = {email: this.email.value, message: this.message.value}
+      
+      this.db.sendMessage(mail).subscribe(
+        (response) => {
+          console.log(response)
+
+          if(response["message"] ="Mensaje enviado correctamente"){
+            this.messageOk = true;
+            this.message.setValue("");
+            // this.email.setValue("");
+          } else {
+            this.messageError = true;
+          }
+        },
+        (error) => {
+          this.messageError = true;
+        }
+      ); 
+    }
+  }
 }

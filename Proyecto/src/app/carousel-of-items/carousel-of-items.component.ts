@@ -9,7 +9,7 @@ export class CarouselOfItemsComponent implements OnInit {
   @Input() carouselId;
   @Input() group=[];
 
-  constructor( ) { }
+  constructor( ) {}
 
   ngOnInit(): void {    
   }

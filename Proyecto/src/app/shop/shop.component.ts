@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { MarketPlaceDBService } from 'src/app/market-place-db.service';
+import { CategoryListService } from '../category-list.service';
 
 @Component({
   selector: 'app-shop',
@@ -16,7 +17,7 @@ export class ShopComponent implements OnInit {
   aux;
   best = [];
   shop_rating: number;
-  shop_subcat = []
+  shop_cat = []
 
   order = "reciente";
   sum = 6;
@@ -24,11 +25,12 @@ export class ShopComponent implements OnInit {
   scrollDistance = 1;
   direction = "";
 
+
   loading: boolean = true;
   loadingProducts: boolean = true;
   show: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService) {
+  constructor(private route: ActivatedRoute, private router: Router, private db: MarketPlaceDBService, private categoryList: CategoryListService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.shop;
@@ -38,7 +40,7 @@ export class ShopComponent implements OnInit {
         this.aux;
         this.best = [];
         this.shop_rating;
-        this.shop_subcat = []
+        this.shop_cat = []
 
         this.sum = 6;
         this.scrollDistance = 1;
@@ -134,22 +136,24 @@ export class ShopComponent implements OnInit {
           this.loadingProducts = false;
           let num_ratings: number = 0;
           let sum_ratings: number = 0
-          let subcategories = [];
+          let categories = [];
           this.aux.forEach( (product) => {
-            console.log(product)
-            if(!subcategories.includes(product.subcategory_id)) {
-              subcategories.push(product.subcategory_id);
+            if(!categories.includes(product.category_id)) {
+              categories.push(product.category_id);
             }
             if (parseFloat(product.media_rating) > 0) {
               num_ratings++;
               sum_ratings = sum_ratings + parseFloat(product.media_rating);
             }
           })
-          if (subcategories.length) {
-            
-            this.shop_subcat = [...subcategories];
+          if (categories.length) {
+            categories.forEach( category_id => {
+              let name = this.categoryList.getCategoryName(category_id);
+              if (name.length > 0 ) {
+                this.shop_cat.push(name)
+              }
+            })
           }
-          console.log(this.shop_subcat)
           this.shop_rating = sum_ratings / num_ratings;
           // console.log(this.shop_rating)
           // console.table(this.results)

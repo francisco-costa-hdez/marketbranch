@@ -13,7 +13,7 @@ export class ProductComponent implements OnInit {
 
   product;
   images;
-  shop;
+  shop = {id: "", name: "", image: ""};
   categorization;
   reviews;
   auxReviews;
@@ -36,7 +36,7 @@ export class ProductComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.product = null;
         this.images = [];
-        this.shop = null;
+        this.shop = {id: "", name: "", image: ""};
         this.categorization = null;
         this.reviews = [];
         this.auxReviews = [];
@@ -116,9 +116,13 @@ export class ProductComponent implements OnInit {
   getShop(shop_id: string | number) {
     this.db.findShopById(shop_id).subscribe(
       (response) => {
+        console.log(response)
         if (response) {
-          this.shop = response["shop"];
+          this.shop.id = (response["shop"].id) ? (response["shop"].id) : null;
+          this.shop.name = (response["shop"].name) ? (response["shop"].name) : null;
+          this.shop.image = (response["images"][0]) ? (response["images"][0].image) : null;
           this.loading = false;
+          console.log(this.shop)
           // console.log(this.shop);    
         }
       },
