@@ -3,6 +3,8 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientUserController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ShopController;
@@ -37,6 +39,9 @@ Route::post('shopuser/login', [ShopUserController::class, 'login']);
 
 Route::get('review/product/{product_id}', [ReviewController::class, 'getAllProductReviews']);
 Route::get('review/user/{user_id}', [ReviewController::class, 'getAlluserReviews']);
+
+Route::post('error', [ErrorController::class, 'createError']);
+Route::post('contact', [ContactController::class, 'createContact']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('products/create', [ProductController::class, 'createProduct']);
