@@ -32,6 +32,7 @@ class ShopRepository implements IShopRepository
        $shops =  DB::select("SELECT s.*, si.image as image
                             from shops s LEFT JOIN shop_images si ON s.id = si.shop_id
                             WHERE s.name != ''
+                            GROUP BY s.id
                             ORDER BY s.created_at DESC");
         return $shops;
     }
@@ -52,6 +53,7 @@ class ShopRepository implements IShopRepository
         $shops = DB::select("SELECT s.*, si.image as image
         from shops s LEFT JOIN shop_images si ON s.id = si.shop_id
         WHERE s.name like ? or s.description like ?
+        GROUP BY s.id
         ORDER BY s.created_at DESC",[$string,$string]);
 
         return $shops;
