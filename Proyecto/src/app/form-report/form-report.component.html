@@ -1,7 +1,9 @@
 <section class="container-fluid d-flex justify-content-center">
-    <div  class="card col-12 col-md-8 col-lg-6 mx-0 px-0 my-5">
+  <div class="row m-0 p-0">
+    <div  class="card col-12 col-md-8 col-lg-6 mx-auto px-0 my-5">
       <div class="card-header text-center w-100 mx-0 px-0">
-          <h3 class="my-2">Informar de un Error</h3>
+          <h3 class="my-2">Informar sobre un error</h3>
+          <p>Agradecemos los reportes sobre errores para mejorar la experiencia en Acho Market. Por favor, indícanos qué problema te ha ocurrido en este formulario.</p>
       </div>
       <div class="card-body">
           <div *ngIf="messageOk" class="alert alert-success alert-dismissible fade show col-md-12" role="alert">
@@ -16,7 +18,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form novalidate class="needs-validation" [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
           <!-- <div class="form-group">
             <label for="name">Nombre *</label>
             <input type="text" name="name" id="name" class="form-control" required>
@@ -24,7 +26,10 @@
           <div class="form-group">
             <label for="email">Email *</label>
             <input name="email" formControlName="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email" placeholder="micorreo@email.com" required>
-            </div>
+            <div *ngIf="emailError">
+              Inserta tu correo electrónico para poder enviar el formulario.
+            </div> 
+          </div>
           <div class="form-group">
             <label for="message">Mensaje *</label>
             <textarea name="message" formControlName="message" class="form-control" id="message" rows="3" required></textarea>
@@ -36,5 +41,9 @@
         </form>
       </div>
     </div>
-  </section>
+    <div class="col-12 col-md-7 mx-auto text-center mb-3">
+      <h3>Desde Ach<img class="align-center" src="assets/images/ach-yellow.png" width="5%"> Market te damos las gracias por ayudarnos a hacer de nuestro sitio un lugar mejor. </h3>
+    </div>
+  </div> 
+</section>
   

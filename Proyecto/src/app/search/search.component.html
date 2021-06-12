@@ -1,5 +1,6 @@
 <section class="container-fluid m-0 p-0">
-    <article class="product">
+    <app-error500 *ngIf="error" class="mt-0 p-0"></app-error500>
+    <article *ngIf="!error" class="product">
         <div class="section-header pl-5 row w-100 mx-0">
             <h1 class="col-12 col-lg-9">{{title}}</h1>
             <form class="col-12 col-lg-3">
@@ -15,11 +16,11 @@
                 </div>
             </form>
         </div>
+        
         <div class="row container-fluid mx-auto p-0">
             <div *ngIf="search.type =='Producto' && results.length" class="col-12 col-lg-3 my-2 px-auto pb-4">
                <app-search-sidebar [type]="search.type" [categoryId]="categoryId" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)" (subcategoryChangeEvent)="updateSubcategoryFilter($event)"></app-search-sidebar>
             </div>
-            <app-error500 *ngIf="error" class="col-12 col-lg-9"></app-error500>
             <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
             <ng-container *ngIf="!loading && results.length;else fail">
                 <div *ngIf="search.type == 'Producto'" class="search-results col-12 col-lg-9 row row-cols-2 row-cols-md-3 row-cols-lg-4 mx-auto px-auto"
