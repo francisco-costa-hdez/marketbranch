@@ -5,6 +5,7 @@ import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ClientUser } from '../client-user';
 import { validarIguales } from '../app.validator';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import {NgxImageCompressService} from 'ngx-image-compress';
 @Component({
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
@@ -22,8 +23,11 @@ export class FormUserComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  compressedImage: any = '';
+  
 
-  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) { 
+  constructor(private db: MarketPlaceDBService,private router: Router,
+    private form:FormBuilder, private compressor: NgxImageCompressService) { 
     this.userForm=this.form.group(
       {
         name:['',Validators.required],
@@ -46,7 +50,16 @@ export class FormUserComponent implements OnInit {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-      this.croppedImage = event.base64;
+    this.croppedImage = event.base64;
+    this.compressor.getOrientation(this.croppedImage).then(
+      result => {
+        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+          result2 => {
+            this.compressedImage= result2;
+          }
+        );
+      }
+    );
   }
 
   get name() { return this.userForm.get('name'); }
@@ -90,7 +103,7 @@ export class FormUserComponent implements OnInit {
       this.client.password=this.password.value;
       this.client.address=this.address.value;
       // this.client.profile_img=this.img.value;
-      this.client.profile_img=this.croppedImage;
+      this.client.profile_img= (this.compressedImage) ? this.compressedImage : this.croppedImage;
       // console.log(this.client)
       // let arrayClient = {"name": this.client.name, "email": this.client.email, "tlf": this.client.tlf, "profile_img": this.client.profile_img, "address": this.client.address, "password": this.client.password}
       // console.log(arrayClient)
@@ -121,17 +134,14 @@ export class FormUserComponent implements OnInit {
           this.userFormValid=true
           // console.log(this.userForm)
           // this.router.navigate(['/validshopuser']);
-          
         }
         },
         (error) => {
           console.log("Se ha producido un error:")
           console.log(error)
           
-        }); 
-      }
+        }
+      ); 
     }
-
-  
-
+  }
 }

@@ -58,6 +58,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopInfoComponent } from './shop-info/shop-info.component';
 import { ShopManagementComponent } from './shop-management/shop-management.component';
 import { TermsComponent } from './terms/terms.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 const rutas=[
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -144,7 +145,8 @@ const rutas=[
     CookieService,
     NotLoggedGuard,
     ClientGuard,
-    ShopGuard
+    ShopGuard,
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent]
 }

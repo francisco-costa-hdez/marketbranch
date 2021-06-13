@@ -5,6 +5,7 @@ import { MarketPlaceDBService } from 'src/app/market-place-db.service';
 import { ShopUser } from '../shop-user';
 import { validarIguales } from '../app.validator';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 
 @Component({
@@ -25,8 +26,9 @@ export class FormShopComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  compressedImage: any = '';
 
-  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder) {
+  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder, private compressor: NgxImageCompressService) {
     this.shopUserForm=this.form.group(
       {
       admin_name:['',Validators.required],
@@ -48,7 +50,16 @@ export class FormShopComponent implements OnInit {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-      this.croppedImage = event.base64;
+    this.croppedImage = event.base64;
+    this.compressor.getOrientation(this.croppedImage).then(
+      result => {
+        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+          result2 => {
+            this.compressedImage= result2;
+          }
+        );
+      }
+    );
   }
 
    get admin_name() { return this.shopUserForm.get('admin_name'); }
@@ -92,7 +103,7 @@ export class FormShopComponent implements OnInit {
       this.shopUser.nif=this.nif.value;
       this.shopUser.password=this.password.value;
       // this.shopUser.profile_img=this.img.value;
-      this.shopUser.profile_img=this.croppedImage;
+      this.shopUser.profile_img=(this.compressedImage) ? this.compressedImage : this.croppedImage;
       // console.log(this.croppedImage);
       
       

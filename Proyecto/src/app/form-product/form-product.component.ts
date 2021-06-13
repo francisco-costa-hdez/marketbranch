@@ -7,6 +7,7 @@ import { Image } from '../image';
 import { CategoryListService } from '../category-list.service';
 import { AuthService } from '../auth.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-form-product',
@@ -22,9 +23,11 @@ export class FormProductComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  compressedImage: any = '';
   imageProduct = new Image;
 
-  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService, private auth: AuthService) {
+  constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,
+    private categoryList: CategoryListService, private auth: AuthService, private compressor: NgxImageCompressService) {
     this.productForm=this.form.group(
       {
       name:['',Validators.required],
@@ -45,6 +48,15 @@ export class FormProductComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    this.compressor.getOrientation(this.croppedImage).then(
+      result => {
+        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+          result2 => {
+            this.compressedImage= result2;
+          }
+        );
+      }
+    );
   }
 
   get name() { return this.productForm.get('name'); }
@@ -138,8 +150,8 @@ getSubca(i){
        this.product.stock=this.stock.value;
        this.product.availability=this.availability.value;
        this.product.subcategory_id=this.subcategory_id.value;
-       this.product.shop_id=this.auth.getCurrentUserShop();
-       this.imageProduct.image=this.croppedImage;
+       this.product.shop_id=Number(this.auth.getCurrentUserShop());
+       this.imageProduct.image=(this.compressedImage) ? this.compressedImage : this.croppedImage;
       //  this.imageProduct.image=this.image.value;
       
       this.db.createProduct(this.product).subscribe(

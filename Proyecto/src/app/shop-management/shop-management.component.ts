@@ -6,6 +6,7 @@ import { Shop } from '../shop';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ProfileImageService } from '../profile-image.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-shop-management',
@@ -40,11 +41,14 @@ export class ShopManagementComponent implements OnInit {
   photoUploaded: boolean = false;
 
   imageShopChangedEvent: any = '';
-  imageUserChangedEvent: any = '';
   croppedShop: any = '';
+  compressedShopImage: any = '';
+  imageUserChangedEvent: any = '';
   croppedUser: any = '';
+  compressedUserImage: any = '';
 
-  constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder, private img: ProfileImageService) {
+  constructor(private auth: AuthService, private db: MarketPlaceDBService, private form: FormBuilder,
+     private img: ProfileImageService, private compressor: NgxImageCompressService) {
     this.detailsForm = new FormGroup({
       admin_name: new FormControl({value: "", disabled: true}, Validators.required),
       nif: new FormControl({value: "", disabled: true}, Validators.required),
@@ -107,6 +111,15 @@ export class ShopManagementComponent implements OnInit {
 
   imageShopCropped(event: ImageCroppedEvent) {
     this.croppedShop = event.base64;
+    this.compressor.getOrientation(this.croppedShop).then(
+      result => {
+        this.compressor.compressFile(this.croppedShop, result, 50, 25).then(
+          result2 => {
+            this.compressedShopImage= result2;
+          }
+        );
+      }
+    );
   }
 
   fileUserChangeEvent(event: any): void {
@@ -115,6 +128,15 @@ export class ShopManagementComponent implements OnInit {
 
   imageUserCropped(event: ImageCroppedEvent) {
     this.croppedUser = event.base64;
+    this.compressor.getOrientation(this.croppedUser).then(
+      result => {
+        this.compressor.compressFile(this.croppedUser, result, 50, 25).then(
+          result2 => {
+            this.compressedUserImage= result2;
+          }
+        );
+      }
+    );
   }
 
   get admin_name() { return this.detailsForm.get('admin_name'); }
@@ -267,7 +289,12 @@ export class ShopManagementComponent implements OnInit {
       shopUser.email=this.email.value;
       shopUser.nif=this.nif.value;
       // shopUser.profile_img=this.croppedImage;
-      shopUser.profile_img = (this.croppedUser) ? this.croppedUser : this.user.profile_img;
+      // shopUser.profile_img = (this.croppedUser) ? this.croppedUser : this.user.profile_img;
+      if (this.croppedUser) {
+        shopUser.profile_img = (this.compressedUserImage) ? this.compressedUserImage : this.croppedUser;
+      } else {
+        shopUser.profile_img = this.user.profile_img
+      }
       this.db.updateShopUser(shopUser).subscribe(
         (response)=>{
           if (response["message"] == "Los datos se han actualizado correctamente") {
@@ -276,7 +303,7 @@ export class ShopManagementComponent implements OnInit {
             this.user.email = shopUser.email;
             // this.user.profile_img =  shopUser.profile_img;
 
-            this.img.setImage(this.user.profile_img);
+            this.img.setImage(shopUser.profile_img);
             
             this.userChanged = true;
           } else {
@@ -297,7 +324,7 @@ export class ShopManagementComponent implements OnInit {
       this.photoUploaded = false;
       
       let image = {image: "", shop_id: ""};
-      image.image = this.croppedShop;
+      image.image = (this.compressedShopImage) ? this.compressedShopImage : this.croppedShop;
       image.shop_id  = this.auth.getCurrentUserShop();
 
       this.db.uploadShopImage(image).subscribe(

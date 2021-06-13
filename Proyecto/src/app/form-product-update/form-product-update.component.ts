@@ -7,6 +7,7 @@ import { Image } from '../image';
 import { CategoryListService } from '../category-list.service';
 import { AuthService } from '../auth.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-form-product-update',
@@ -25,6 +26,7 @@ export class FormProductUpdateComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  compressedImage: any = '';
   imageObject = new Image;
 
   photoNotUploaded: boolean = false;
@@ -33,7 +35,7 @@ export class FormProductUpdateComponent implements OnInit {
   productOld;
 
   constructor(private db: MarketPlaceDBService,private router: Router,private form:FormBuilder,private categoryList: CategoryListService, private auth: AuthService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private compressor: NgxImageCompressService) {
     this.productForm=this.form.group(
       {
         name:['',Validators.required],
@@ -68,6 +70,15 @@ export class FormProductUpdateComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    this.compressor.getOrientation(this.croppedImage).then(
+      result => {
+        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+          result2 => {
+            this.compressedImage= result2;
+          }
+        );
+      }
+    );
   }
 
   get name() { return this.productForm.get('name'); }
@@ -217,7 +228,7 @@ export class FormProductUpdateComponent implements OnInit {
       this.photoUploaded = false;
       
       let image = {image: "", product_id: ""};
-      image.image = this.croppedImage;
+      image.image = (this.compressedImage) ? this.compressedImage : this.croppedImage;
       image.product_id  = this.productOld.id;
 
       console.log(image)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { AuthService } from '../auth.service';
 import { ClientUser } from '../client-user';
@@ -22,8 +23,10 @@ export class CustomerComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  compressedImage: any = '';
 
-  constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService, private img: ProfileImageService) {
+  constructor(private form: FormBuilder, private auth: AuthService, private db: MarketPlaceDBService,
+     private img: ProfileImageService,private compressor: NgxImageCompressService) {
     this.detailsForm = new FormGroup({
       name: new FormControl({value: "", disabled: true}, Validators.required),
       tlf: new FormControl({value: "", disabled: true}, Validators.required),
@@ -71,6 +74,15 @@ export class CustomerComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    this.compressor.getOrientation(this.croppedImage).then(
+      result => {
+        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+          result2 => {
+            this.compressedImage= result2;
+          }
+        );
+      }
+    );
   }
 
   get name() { return this.detailsForm.get('name'); }
@@ -101,8 +113,13 @@ export class CustomerComponent implements OnInit {
       client.email=this.email.value;
       client.tlf=this.tlf.value;
       let image = (this.croppedImage) ? this.croppedImage : this.user.profile_img;
-      client.profile_img=image;
-      console.log(client)
+      if (this.croppedImage) {
+        client.profile_img = (this.compressedImage) ? this.compressedImage : this.croppedImage;
+      } else {
+        client.profile_img = this.user.profile_img
+      }
+      // client.profile_img=image;
+      // console.log(client)
       this.db.updateClientUser(client).subscribe(
         (response)=>{
           if (response["message"]=="Los datos se han actualizado correctamente") {

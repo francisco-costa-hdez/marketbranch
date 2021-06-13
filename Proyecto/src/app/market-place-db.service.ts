@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 
 export class MarketPlaceDBService {
 
-  private url = "http://127.0.0.1:8000/api";
+  private url = "http://149.202.42.42/achoMarketBackend/api";
  
   constructor(private http: HttpClient) { }
   
