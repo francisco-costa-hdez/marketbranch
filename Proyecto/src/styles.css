@@ -24,6 +24,13 @@
         color: #407EC9;
     }
     
+    .section-header a:hover,
+    .section-header a:active,
+    .section-header a:focus {
+        color: white;
+        outline: none;
+        text-decoration: none;
+    }
     a:hover,
     a:active,
     a:focus {

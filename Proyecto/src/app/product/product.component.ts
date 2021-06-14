@@ -130,7 +130,6 @@ export class ProductComponent implements OnInit {
     this.db.getAllProductReviews(product_id).subscribe(
       (response) => {
         if (response) {
-          // console.log(response);
           response["reviews"].forEach((item) => {
             this.totalReviews.push(item);
           }

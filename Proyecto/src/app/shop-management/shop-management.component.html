@@ -174,8 +174,8 @@
                             (scrolled)="onScrollDown()">
                             <div *ngFor="let product of products" class="card">
                                 <div class="row card-body m-0 p-1">
-                                    <img *ngIf="product.image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" [src]="product.image">
-                                    <img *ngIf="!product.image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
+                                    <img *ngIf="product.product_image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" [src]="product.product_image">
+                                    <img *ngIf="!product.product_image" class="col-2 col-lg-1 my-auto mx-0 p-0 border-right" src="/assets/images/limon-eco.jpg">
                                     <h6 class="col-4 col-lg-6 my-auto mx-0 pl-1"><a routerLink="/producto/{{product.id}}">{{product.name}}</a></h6>
                                     <h6 class="col-3 my-auto mx-0 pl-1">{{product.price | currency:" "}} €</h6>
                                     <div class="col-1 col-lg-1 m-0 p-0 row align-items-center">

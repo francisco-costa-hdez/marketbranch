@@ -1,13 +1,13 @@
 <app-error500 *ngIf="contentLoaded < 0"></app-error500>
-<app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>
-<section *ngIf="contentLoaded == 2" class="container-fluid m-0 p-0">
+
+<section class="container-fluid m-0 p-0">
     <div *ngIf="user" class="alert alert-success" role="alert">¡Bienvenide {{user}}!</div>
     <article class="text-center my-5">
         <h1 class="display-1">Ach<img src="/assets/images/ach-yellow.png" width="70em"> Market</h1>
         <h2>Explora el Marketplace de la Región de Murcia.</h2>
         <h5>Descubre las tiendas de la región y sus productos en un click.</h5>
     </article>
-    <article class="featured-product product">
+    <article *ngIf="contentLoaded > 0" class="featured-product product">
         <div class="section-header pl-5">
             <h1>Nuevas Tiendas</h1>
         </div>
@@ -51,7 +51,7 @@
             </div>
         </div>
     </article>
-    <article class="featured-product product">
+    <article *ngIf="contentLoaded > 1" class="featured-product product">
 
         <div class="section-header pl-5">
             <h1>Nuestra Selección de productos</h1>
@@ -60,7 +60,7 @@
             <app-carousel-of-items [group]="latest" [carouselId]="'featured'"></app-carousel-of-items>
         </div>  
     </article>
-    <article class="featured-product product">
+    <article *ngIf="contentLoaded > 1" class="featured-product product">
 
         <div class="section-header pl-5">
             <h1>Nuevos Productos</h1>
@@ -69,7 +69,7 @@
             <app-carousel-of-items [group]="latest" [carouselId]="'newProducts'"></app-carousel-of-items>
         </div>
     </article>
-    <article class="featured-product product">
+    <article *ngIf="contentLoaded > 1" class="featured-product product">
             <div class="section-header pl-5">
                 <h1>Productos Mejor Valorados</h1>
             </div>
@@ -78,3 +78,4 @@
             </div>
     </article>
 </section>
+<app-loading-screen *ngIf="contentLoaded == 0 || contentLoaded == 1"></app-loading-screen>

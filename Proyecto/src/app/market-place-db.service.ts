@@ -73,7 +73,7 @@ export class MarketPlaceDBService {
 
   //Deletes a product image
   deleteProductImage(image_id: string | number) {
-    return this.http.delete( this.url + "/products/uploadImage/" + image_id);
+    return this.http.delete( this.url + "/products/delete/img/" + image_id);
   }
   
   /**********************************************************************************

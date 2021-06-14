@@ -130,7 +130,7 @@ export class FormProductUpdateComponent implements OnInit {
             this.subcategory_id.setValue(this.productOld.subcategory_id);
             if (response["images"]) {
               this.images = response["images"]
-              console.log(this.images)
+              // console.log(this.images)
             }
           }
         }
@@ -210,7 +210,7 @@ export class FormProductUpdateComponent implements OnInit {
       this.product.subcategory_id=this.subcategory_id.value;
       this.db.updateProduct(this.route.snapshot.paramMap.get('id'),this.product).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           // this.imageProduct.product_id=response["product"].id
           this.redirect();
         },
@@ -231,17 +231,17 @@ export class FormProductUpdateComponent implements OnInit {
       image.image = (this.compressedImage) ? this.compressedImage : this.croppedImage;
       image.product_id  = this.productOld.id;
 
-      console.log(image)
+      // console.log(image)
       this.db.uploadProductImage(image).subscribe(
         (response)=>{
           this.db.findProductById(image.product_id).subscribe(
             (response) => {
-              console.log(response)
+              // console.log(response)
               if (response["product"]) {
                 if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
                   if (response["images"]) {
                     this.images = response["images"]
-                    console.log(this.images)
+                    // console.log(this.images)
                   }
                 }
               }
@@ -258,12 +258,12 @@ export class FormProductUpdateComponent implements OnInit {
       (response)=>{
         this.db.findProductById(this.productOld.id).subscribe(
           (response) => {
-            console.log(response)
+            // console.log(response)
             if (response["product"]) {
               if (this.productOld.shop_id == this.auth.getCurrentUserId()) {
                 if (response["images"]) {
                   this.images = response["images"]
-                  console.log(this.images)
+                  // console.log(this.images)
                 }
               }
             }

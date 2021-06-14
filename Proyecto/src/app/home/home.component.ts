@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
 
   latest=[];
   best=[];
-  user = ""
+  user = "";
 
   contentLoaded = 0;
   latestShops=[];
@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
               private storageService: LocalStorageService) { }
 
   ngOnInit(): void {
-  this.getProducts()
   this.getAllShops()
+  this.getProducts()
   this.user = this.storageService.getCurrentUser();
   }
 
@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
           for(let i=0;i<=11;i++){
             this.best[i]=products[i];
           }
+          products = [];
           this.contentLoaded += 1;
         }
         //console.table(products)
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit {
           
         }
         //onsole.table(shops)
+        shops = [];
       },
       (error) => {
         this.contentLoaded = -2;
