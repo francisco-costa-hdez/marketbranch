@@ -73,11 +73,11 @@
         <br>
         <div class="container row my-0 mx-auto">
             <div class="col-12 col-md-8 my-0 mx-auto">
-                <div class="card border-radius-0">
+                <div *ngIf="(reviews.length && !customer) || customer " class="card border-radius-0">
                     <div class="card-header">
                         <h2>Comentarios</h2>
                     </div>
-                    <div class="card-body">
+                    <div *ngIf="customer" class="card-body">
                         <app-form-review [product_id]="product.id" (newReview)="addReview($event)"></app-form-review>
                     </div>
                     <div class="card-header border-top">
@@ -109,8 +109,8 @@
                         (scrolled)="onScrollDown()">
                         <app-review-card *ngFor="let review of reviews" [review]="review"></app-review-card>
                     </div>
-                    <div *ngIf="!reviews">
-                        <div class="alert alert-info" role="alert">
+                    <div *ngIf="!reviews.length">
+                        <div class="alert alert-info m-3" role="alert">
                             Nadie ha valorado aún sobre este producto, ¿Lo has probado? Sé el primero en valorarlo.
                         </div>
                     </div>

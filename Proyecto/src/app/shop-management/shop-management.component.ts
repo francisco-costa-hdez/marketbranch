@@ -113,7 +113,7 @@ export class ShopManagementComponent implements OnInit {
     this.croppedShop = event.base64;
     this.compressor.getOrientation(this.croppedShop).then(
       result => {
-        this.compressor.compressFile(this.croppedShop, result, 50, 25).then(
+        this.compressor.compressFile(this.croppedShop, result, 50, 50).then(
           result2 => {
             this.compressedShopImage= result2;
           }
@@ -130,7 +130,7 @@ export class ShopManagementComponent implements OnInit {
     this.croppedUser = event.base64;
     this.compressor.getOrientation(this.croppedUser).then(
       result => {
-        this.compressor.compressFile(this.croppedUser, result, 50, 25).then(
+        this.compressor.compressFile(this.croppedUser, result, 50, 50).then(
           result2 => {
             this.compressedUserImage= result2;
           }
@@ -159,7 +159,7 @@ export class ShopManagementComponent implements OnInit {
       this.db.findProductByShop(this.auth.getCurrentUserShop()).subscribe(
         (response) => {
           if (response["products"]) {
-            console.log(response)
+            // console.log(response)
             response["products"].forEach((item) => {
 
               this.totalProducts.push(item);

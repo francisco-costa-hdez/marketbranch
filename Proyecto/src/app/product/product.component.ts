@@ -112,13 +112,13 @@ export class ProductComponent implements OnInit {
   getShop(shop_id: string | number) {
     this.db.findShopById(shop_id).subscribe(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if (response) {
           this.shop.id = (response["shop"].id) ? (response["shop"].id) : null;
           this.shop.name = (response["shop"].name) ? (response["shop"].name) : null;
           this.shop.image = (response["images"][0]) ? (response["images"][0].image) : null;
           this.loading = false;
-          console.log(this.shop)
+          // console.log(this.shop)
           // console.log(this.shop);    
         }
       },

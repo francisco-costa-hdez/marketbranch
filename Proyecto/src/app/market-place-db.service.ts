@@ -53,7 +53,7 @@ export class MarketPlaceDBService {
 
   //Creates a product
   createProduct(product) {
-    return this.http.post( this.url + "/products/create/", product);
+    return this.http.post( this.url + "/products/create", product);
   }
 
   //Updates a product
@@ -68,7 +68,7 @@ export class MarketPlaceDBService {
   
   //Creates a product image
   uploadProductImage(img) {
-    return this.http.post( this.url + "/products/uploadImage/", img);
+    return this.http.post( this.url + "/products/uploadImage", img);
   }
 
   //Deletes a product image
@@ -102,7 +102,7 @@ export class MarketPlaceDBService {
   
   //Creates a shop
   createShop(shop) {
-    return this.http.post( this.url + "/shop/create/", shop);
+    return this.http.post( this.url + "/shop/create", shop);
   }
   
   //Updates a shop

@@ -76,7 +76,7 @@ export class CustomerComponent implements OnInit {
     this.croppedImage = event.base64;
     this.compressor.getOrientation(this.croppedImage).then(
       result => {
-        this.compressor.compressFile(this.croppedImage, result, 50, 25).then(
+        this.compressor.compressFile(this.croppedImage, result, 50, 50).then(
           result2 => {
             this.compressedImage= result2;
           }

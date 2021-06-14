@@ -28,10 +28,10 @@ export class CartService {
         this.db.addToCart(productId, this.auth.getCurrentUserId()).subscribe(
           (response) => {
             if (response) {
-              console.log(response);
+              // console.log(response);
               this.initializeCartList()
             } else {
-              console.log("no response");
+              // console.log("no response");
             }
           },
           (error) => {
@@ -40,10 +40,10 @@ export class CartService {
           }
         );
       } else {
-        console.log("este elemento ya está en el carrito");
+        // console.log("este elemento ya está en el carrito");
       }
     } else {
-      console.log("inicia sesión");
+      // console.log("inicia sesión");
     }
   }
 
@@ -53,10 +53,10 @@ export class CartService {
       this.db.deleteFromCart(productId, this.auth.getCurrentUserId()).subscribe(
         (response) => {
           if (response) {
-            console.log(response);
+            // console.log(response);
             this.initializeCartList()
           } else {
-            console.log("no response");
+            // console.log("no response");
           }
         },
         (error) => {
@@ -65,7 +65,7 @@ export class CartService {
         }
       );
     } else {
-      console.log("este elemento no está en el carrito");
+      // console.log("este elemento no está en el carrito");
     }
   }
  }
@@ -99,10 +99,10 @@ export class CartService {
         this.db.updateQuantityInCartproduct_id(this.auth.getCurrentUserId(), quantity, productId).subscribe(
           (response) => {
             if (response) {
-              console.log(response);
+              // console.log(response);
               this.initializeCartList()
             } else {
-              console.log("no response");
+              // console.log("no response");
             }
           },
           (error) => {
@@ -111,10 +111,10 @@ export class CartService {
           }
         );
       } else {
-        console.log("este elemento no está en el carrito");
+        // console.log("este elemento no está en el carrito");
       }
     } else {
-      console.log("inicia sesión");
+      // console.log("inicia sesión");
     }
   }
 
