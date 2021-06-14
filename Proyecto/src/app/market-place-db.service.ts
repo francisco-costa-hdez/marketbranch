@@ -117,7 +117,7 @@ export class MarketPlaceDBService {
   
   //Creates a shop image
   uploadShopImage(img) {
-    return this.http.post( this.url + "/shop/uploadImage/", img);
+    return this.http.post( this.url + "/shop/uploadImage", img);
   }
   
   //Deletes a shop image

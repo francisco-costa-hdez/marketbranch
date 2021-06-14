@@ -129,7 +129,7 @@ getSubca(i){
   
   this.db.findSubcategoryByCategoryId(i).subscribe(
   (response) => {
-  this.subCategories.push(response["subcategories"]);
+  this.subCategories[i-1] = (response["subcategories"]);
   }     
   ,
    (error) => {

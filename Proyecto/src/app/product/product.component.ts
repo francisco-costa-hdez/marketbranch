@@ -70,10 +70,6 @@ export class ProductComponent implements OnInit {
     this.orderReviews();
   }
 
-  chosePrincipal() {
-    alert("esto quiero hacerlo con los datos devueltos de la api pa no trabajar doble:)");
-  }
-
   toggleGallery(state:boolean) {
     this.show = state;
   }
