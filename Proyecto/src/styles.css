@@ -2439,7 +2439,7 @@ NUESTRO*/
     height: 2px;
   }
   .custom-slider .ngx-slider .ngx-slider-selection {
-    background: orange;
+    background: #fcd015;
   }
 
   .custom-slider .ngx-slider .ngx-slider-pointer {
@@ -2462,7 +2462,7 @@ NUESTRO*/
 
   .custom-slider .ngx-slider .ngx-slider-limit {
     font-weight: bold;
-    color: orange;
+    color: #fcd015;
   }
 
   .custom-slider .ngx-slider .ngx-slider-tick {
@@ -2475,7 +2475,7 @@ NUESTRO*/
   }
 
   .custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-    background: orange;
+    background: #fcd015;
   }
 
   .text{

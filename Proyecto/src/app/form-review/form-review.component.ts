@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { MarketPlaceDBService } from '../market-place-db.service';
+import { ProfileImageService } from '../profile-image.service';
 
 @Component({
   selector: 'app-form-review',
@@ -16,7 +17,7 @@ export class FormReviewComponent implements OnInit {
   reviewForm:FormGroup;
   review = {rating:"", comment:"", client_user_id: "", product_id: ""};
 
-  constructor(private db: MarketPlaceDBService,private form:FormBuilder, private auth: AuthService) { 
+  constructor(private db: MarketPlaceDBService,private form:FormBuilder, private auth: AuthService, private image: ProfileImageService) { 
     this.reviewForm=this.form.group(
       {
         rating:['',Validators.required],
@@ -54,7 +55,8 @@ export class FormReviewComponent implements OnInit {
                     user_name: this.auth.getCurrentUserName(),
                     client_user_id: response["review"].client_user_id,
                     product_id: response["review"].product_id,
-                    id: response["review"].id
+                    id: response["review"].id,
+                    user_profile_img: (this.image.getImage()) ? this.image.getImage() : null
                   }
                 );
               }

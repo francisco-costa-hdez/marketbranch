@@ -18,8 +18,9 @@
         </div>
         
         <div class="row container-fluid mx-auto p-0">
-            <div *ngIf="search.type =='Producto' && results.length" class="col-12 col-lg-3 my-2 px-auto pb-4">
-               <app-search-sidebar [type]="search.type" [categoryId]="categoryId" (priceChangeEvent)="updatePriceFilter($event)" (rateChangeEvent)="updateRateFilter($event)" (subcategoryChangeEvent)="updateSubcategoryFilter($event)"></app-search-sidebar>
+            <div *ngIf="search.type =='Producto'" class="col-12 col-lg-3 my-2 px-auto pb-4">
+               <app-search-sidebar [type]="search.type" [categoryId]="categoryId" (priceChangeEvent)="updatePriceFilter($event)"
+                (rateChangeEvent)="updateRateFilter($event)" (subcategoryChangeEvent)="updateSubcategoryFilter($event)"></app-search-sidebar>
             </div>
             <app-loading-screen *ngIf="loading && !error" class="col-12 col-lg-9"></app-loading-screen>
             <ng-container *ngIf="!loading && results.length;else fail">
@@ -42,7 +43,7 @@
             </ng-container>
         </div>
         <ng-template #fail>
-            <div *ngIf="!loading" class="featured-product product  container-fluid mt-0 pt-0">
+            <div *ngIf="!loading" class="featured-product product col-12 col-lg-9 mt-0 pt-0">
                 <div class="card text-center mb-0 col-12 col-md-6 mx-auto my-3">
                     <div class="card-body mt-4">
                       <h2 class="card-title">La búsqueda introducida no ha arrojado ningún resultado.</h2>
